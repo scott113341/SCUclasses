@@ -1,0 +1,31 @@
+<div class="container-fluid">
+  <div class="row-fluid">
+    <div class="span12">
+      <h1>Update Courses</h1>
+      <p><%= @courses.length %> courses found</p>
+
+      <table class="table table-condensed table-bordered table-striped">
+        <thead>
+            <tr>
+              <th>id</th>
+              <th>name</th>
+              <th>fullname</th>
+              <th>seats</th>
+              <th>instructors</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% @courses.each do |course| %>
+                <tr>
+                  <td><%= course.id %></td>
+                  <td><%= course.name %></td>
+                  <td><%= course.fullname %></td>
+                  <td><%= course.seats %></td>
+                  <td><%= course.instructors %></td>
+                </tr>
+            <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
