@@ -1,5 +1,5 @@
 task :update_courses => :environment do
-  puts Course.count + ' existing courses'
+  print(Course.count, " existing courses\n")
 
   # delete courses
   Course.delete_all
@@ -24,5 +24,5 @@ task :update_courses => :environment do
     end
   end
 
-  puts Course.count + ' courses updated'
+  print(Course.count, " courses updated\n")
 end
