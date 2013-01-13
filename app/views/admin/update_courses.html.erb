@@ -12,6 +12,9 @@
               <th>fullname</th>
               <th>seats</th>
               <th>instructors</th>
+              <th>days</th>
+              <th>time_start</th>
+              <th>time_end</th>
             </tr>
         </thead>
         <tbody>
@@ -22,6 +25,9 @@
                   <td><%= course.fullname %></td>
                   <td><%= course.seats %></td>
                   <td><%= course.instructors %></td>
+                  <td><%= course.days %></td>
+                  <td><%= course.time_start.to_s %></td>
+                  <td><%= course.time_end.to_s %></td>
                 </tr>
             <% end %>
         </tbody>
