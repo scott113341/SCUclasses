@@ -2,11 +2,7 @@ class AdminController < ApplicationController
   def index
   end
 
-  def update_courses
-    authenticate
-
-
-
+  def courses
     @courses = Course.all
   end
 

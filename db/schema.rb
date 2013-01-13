@@ -21,8 +21,8 @@ ActiveRecord::Schema.define(:version => 20130113041108) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
     t.string   "days"
-    t.time     "time_start"
-    t.time     "time_end"
+    t.integer  "time_start"
+    t.integer  "time_end"
   end
 
 end
