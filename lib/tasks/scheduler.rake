@@ -13,14 +13,6 @@ task :update_courses => :environment do
     if course.css('td').length == 8
       id = course.css('td')[1].text.to_i
 
-      #newcourse = Course.find_or_initialize_by_id(id)
-      newcourse = Course.new
-      newcourse.id = id
-      newcourse.name = course.css('td')[0].text.strip
-      newcourse.fullname = course.css('td')[3].text.strip
-      newcourse.seats = course.css('td')[7].text.to_i
-      newcourse.instructors = course.css('td')[6].text.strip
-
       # parse date and time
       scheduletext = course.css('td')[4].text.strip
       if scheduletext == '-'
@@ -34,11 +26,16 @@ task :update_courses => :environment do
         time_end = parseTime(times[2])
       end
 
-      # set date and time
+      # set newcourse properties
+      newcourse = Course.new
+      newcourse.id = id
+      newcourse.name = course.css('td')[0].text.strip
+      newcourse.fullname = course.css('td')[3].text.strip
+      newcourse.seats = course.css('td')[7].text.to_i
+      newcourse.instructors = course.css('td')[6].text.strip
       newcourse.days = days
       newcourse.time_start = time_start
       newcourse.time_end = time_end
-
       newcourse.save
     end
   end

@@ -3,6 +3,7 @@
     <div class="span12">
       <h1>Update Courses</h1>
       <p><%= @courses.length %> courses found</p>
+      <p>Last updated <%= @courses.first.updated_at.in_time_zone('America/Los_Angeles').strftime('%Y-%-m-%-d %I:%M:%S %p') %></p>
 
       <table class="table table-condensed table-bordered table-striped">
         <thead>
