@@ -1,0 +1,59 @@
+div.calendar {
+  $hourheight: 40px;
+
+  .days {
+    .hours {
+      float: left;
+      width: 2.5%;
+      margin-right: 0.5%;
+      margin-top: 16px;
+
+      .hour {
+        height: $hourheight;
+        text-align: right;
+        font-size: 11px;
+      }
+    }
+
+    .day {
+      .day-title {
+        height: 25px;
+        text-align: center;
+        font-weight: bold;
+      }
+
+      float: left;
+      position: relative;
+      width: ((100% - 3) / 7);
+
+      .course-block {
+        background: #42D692;
+        position: absolute;
+        width: 92%;
+        margin: 0 2%;
+        padding: 0 2%;
+        top: 200px;
+        left: 0;
+        font-weight: bold;
+
+        .times {
+          font-size: 10px;
+          line-height: 12px;
+        }
+        .name {
+          font-size: 12px;
+        }
+      }
+
+      .hour {
+        height: $hourheight - 1;
+        background: #eee;
+        border-top: 1px solid #ccc;
+        margin: 0 1.5%;
+      }
+      .hour:last-of-type {
+        border-bottom: 1px solid #ccc;
+      }
+    }
+  }
+}

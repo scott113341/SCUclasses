@@ -1,7 +1,31 @@
 <div class="container-fluid">
   <div class="row-fluid">
-    <div class="span12">
-      <h1>Home</h1>
+    <div class="span4"><%= (1..100).to_a.to_s %></div>
+    <div class="span8">
+      <div class="calendar">
+        <div class="days">
+          <div class="hours">
+            <% @hours.each do |h| %>
+              <div class="hour"><%= ((h < 13) ? (h) : (h - 12)).to_s + ((h < 12) ? 'am' : 'pm') %></div>
+            <% end %>
+          </div>
+
+          <% @days.each do |d,day| %>
+            <div class="day" id="<%= d %>">
+              <div class="day-title"><%= day %></div>
+
+              <div class="course-block" style="height:50px;">
+                <div class="name">BIOE 162</div>
+                <div class="times">11:30am - 12:35pm</div>
+              </div>
+
+              <% @hours.each do |h| %>
+                <div class="hour"></div>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
 </div>
