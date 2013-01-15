@@ -1,6 +1,24 @@
 <div class="container-fluid">
   <div class="row-fluid">
-    <div class="span4"><%= (1..100).to_a.to_s %></div>
+    <div class="span4">
+      <h4>Classes</h4>
+      <input id="course-add" type="text" placeholder='Type a class, like "RSOC 9"'/>
+      <div id="courses-added"></div>
+      <script id="courses-added-template" type="text/x-handlebars-template">
+        <ul>
+          {{#courses}}
+            <li>{{name}} - {{fullname}} - {{id}} - <a class="course-evaluation" href="#">{{instructors}}</a></li>
+          {{/courses}}
+        </ul>
+      </script>
+      <form id="course-evaluation-form" action="http://evaluations.scu.edu/" method="post" target="_blank">
+        <input name="fac" type="hidden">
+      </form>
+
+      <h4>Conditions</h4>
+
+      <h4>Details</h4>
+    </div>
     <div class="span8">
       <div class="calendar">
         <div class="days">
@@ -29,3 +47,8 @@
     </div>
   </div>
 </div>
+
+
+<script type="text/javascript">
+  var js_courses = <%= raw @js_courses.to_json %>;
+</script>

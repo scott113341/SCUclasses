@@ -4,7 +4,7 @@ div.calendar {
   .days {
     .hours {
       float: left;
-      width: 2.5%;
+      width: 3.5%;
       margin-right: 0.5%;
       margin-top: 16px;
 
@@ -24,7 +24,7 @@ div.calendar {
 
       float: left;
       position: relative;
-      width: ((100% - 3) / 7);
+      width: ((100% - 4) / 7);
 
       .course-block {
         background: #42D692;
