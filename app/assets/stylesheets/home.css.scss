@@ -24,7 +24,7 @@ div.calendar {
 
       float: left;
       position: relative;
-      width: ((100% - 4) / 7);
+      width: ((100% - 4) / 5);
 
       .course-block {
         background: #42D692;
@@ -32,7 +32,6 @@ div.calendar {
         width: 92%;
         margin: 0 2%;
         padding: 0 2%;
-        top: 200px;
         left: 0;
         font-weight: bold;
 
@@ -56,4 +55,10 @@ div.calendar {
       }
     }
   }
+}
+
+
+
+#S, #U {
+  display: none;
 }

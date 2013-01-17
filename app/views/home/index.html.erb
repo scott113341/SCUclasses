@@ -1,25 +1,11 @@
 <div class="container-fluid">
   <div class="row-fluid">
-    <div class="span4">
+    <div class="span6">
       <h4>Classes</h4>
       <input id="course-add" type="text" placeholder='Type a class, like "RSOC 9"'/>
       <div id="courses-added"></div>
-      <script id="courses-added-template" type="text/x-handlebars-template">
-        <ul>
-          {{#courses}}
-            <li>{{name}} - {{fullname}} - {{id}} - <a class="course-evaluation" href="#">{{instructors}}</a></li>
-          {{/courses}}
-        </ul>
-      </script>
-      <form id="course-evaluation-form" action="http://evaluations.scu.edu/" method="post" target="_blank">
-        <input name="fac" type="hidden">
-      </form>
-
-      <h4>Conditions</h4>
-
-      <h4>Details</h4>
     </div>
-    <div class="span8">
+    <div class="span6">
       <div class="calendar">
         <div class="days">
           <div class="hours">
@@ -31,13 +17,7 @@
           <% @days.each do |d,day| %>
             <div class="day" id="<%= d %>">
               <div class="day-title"><%= day %></div>
-
-              <div class="course-block" style="height:50px;">
-                <div class="name">BIOE 162</div>
-                <div class="times">11:30am - 12:35pm</div>
-              </div>
-
-              <% @hours.each do |h| %>
+              <% @hours[0..(@hours.length - 2)].each do |h| %>
                 <div class="hour"></div>
               <% end %>
             </div>
@@ -52,3 +32,28 @@
 <script type="text/javascript">
   var js_courses = <%= raw @js_courses.to_json %>;
 </script>
+
+
+
+
+
+<script id="courses-added-template" type="text/x-handlebars-template">
+  <ul>
+    {{#courses}}
+    <li>{{name}} - {{fullname}} - {{id}} - <a class="course-evaluation" href="#">{{instructors}}</a></li>
+    {{/courses}}
+  </ul>
+</script>
+
+<script id="calendar-course" type="text/x-handlebars-template">
+  <div class="course-block" style="top:{{course.style.top}}; height:{{course.style.height}};">
+    <div class="name">{{course.name}}</div>
+    <div class="times">{{formatTime course.time_start}} - {{formatTime course.time_end}}</div>
+  </div>
+</script>
+
+
+
+<form id="course-evaluation-form" action="http://evaluations.scu.edu/" method="post" target="_blank">
+  <input name="fac" type="hidden">
+</form>
