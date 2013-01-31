@@ -174,7 +174,7 @@ function courseOptionsController($scope,$http,$window) {
                     var course_ids = _.pluck($scope.courses, 'id'); // get ids of already added courses
                     if (!_.contains(course_ids, course.id)) {
                         console.log($window);
-                        course.time_start = $window.intTimeToObject(course.time_start);
+                        course.time_start = intTimeToObject(course.time_start);
                         course.time_end = intTimeToObject(course.time_end);
 
                         _.extend(course,{
