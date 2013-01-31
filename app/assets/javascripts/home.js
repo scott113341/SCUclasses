@@ -178,8 +178,8 @@ function courseOptionsController($scope,$http,$window) {
                         course.time_end = intTimeToObject(course.time_end);
 
                         _.extend(course,{
-                            show: true,
-                            style: $scope.courseCalStyle(course)
+                            show: false,
+                            style: $scope.courseCalendarStyle(course)
                         });
                         $scope.courses.push(course);
                     }
@@ -189,12 +189,25 @@ function courseOptionsController($scope,$http,$window) {
 
 
     // calculate course position on calendar
-    $scope.courseCalStyle = function(course) {
+    $scope.courseCalendarStyle = function(course) {
         var style = {};
 
         style.top = 25 + (40 * (course.time_start.hour24 - 7 + course.time_start.minute/60)) + 'px';
         style.height = 40 * (course.time_end.hour24 - course.time_start.hour24 + (course.time_end.minute - course.time_start.minute)/60) + 'px';
 
         return style;
+    };
+
+
+    // tell if should show course on particular day
+    $scope.showCourseBlock = function(course, day) {
+        if (course.show == false) return false;
+        else {
+            console.log('here')
+            var days = course.days.split('');
+            console.log(days,day)
+            if (_.contains(days,day)) return true;
+            else return false;
+        }
     };
 }

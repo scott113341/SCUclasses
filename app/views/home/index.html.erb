@@ -33,7 +33,7 @@
               <div class="hour last"></div>
 
               <div ng-repeat="course in courses">
-                <div ng-show="course.show" class="course-block" style="top:{{course.style.top}}; height:{{course.style.height}};">
+                <div ng-show="showCourseBlock(course, '<%= d %>')" class="course-block" style="top:{{course.style.top}}; height:{{course.style.height}};">
                   <div class="name">{{course.name}}</div>
                   <div class="times">{{course.time_start.formatted}} - {{course.time_end.formatted}}</div>
                 </div>
