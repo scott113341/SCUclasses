@@ -22,8 +22,16 @@ task :update_courses => :environment do
       else
         days = /([MTWRFSU]+)\s/.match(scheduletext)[1]
         times = /(\d{2}:\d{2}\s[APM]{2})-(\d{2}:\d{2}\s[APM]{2})/.match(scheduletext)
-        time_start = parseTime(times[1])
-        time_end = parseTime(times[2])
+
+        # check that time is well-formed
+        if times != nil
+          time_start = parseTime(times[1])
+          time_end = parseTime(times[2])
+        else
+          days = ''
+          time_start = 0
+          time_end = 0
+        end
       end
 
       # set newcourse properties

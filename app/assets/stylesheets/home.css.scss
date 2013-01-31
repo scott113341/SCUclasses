@@ -50,7 +50,7 @@ div.calendar {
         border-top: 1px solid #ccc;
         margin: 0 1.5%;
       }
-      .hour:last-of-type {
+      .hour.last {
         border-bottom: 1px solid #ccc;
       }
     }

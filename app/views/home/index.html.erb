@@ -17,9 +17,10 @@
           <% @days.each do |d,day| %>
             <div class="day" id="<%= d %>">
               <div class="day-title"><%= day %></div>
-              <% @hours[0..(@hours.length - 2)].each do |h| %>
+              <% @hours[0..(@hours.length - 3)].each do |h| %>
                 <div class="hour"></div>
               <% end %>
+              <div class="hour last"></div>
             </div>
           <% end %>
         </div>
