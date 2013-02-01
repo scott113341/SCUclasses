@@ -7,7 +7,8 @@
 
       <ul>
         <li ng-repeat="course in courses">
-          {{course.name}} - {{course.fullname}} - {{course.id}} -
+          {{course.name}} - {{course.fullname}} -
+          <a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{course.id}}&term=<%= TERM %>">{{course.id}}</a> -
           <a class="course-evaluation" href="#">{{course.instructors}}</a>
           <input ng-model="course.show" type="checkbox">
         </li>

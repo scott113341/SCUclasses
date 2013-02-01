@@ -61,3 +61,64 @@ def parseTime(time)
   time = hours + minutes + ((ampm=='PM' && hours<1200) ? 1200 : 0)
   return time
 end
+
+
+
+
+
+
+
+
+
+
+task :update_courses_details => :environment do
+  #courses = Course.all(:id => 86366, :limit => 1)
+  courses = Course.find(86366,85001)
+  i = 1
+
+  courses.each do |course|
+    # get course details
+    require 'rest-client'
+    require 'nokogiri'
+    res = RestClient.get('http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr=' + course.id.to_s + '&term=' + TERM)
+    res = Nokogiri.HTML(res)
+
+    # reset
+    course.description = nil
+    course.core = nil
+    course.location = nil
+    course.units = nil
+
+    # parse course details
+    res.css('#page-primary tr').each do |detail|
+      detail_name = detail.css('th').text.strip
+      value = detail.css('td').text.strip
+
+      print(detail_name,"_____",value,"\n")
+
+      if 'Description' == detail.css('th').text.strip
+        course.description = value
+      end
+
+      if detail_name.match(/2009 Core/)
+        course.core = value.scan(/\w{1}_\w+/).join(',')
+      end
+
+      if 'Units (min/max)' == detail.css('th').text.strip
+        course.units = value.scan(/\d/)[0]
+      end
+
+      if location = detail.css('td')[4]
+        course.location = location.text.strip
+      end
+    end
+
+    course.save
+
+    print("course ",i," of ",courses.length,"\n")
+    i += 1
+
+    print(course.description,"\n")
+    print(course.core,"\n")
+  end
+end
