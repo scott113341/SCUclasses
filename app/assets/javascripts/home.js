@@ -1,95 +1,3 @@
-function generateSchedule(courses) {
-    courses.forEach(function(course) {
-        course.schedule = {};
-        var days = course.days.split('');
-        ['M','T','W','R','F','S','U'].forEach(function(day) {
-            course.schedule[day] = (_.contains(days, day)) ? true : false;
-        });
-    });
-}
-
-
-function checkOverlap(courses) {
-    // output
-    var conflicts = [];
-
-    // make unlinked copy of courses
-    courses = courses.slice(0);
-
-    // for each course
-    while (courses.length > 0) {
-        var course_test = courses.shift();
-        console.log('testing', course_test.id);
-        //var overlaps = false;
-
-        // test against each remaining course
-        courses.forEach(function(course) {
-            var overlaps = false;
-
-            // test if starts during
-            if (course_test.time_start >= course.time_start && course_test.time_start <= course.time_end) {
-                console.log(course_test.id, 'starts during', course.id);
-                overlaps = true;
-            }
-
-            // test if ends during
-            if (course_test.time_end >= course.time_start && course_test.time_end <= course.time_end) {
-                console.log(course_test.id, 'ends during', course.id);
-                overlaps = true;
-            }
-
-            // test if starts before and ends after
-            if (course_test.time_start <= course.time_start && course_test.time_end >= course.time_end) {
-                console.log(course_test.id, 'starts before and ends after', course.id);
-                overlaps = true;
-            }
-
-            // test if don't share a common day
-            if (_.intersection( course_test.days.split(''), course_test.days.split('')).length == 0) {
-                console.log(course_test.id, 'doesnt share a day with', course.id);
-                overlaps = false;
-            }
-
-            // if overlaps, add to conflicts
-            if (overlaps) {
-                conflicts.push(course_test.id + ' conflicts with ' + course.id);
-            }
-        });
-    }
-    console.log(conflicts);
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 $(function() {
     // course typeahead
     $('[ng-model="addCourseText"]').typeahead({
@@ -104,14 +12,17 @@ $(function() {
             return item;
         }
     });
+
+
+    // course evaluation linkout
+    $('.course-evaluation').live('click', function(e) {
+        $('#course-evaluation-form').find('input').val($(this).text());
+        $('#course-evaluation-form').submit();
+    });
 });
 
 
-// course evaluation linkout
-$('.course-evaluation').live('click', function(e) {
-    $('#course-evaluation-form').find('input').val($(this).text());
-    $('#course-evaluation-form').submit();
-});
+
 
 
 // time pad formatting
@@ -178,7 +89,7 @@ function courseOptionsController($scope,$http,$window) {
                         course.time_end = intTimeToObject(course.time_end);
 
                         _.extend(course,{
-                            show: false,
+                            show: true,
                             style: $scope.courseCalendarStyle(course)
                         });
                         $scope.courses.push(course);
