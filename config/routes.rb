@@ -1,7 +1,5 @@
 Coursemaster::Application.routes.draw do
-  get "admin/index"
-  get "admin/courses"
-  match "admin/course/:name" => "admin#course"
+  match 'courses' => 'courses#courses'
 
   root :to => 'home#index'
   get 'home/index'

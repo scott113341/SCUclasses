@@ -78,7 +78,7 @@ function courseOptionsController($scope,$http,$window) {
     // add course details via ajax
     $scope.addCourse = function(name) {
         // request courses and add to model
-        $http.get('/admin/course/' + name + '.json').
+        $http.get('/courses?name=' + name).
             success(function(courses) {
                 console.log(courses);
                 _.each(courses,function(course) {
@@ -89,7 +89,7 @@ function courseOptionsController($scope,$http,$window) {
                         course.time_end = intTimeToObject(course.time_end);
 
                         _.extend(course,{
-                            show: true,
+                            show: false,
                             style: $scope.courseCalendarStyle(course)
                         });
                         $scope.courses.push(course);

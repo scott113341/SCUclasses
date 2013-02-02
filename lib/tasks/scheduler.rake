@@ -73,7 +73,8 @@ end
 
 task :update_courses_details => :environment do
   #courses = Course.all(:id => 86366, :limit => 1)
-  courses = Course.find(86366,85001)
+  #courses = Course.find(86366,85001)
+  courses = Course.all
   i = 1
 
   courses.each do |course|
@@ -82,12 +83,6 @@ task :update_courses_details => :environment do
     require 'nokogiri'
     res = RestClient.get('http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr=' + course.id.to_s + '&term=' + TERM)
     res = Nokogiri.HTML(res)
-
-    # reset
-    course.description = nil
-    course.core = nil
-    course.location = nil
-    course.units = nil
 
     # parse course details
     res.css('#page-primary tr').each do |detail|
@@ -117,8 +112,5 @@ task :update_courses_details => :environment do
 
     print("course ",i," of ",courses.length,"\n")
     i += 1
-
-    print(course.description,"\n")
-    print(course.core,"\n")
   end
 end
