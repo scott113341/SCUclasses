@@ -5,14 +5,34 @@
 
       <input ng-model="addCourseText" type="text" placeholder='Type a class, like "RSOC 9"'/>
 
-      <ul>
-        <li ng-repeat="course in courses">
-          <input ng-model="course.show" type="checkbox">
-          {{course.name}} - {{course.fullname}} -
-          <a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{course.id}}&term=<%= TERM %>" target="_blank">{{course.id}}</a> -
-          <a class="course-evaluation" href="#">{{course.instructors}}</a>
-        </li>
-      </ul>
+      <div ng-repeat="(name, course_divide) in courses_divided" class="course">
+        <div class="inner">
+          <h4>{{name}} - {{course_divide.0.fullname}}</h4>
+          <div ng-repeat="course in course_divide" class="section">
+            <table>
+              <tbody>
+              <tr>
+                <td class="schedule">
+                  <span class="days">{{course.days}}</span>
+                  <br>
+                  <span class="times">{{course.time_start.formatted}} - {{course.time_end.formatted}}</span>
+                </td>
+                <td class="seats">
+                  <span class="seats">{{course.seats}}</span>
+                  <br>
+                  <span class="remaining">seat{{plural(course.seats)}} remaining</span>
+                </td>
+                <td><input ng-model="course.show" type="checkbox"></td>
+                <td>{{course.name}}</td>
+                <td>{{course.fullname}}</td>
+                <td><a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{course.id}}&term=<%= TERM %>" target="_blank">{{course.id}}</a></td>
+                <td><a class="course-evaluation" href="#">{{course.instructors}}</a></td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
     </div>
 
 

@@ -57,8 +57,58 @@ div.calendar {
   }
 }
 
-
-
 #S, #U {
   display: none;
+}
+
+
+
+
+
+
+
+
+.course {
+  background: #f7f7f7;
+  border-left: 4px solid red;
+  margin-bottom: 15px;
+
+  .inner {
+    border: 1px solid #ccc;
+    border-left: none;
+    padding: 0 10px 10px;
+    overflow: hidden;
+
+    .section {
+      border-left: 3px solid #333;
+      background: white;
+      margin-bottom: 10px;
+      overflow: hidden;
+
+      td {
+        border-right: 1px solid black;
+        text-align: center;
+      }
+
+      .schedule {
+        width: 130px;
+        .days {
+          font-size: 20px;
+        }
+        .times {
+          font-size: 14px;
+        }
+      }
+
+      .seats {
+        width: 80px;
+        .seats {
+          font-size: 24px;
+        }
+        .remaining {
+          font-size: 10px;
+        }
+      }
+    }
+  }
 }

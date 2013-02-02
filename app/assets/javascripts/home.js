@@ -54,6 +54,7 @@ function intTimeToObject(time) {
 
 function courseOptionsController($scope,$http,$window) {
     $scope.courses = [];
+    $scope.courses_divided = {};
 
 
     // update model after typeahead submit
@@ -80,21 +81,29 @@ function courseOptionsController($scope,$http,$window) {
         // request courses and add to model
         $http.get('/courses?name=' + name).
             success(function(courses) {
-                console.log(courses);
-                _.each(courses,function(course) {
-                    var course_ids = _.pluck($scope.courses, 'id'); // get ids of already added courses
-                    if (!_.contains(course_ids, course.id)) {
-                        console.log($window);
-                        course.time_start = intTimeToObject(course.time_start);
-                        course.time_end = intTimeToObject(course.time_end);
+                // if not already added
+                if (!$scope.courses_divided[name]) {
+                    $scope.courses_divided[name] = [];
+                    _.each(courses,function(course) {
+                        var course_ids = _.pluck($scope.courses, 'id'); // get ids of already added courses
+                        if (!_.contains(course_ids, course.id)) {
+                            console.log('good choice');
 
-                        _.extend(course,{
-                            show: false,
-                            style: $scope.courseCalendarStyle(course)
-                        });
-                        $scope.courses.push(course);
-                    }
-                });
+                            // compute more values
+                            course.time_start = intTimeToObject(course.time_start);
+                            course.time_end = intTimeToObject(course.time_end);
+                            course.show = false;
+                            course.style = $scope.courseCalendarStyle(course);
+
+                            // add to courses and courses_divided
+                            $scope.courses.push(course);
+                            $scope.courses_divided[course.name].push(course);
+                        }
+                    });
+                }
+
+                console.log($scope.courses);
+                console.log($scope.courses_divided);
             });
     };
 
@@ -114,11 +123,16 @@ function courseOptionsController($scope,$http,$window) {
     $scope.showCourseBlock = function(course, day) {
         if (course.show == false) return false;
         else {
-            console.log('here')
             var days = course.days.split('');
-            console.log(days,day)
             if (_.contains(days,day)) return true;
             else return false;
         }
+    };
+
+
+    // pluralize seats?
+    $scope.plural = function(seats) {
+        if (seats == 1) return '';
+        else return 's';
     };
 }
