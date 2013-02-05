@@ -15,10 +15,12 @@ $(function() {
 
 
     // course evaluation linkout
+    /*
     $('.course-evaluation').live('click', function(e) {
         $('#course-evaluation-form').find('input').val($(this).text());
         $('#course-evaluation-form').submit();
     });
+    */
 });
 
 
