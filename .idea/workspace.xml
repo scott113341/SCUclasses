@@ -4,9 +4,8 @@
     <list default="true" id="1f0fa012-68ca-497d-b028-727f9cd5c379" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/development.sqlite3" afterPath="$PROJECT_DIR$/db/development.sqlite3" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/home.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/home.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/stylesheets/home.css.scss" afterPath="$PROJECT_DIR$/app/assets/stylesheets/home.css.scss" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/home/index.html.erb" afterPath="$PROJECT_DIR$/app/views/home/index.html.erb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/initializers/constants.rb" afterPath="$PROJECT_DIR$/config/initializers/constants.rb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/lib/tasks/scheduler.rake" afterPath="$PROJECT_DIR$/lib/tasks/scheduler.rake" />
     </list>
     <ignored path="coursemaster.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -32,10 +31,10 @@
     <splitter split-orientation="horizontal" split-proportion="0.55327344">
       <split-first>
         <leaf>
-          <file leaf-file-name="scheduler.rake" pinned="false" current="false" current-in-tab="false">
+          <file leaf-file-name="scheduler.rake" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/lib/tasks/scheduler.rake">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="50" column="19" selection-start="1652" selection-end="1652" vertical-scroll-proportion="0.0">
+                <state line="23" column="64" selection-start="883" selection-end="883" vertical-scroll-proportion="0.44331065">
                   <folding />
                 </state>
               </provider>
@@ -53,7 +52,7 @@
           <file leaf-file-name="application.html.erb" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="21" column="55" selection-start="773" selection-end="773" vertical-scroll-proportion="-13.730769">
+                <state line="21" column="55" selection-start="773" selection-end="773" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
@@ -68,13 +67,11 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="index.html.erb" pinned="false" current="true" current-in-tab="true">
+          <file leaf-file-name="index.html.erb" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/views/home/index.html.erb">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="31" column="20" selection-start="1495" selection-end="1495" vertical-scroll-proportion="0.61565423">
-                  <folding>
-                    <element signature="n#style#0;n#div#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-                  </folding>
+                <state line="31" column="20" selection-start="1495" selection-end="1495" vertical-scroll-proportion="0.0">
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -83,10 +80,10 @@
       </split-first>
       <split-second>
         <leaf>
-          <file leaf-file-name="home.css.scss" pinned="false" current="false" current-in-tab="true">
+          <file leaf-file-name="home.css.scss" pinned="false" current="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/home.css.scss">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="103" column="16" selection-start="1641" selection-end="1641" vertical-scroll-proportion="0.7530726">
+                <state line="103" column="16" selection-start="1641" selection-end="1641" vertical-scroll-proportion="0.0">
                   <folding />
                 </state>
               </provider>
@@ -96,6 +93,15 @@
             <entry file="file://$PROJECT_DIR$/app/assets/javascripts/home.js">
               <provider selected="true" editor-type-id="text-editor">
                 <state line="135" column="24" selection-start="4015" selection-end="4015" vertical-scroll-proportion="0.0">
+                  <folding />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file leaf-file-name="constants.rb" pinned="false" current="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/config/initializers/constants.rb">
+              <provider selected="true" editor-type-id="text-editor">
+                <state line="2" column="0" selection-start="28" selection-end="28" vertical-scroll-proportion="0.037988827">
                   <folding />
                 </state>
               </provider>
@@ -130,15 +136,15 @@
         <option value="$PROJECT_DIR$/app/helpers/application_helper.rb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/js/ga.js" />
         <option value="$PROJECT_DIR$/app/models/course.rb" />
-        <option value="$PROJECT_DIR$/lib/tasks/scheduler.rake" />
         <option value="$PROJECT_DIR$/app/controllers/home_controller.rb" />
         <option value="$PROJECT_DIR$/config/routes.rb" />
         <option value="$PROJECT_DIR$/app/views/layouts/application.html.erb" />
         <option value="$PROJECT_DIR$/app/controllers/courses_controller.rb" />
-        <option value="$PROJECT_DIR$/config/initializers/constants.rb" />
         <option value="$PROJECT_DIR$/app/assets/javascripts/home.js" />
         <option value="$PROJECT_DIR$/app/assets/stylesheets/home.css.scss" />
         <option value="$PROJECT_DIR$/app/views/home/index.html.erb" />
+        <option value="$PROJECT_DIR$/config/initializers/constants.rb" />
+        <option value="$PROJECT_DIR$/lib/tasks/scheduler.rake" />
       </list>
     </option>
   </component>
@@ -218,7 +224,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="RailsProjectView">
         <subPane>
           <PATH>
@@ -293,6 +298,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -350,14 +356,14 @@
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="options.lastSelected" value="preferences.keymap" />
     <property name="recentsLimit" value="5" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
+    <property name="options.lastSelected" value="preferences.keymap" />
     <property name="restartRequiresConfirmation" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/.." />
     <property name="RakeTaksPopup.undocumentedIncluded" value="false" />
     <property name="RailsGeneratorsPopup.hiddenIncluded" value="false" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager" selected="Rails.Development: coursemaster">
     <configuration default="false" name="Rails console: coursemaster" type="IrbRunConfigurationType" factoryName="IRB console" temporary="true">
@@ -723,7 +729,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934782" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.14514408" sideWeight="0.21847826" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.16862327" sideWeight="0.70434785" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.17342582" sideWeight="0.70434785" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.15101388" sideWeight="0.34021738" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32934782" sideWeight="0.5" order="10" side_tool="true" content_ui="tabs" />
@@ -821,9 +827,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/models/course.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="3" column="0" selection-start="96" selection-end="96" vertical-scroll-proportion="0.08186196">
-          <folding />
-        </state>
+        <state line="3" column="0" selection-start="96" selection-end="96" vertical-scroll-proportion="0.08186196" />
       </provider>
     </entry>
     <entry file="uml://RailsDependency/#coursemaster">
@@ -853,16 +857,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config/initializers/constants.rb">
+    <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="29" selection-end="29" vertical-scroll-proportion="0.038857143">
+        <state line="26" column="0" selection-start="800" selection-end="800" vertical-scroll-proportion="0.50514287" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="55" selection-start="773" selection-end="773" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/controllers/home_controller.rb">
+    <entry file="file://$PROJECT_DIR$/app/views/home/index.html.erb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="0" selection-start="800" selection-end="800" vertical-scroll-proportion="0.50514287">
+        <state line="31" column="20" selection-start="1495" selection-end="1495" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/home.css.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="103" column="16" selection-start="1641" selection-end="1641" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -874,20 +890,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/stylesheets/home.css.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="103" column="16" selection-start="1641" selection-end="1641" vertical-scroll-proportion="0.7530726">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/layouts/application.html.erb">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="55" selection-start="773" selection-end="773" vertical-scroll-proportion="-13.730769">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/routes.rb">
       <provider selected="true" editor-type-id="text-editor">
         <state line="1" column="38" selection-start="79" selection-end="79" vertical-scroll-proportion="0.0">
@@ -895,19 +897,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/tasks/scheduler.rake">
+    <entry file="file://$PROJECT_DIR$/config/initializers/constants.rb">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="19" selection-start="1652" selection-end="1652" vertical-scroll-proportion="0.0">
+        <state line="2" column="0" selection-start="28" selection-end="28" vertical-scroll-proportion="0.037988827">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/home/index.html.erb">
+    <entry file="file://$PROJECT_DIR$/lib/tasks/scheduler.rake">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="20" selection-start="1495" selection-end="1495" vertical-scroll-proportion="0.61565423">
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#3;n#div#1;n#div#0;n#div#0;n#div#1;n#div#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
+        <state line="23" column="64" selection-start="883" selection-end="883" vertical-scroll-proportion="0.44331065">
+          <folding />
         </state>
       </provider>
     </entry>

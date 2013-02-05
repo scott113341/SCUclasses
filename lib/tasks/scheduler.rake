@@ -15,16 +15,17 @@ task :update_courses => :environment do
 
       # parse date and time
       scheduletext = course.css('td')[4].text.strip
+      print(id,scheduletext,"\n")
       if scheduletext == '-'
         days = ''
         time_start = 0
         time_end = 0
       else
-        days = /([MTWRFSU]+)\s/.match(scheduletext)[1]
+        days = (a = /([MTWRFSU]+)\s/.match(scheduletext)) ? a[1] : nil
         times = /(\d{2}:\d{2}\s[APM]{2})-(\d{2}:\d{2}\s[APM]{2})/.match(scheduletext)
 
         # check that time is well-formed
-        if times != nil
+        if days != nil && times != nil
           time_start = parseTime(times[1])
           time_end = parseTime(times[2])
         else
@@ -34,21 +35,29 @@ task :update_courses => :environment do
         end
       end
 
-      # set newcourse properties
-      newcourse = Course.new
-      newcourse.id = id
-      newcourse.name = course.css('td')[0].text.strip
-      newcourse.fullname = course.css('td')[3].text.strip
-      newcourse.seats = course.css('td')[7].text.to_i
-      newcourse.instructors = course.css('td')[6].text.strip
-      newcourse.days = days
-      newcourse.time_start = time_start
-      newcourse.time_end = time_end
-      newcourse.save
+      # create new or update existing
+      if Course.exists?(id)
+        thiscourse = Course.find(id)
+      else
+        thiscourse = Course.new
+      end
+
+      # set course properties
+      thiscourse.id = id
+      thiscourse.name = course.css('td')[0].text.strip
+      thiscourse.fullname = course.css('td')[3].text.strip
+      thiscourse.seats = course.css('td')[7].text.to_i
+      thiscourse.instructors = course.css('td')[6].text.strip
+      thiscourse.days = days
+      thiscourse.time_start = time_start
+      thiscourse.time_end = time_end
+      thiscourse.save
     end
   end
 
   print(Course.count, " courses updated\n")
+
+  Rake::Task['update_courses_details'].execute
 end
 
 
@@ -72,8 +81,6 @@ end
 
 
 task :update_courses_details => :environment do
-  #courses = Course.all(:id => 86366, :limit => 1)
-  #courses = Course.find(86366,85001)
   courses = Course.all
   i = 1
 
@@ -88,8 +95,6 @@ task :update_courses_details => :environment do
     res.css('#page-primary tr').each do |detail|
       detail_name = detail.css('th').text.strip
       value = detail.css('td').text.strip
-
-      print(detail_name,"_____",value,"\n")
 
       if 'Description' == detail.css('th').text.strip
         course.description = value
