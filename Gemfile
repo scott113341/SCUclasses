@@ -19,5 +19,5 @@ end
 
 group :assets do
   gem 'sass-rails'
-  #gem 'uglifier'
+  gem 'uglifier'
 end
