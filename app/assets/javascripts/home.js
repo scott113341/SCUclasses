@@ -52,7 +52,7 @@ function intTimeToObject(time) {
 
 
 
-function courseOptionsController($scope,$http,$window) {
+function courseOptionsController($scope,$http) {
     $scope.courses = [];
     $scope.courses_divided = {};
 
@@ -136,3 +136,4 @@ function courseOptionsController($scope,$http,$window) {
         else return 's';
     };
 }
+courseOptionsController.$inject = ['$scope','$http'];
