@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1f0fa012-68ca-497d-b028-727f9cd5c379" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/db/development.sqlite3" afterPath="$PROJECT_DIR$/db/development.sqlite3" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/assets/javascripts/home.js" afterPath="$PROJECT_DIR$/app/assets/javascripts/home.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/config/initializers/constants.rb" afterPath="$PROJECT_DIR$/config/initializers/constants.rb" />
     </list>
     <ignored path="coursemaster.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -31,7 +28,7 @@
     <splitter split-orientation="horizontal" split-proportion="0.55327344">
       <split-first>
         <leaf>
-          <file leaf-file-name="scheduler.rake" pinned="false" current="true" current-in-tab="true">
+          <file leaf-file-name="scheduler.rake" pinned="false" current="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/lib/tasks/scheduler.rake">
               <provider selected="true" editor-type-id="text-editor">
                 <state line="23" column="70" selection-start="889" selection-end="889" vertical-scroll-proportion="0.022913257">
@@ -89,10 +86,10 @@
               </provider>
             </entry>
           </file>
-          <file leaf-file-name="home.js" pinned="false" current="false" current-in-tab="true">
+          <file leaf-file-name="home.js" pinned="false" current="true" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/app/assets/javascripts/home.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state line="22" column="6" selection-start="639" selection-end="639" vertical-scroll-proportion="0.6121113">
+                <state line="19" column="46" selection-start="622" selection-end="622" vertical-scroll-proportion="0.5286416">
                   <folding />
                 </state>
               </provider>
@@ -897,16 +894,16 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/home.js">
+    <entry file="file://$PROJECT_DIR$/lib/tasks/scheduler.rake">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="6" selection-start="639" selection-end="639" vertical-scroll-proportion="0.6121113">
+        <state line="23" column="70" selection-start="889" selection-end="889" vertical-scroll-proportion="0.022913257">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/tasks/scheduler.rake">
+    <entry file="file://$PROJECT_DIR$/app/assets/javascripts/home.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="70" selection-start="889" selection-end="889" vertical-scroll-proportion="0.022913257">
+        <state line="19" column="46" selection-start="622" selection-end="622" vertical-scroll-proportion="0.5286416">
           <folding />
         </state>
       </provider>
