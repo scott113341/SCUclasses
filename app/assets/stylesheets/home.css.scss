@@ -31,7 +31,7 @@
       }
 
       .select {
-        //display: none;
+        display: none;
       }
 
       .schedule {
@@ -80,13 +80,10 @@
 
     .section.validchoice-false {
       color: gray;
-    }
-    .section.validchoice-false:hover {
       background: #a9a9a9;
-
-      label {
-        cursor: not-allowed;
-      }
+    }
+    .section.validchoice-false:hover label {
+      cursor: not-allowed;
     }
   }
 }

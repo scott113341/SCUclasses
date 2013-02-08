@@ -93,40 +93,46 @@ function courseOptionsCtrl($scope,$http) {
                 console.log($scope.courses);
             });
     };
-    $scope.addCourse('RSOC 9');
-    $scope.addCourse('ACTG 12');
+//    $scope.addCourse('RSOC 9');
+//    $scope.addCourse('ACTG 12');
 
 
+    // remove course on delete button click
+    $scope.removeCourse = function(name) {
+        delete $scope.courses[name];
+    };
+
+
+    // validate sections based off of selections
     $scope.isValidChoice = function(section) {
-        console.log('************');
         if (section.selected == true) return true;
         else {
             var valid = true;
             _.each($scope.courses, function(course, name) { // for each course
-                _.each(course, function(section2) { // for each section
-                    if (section2.selected == true) { // if section is selected
+                _.each(course, function(section2) { // for each section2
+                    if (section2.selected == true) { // if section2 is selected
                         // don't share a common day
                         if (_.intersection(section.days.split(''), section2.days.split('')).length == 0) {
-                            console.log(section.id, 'doesnt share a day with', section2.id);
+                            //console.log(section.id, 'doesnt share a day with', section2.id);
                         }
 
                         // share common days
                         else {
                             // test if starts during
-                            if (section.time_start >= section2.time_start && section.time_start <= section2.time_end) {
-                                console.log(section.id, 'starts during', section2.id);
+                            if (section.time_start.time >= section2.time_start.time && section.time_start.time <= section2.time_end.time) {
+                                //console.log(section.id, 'starts during', section2.id);
                                 valid = false;
                             }
 
                             // test if ends during
-                            if (section.time_end >= section2.time_start && section.time_end <= section2.time_end) {
-                                console.log(section.id, 'ends during', section2.id);
+                            if (section.time_end.time >= section2.time_start.time && section.time_end.time <= section2.time_end.time) {
+                                //console.log(section.id, 'ends during', section2.id);
                                 valid = false;
                             }
 
                             // test if starts before and ends after
-                            if (section.time_start <= section2.time_start && section.time_end >= section2.time_end) {
-                                console.log(section.id, 'starts before and ends after', section2.id);
+                            if (section.time_start.time <= section2.time_start.time && section.time_end.time >= section2.time_end.time) {
+                                //console.log(section.id, 'starts before and ends after', section2.id);
                                 valid = false;
                             }
                         }
@@ -134,10 +140,10 @@ function courseOptionsCtrl($scope,$http) {
                 });
             });
 
-            console.log(section.id,valid);
+            if (section.seats == 0) valid = false;
+
             return valid;
         }
-        console.log('************');
     };
 
 
