@@ -5,7 +5,7 @@
 
       <input ng-model="addCourseText" type="text" placeholder='Type a class, like "RSOC 9"'/>
 
-      <div ng-repeat="(name, course) in courses_divided" class="course">
+      <div ng-repeat="(name, course) in courses" class="course">
         <div class="inner">
           <h4>{{name}} - {{course.0.fullname}}</h4>
           <div ng-repeat="section in course" class="section">
@@ -53,7 +53,7 @@
               <% end %>
               <div class="hour last"></div>
 
-              <div ng-repeat="(name, course) in courses_divided">
+              <div ng-repeat="(name, course) in courses">
                 <div ng-repeat="section in course">
                   <div ng-show="showCourseBlock(section, '<%= d %>')" class="course-block" style="top:{{section.style.top}}; height:{{section.style.height}};">
                     <div class="name">{{section.name}}</div>

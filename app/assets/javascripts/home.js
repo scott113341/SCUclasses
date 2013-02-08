@@ -53,10 +53,9 @@ function intTimeToObject(time) {
 
 
 function courseOptionsController($scope,$http) {
-    $scope.courses = [];
-    $scope.courses_divided = {};
+    $scope.courses = {};
 
-
+    
     // update model after typeahead submit
     $('[ng-model="addCourseText"]').change(function(event) {
         $scope.$apply(function(scope){
@@ -82,28 +81,21 @@ function courseOptionsController($scope,$http) {
         $http.get('/courses?name=' + name).
             success(function(courses) {
                 // if not already added
-                if (!$scope.courses_divided[name]) {
-                    $scope.courses_divided[name] = [];
+                if (!$scope.courses[name]) {
+                    // add course
+                    $scope.courses[name] = [];
                     _.each(courses,function(course) {
-                        var course_ids = _.pluck($scope.courses, 'id'); // get ids of already added courses
-                        if (!_.contains(course_ids, course.id)) {
-                            console.log('good choice');
+                        // compute more values
+                        course.time_start = intTimeToObject(course.time_start);
+                        course.time_end = intTimeToObject(course.time_end);
+                        course.show = false;
+                        course.style = $scope.courseCalendarStyle(course);
 
-                            // compute more values
-                            course.time_start = intTimeToObject(course.time_start);
-                            course.time_end = intTimeToObject(course.time_end);
-                            course.show = false;
-                            course.style = $scope.courseCalendarStyle(course);
-
-                            // add to courses and courses_divided
-                            $scope.courses.push(course);
-                            $scope.courses_divided[course.name].push(course);
-                        }
+                        // add to courses
+                        $scope.courses[course.name].push(course);
                     });
                 }
-
                 console.log($scope.courses);
-                console.log($scope.courses_divided);
             });
     };
 
