@@ -52,10 +52,10 @@ function intTimeToObject(time) {
 
 
 
-function courseOptionsController($scope,$http) {
+function courseOptionsCtrl($scope,$http) {
     $scope.courses = {};
 
-    
+
     // update model after typeahead submit
     $('[ng-model="addCourseText"]').change(function(event) {
         $scope.$apply(function(scope){
@@ -128,4 +128,4 @@ function courseOptionsController($scope,$http) {
         else return 's';
     };
 }
-courseOptionsController.$inject = ['$scope','$http'];
+courseOptionsCtrl.$inject = ['$scope','$http'];
