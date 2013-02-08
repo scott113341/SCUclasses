@@ -88,7 +88,7 @@ function courseOptionsCtrl($scope,$http) {
                         // compute more values
                         course.time_start = intTimeToObject(course.time_start);
                         course.time_end = intTimeToObject(course.time_end);
-                        course.show = false;
+                        course.selected = false;
                         course.style = $scope.courseCalendarStyle(course);
 
                         // add to courses
@@ -98,6 +98,21 @@ function courseOptionsCtrl($scope,$http) {
                 console.log($scope.courses);
             });
     };
+    $scope.addCourse('RSOC 9');
+
+
+
+
+    $scope.isValidChoice = function(section) {
+        if (section.selected == true) return true;
+        else {
+            if (section.time_start.time > 1200) return true;
+            else return false;
+        }
+    };
+
+
+
 
 
     // calculate course position on calendar
@@ -113,7 +128,7 @@ function courseOptionsCtrl($scope,$http) {
 
     // tell if should show course on particular day
     $scope.showCourseBlock = function(course, day) {
-        if (course.show == false) return false;
+        if (course.selected == false) return false;
         else {
             var days = course.days.split('');
             if (_.contains(days,day)) return true;

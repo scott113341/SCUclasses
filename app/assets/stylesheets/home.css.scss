@@ -1,7 +1,116 @@
+.course {
+  background: #f7f7f7;
+  border-left: 2px solid black;
+  margin-bottom: 15px;
+
+  .inner {
+    border: 1px solid #ccc;
+    border-left: none;
+    padding: 0 10px 10px;
+    overflow: hidden;
+
+    .section {
+      border-left: 1px dashed #333;
+      background: white;
+      margin-bottom: 10px;
+      overflow: hidden;
+
+      -webkit-transition: 200ms;
+      transition: 200ms;
+
+      label {
+        margin: 0;
+      }
+
+      td {
+        border-right: 1px solid black;
+        text-align: center;
+      }
+      td:last-of-type {
+        border: none;
+      }
+
+      .select {
+        display: none;
+      }
+
+      .schedule {
+        width: 135px;
+        .days {
+          font-size: 20px;
+        }
+        .times {
+          font-size: 14px;
+        }
+      }
+
+      .seats {
+        width: 80px;
+        .seats {
+          font-size: 20px;
+        }
+        .remaining {
+          font-size: 10px;
+        }
+      }
+
+      .units {
+        width: 30px;
+        .number {
+          font-size: 20px;
+        }
+        .units {
+          font-size: 10px;
+        }
+      }
+
+      .info {
+        text-align: left;
+        padding-left: 5px;
+      }
+    }
+
+    .section:hover, .section.selected-true {
+      background: #C6FFC4;
+    }
+
+    .section.selected-true {
+      border-left: 5px solid green;
+
+      .schedule {
+        width: 131px;
+      }
+    }
+
+    .section.validchoice-false {
+      color: gray;
+    }
+    .section.validchoice-false:hover {
+      background: #a9a9a9;
+
+      label {
+        cursor: not-allowed;
+      }
+    }
+  }
+}
+.course.collapsed-true .inner {
+  height: 40px;
+  overflow: hidden;
+}
+
+
+
+
+
 div.calendar {
   $hourheight: 40px;
 
   .days {
+    #S, #U {
+      display: none;
+    }
+
     .hours {
       float: left;
       width: 3.5%;
@@ -52,62 +161,6 @@ div.calendar {
       }
       .hour.last {
         border-bottom: 1px solid #ccc;
-      }
-    }
-  }
-}
-
-#S, #U {
-  display: none;
-}
-
-
-
-
-
-
-
-
-.course {
-  background: #f7f7f7;
-  border-left: 4px solid red;
-  margin-bottom: 15px;
-
-  .inner {
-    border: 1px solid #ccc;
-    border-left: none;
-    padding: 0 10px 10px;
-    overflow: hidden;
-
-    .section {
-      border-left: 3px solid #333;
-      background: white;
-      margin-bottom: 10px;
-      overflow: hidden;
-
-      td {
-        border-right: 1px solid black;
-        text-align: center;
-      }
-
-      .schedule {
-        width: 130px;
-        .days {
-          font-size: 20px;
-        }
-        .times {
-          font-size: 14px;
-        }
-      }
-
-      .seats {
-        width: 80px;
-        .seats {
-          font-size: 24px;
-        }
-        .remaining {
-          font-size: 10px;
-        }
       }
     }
   }
