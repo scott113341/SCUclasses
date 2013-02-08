@@ -22,9 +22,6 @@ $(function() {
 });
 
 
-
-
-
 // time pad formatting
 function pad(time) {
     return ((time.toString().length == 1) ? ('0'+time) : (time));
@@ -35,7 +32,7 @@ function pad(time) {
 function intTimeToObject(time) {
     var time = {
         time: time,
-        hour24: Math.floor(time / 100),
+        hour24: Math.floor(time / 100)
     };
 
     time.hour = (time.hour24 > 12) ? (time.hour24 - 12) : time.hour24;
@@ -45,8 +42,6 @@ function intTimeToObject(time) {
 
     return time;
 }
-
-
 
 
 
@@ -99,20 +94,51 @@ function courseOptionsCtrl($scope,$http) {
             });
     };
     $scope.addCourse('RSOC 9');
-
-
+    $scope.addCourse('ACTG 12');
 
 
     $scope.isValidChoice = function(section) {
+        console.log('************');
         if (section.selected == true) return true;
         else {
-            if (section.time_start.time > 1200) return true;
-            else return false;
+            var valid = true;
+            _.each($scope.courses, function(course, name) { // for each course
+                _.each(course, function(section2) { // for each section
+                    if (section2.selected == true) { // if section is selected
+                        // don't share a common day
+                        if (_.intersection(section.days.split(''), section2.days.split('')).length == 0) {
+                            console.log(section.id, 'doesnt share a day with', section2.id);
+                        }
+
+                        // share common days
+                        else {
+                            // test if starts during
+                            if (section.time_start >= section2.time_start && section.time_start <= section2.time_end) {
+                                console.log(section.id, 'starts during', section2.id);
+                                valid = false;
+                            }
+
+                            // test if ends during
+                            if (section.time_end >= section2.time_start && section.time_end <= section2.time_end) {
+                                console.log(section.id, 'ends during', section2.id);
+                                valid = false;
+                            }
+
+                            // test if starts before and ends after
+                            if (section.time_start <= section2.time_start && section.time_end >= section2.time_end) {
+                                console.log(section.id, 'starts before and ends after', section2.id);
+                                valid = false;
+                            }
+                        }
+                    }
+                });
+            });
+
+            console.log(section.id,valid);
+            return valid;
         }
+        console.log('************');
     };
-
-
-
 
 
     // calculate course position on calendar
