@@ -5,28 +5,28 @@
 
       <input ng-model="addCourseText" type="text" placeholder='Type a class, like "RSOC 9"'/>
 
-      <div ng-repeat="(name, course_divide) in courses_divided" class="course">
+      <div ng-repeat="(name, course) in courses_divided" class="course">
         <div class="inner">
-          <h4>{{name}} - {{course_divide.0.fullname}}</h4>
-          <div ng-repeat="course in course_divide" class="section">
+          <h4>{{name}} - {{course.0.fullname}}</h4>
+          <div ng-repeat="section in course" class="section">
             <table>
               <tbody>
               <tr>
                 <td class="schedule">
-                  <span class="days">{{course.days}}</span>
+                  <span class="days">{{section.days}}</span>
                   <br>
-                  <span class="times">{{course.time_start.formatted}} - {{course.time_end.formatted}}</span>
+                  <span class="times">{{section.time_start.formatted}} - {{section.time_end.formatted}}</span>
                 </td>
                 <td class="seats">
-                  <span class="seats">{{course.seats}}</span>
+                  <span class="seats">{{section.seats}}</span>
                   <br>
-                  <span class="remaining">seat{{plural(course.seats)}} remaining</span>
+                  <span class="remaining">seat{{plural(section.seats)}} remaining</span>
                 </td>
-                <td><input ng-model="course.show" type="checkbox"></td>
-                <td>{{course.name}}</td>
-                <td>{{course.fullname}}</td>
-                <td><a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{course.id}}&term=<%= TERM %>" target="_blank">{{course.id}}</a></td>
-                <td><a class="course-evaluation" href="#">{{course.instructors}}</a></td>
+                <td><input ng-model="section.show" type="checkbox"></td>
+                <td>{{section.name}}</td>
+                <td>{{section.fullname}}</td>
+                <td><a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{section.id}}&term=<%= TERM %>" target="_blank">{{section.id}}</a></td>
+                <td><a class="course-evaluation" href="#">{{section.instructors}}</a></td>
               </tr>
               </tbody>
             </table>
@@ -53,12 +53,17 @@
               <% end %>
               <div class="hour last"></div>
 
-              <div ng-repeat="course in courses">
-                <div ng-show="showCourseBlock(course, '<%= d %>')" class="course-block" style="top:{{course.style.top}}; height:{{course.style.height}};">
-                  <div class="name">{{course.name}}</div>
-                  <div class="times">{{course.time_start.formatted}} - {{course.time_end.formatted}}</div>
+              <div ng-repeat="(name, course) in courses_divided">
+                <div ng-repeat="section in course">
+                  <div ng-show="showCourseBlock(section, '<%= d %>')" class="course-block" style="top:{{section.style.top}}; height:{{section.style.height}};">
+                    <div class="name">{{section.name}}</div>
+                    <div class="times">{{section.time_start.formatted}} - {{section.time_end.formatted}}</div>
+                  </div>
                 </div>
               </div>
+
+
+
             </div>
           <% end %>
         </div>
