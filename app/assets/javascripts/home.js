@@ -85,6 +85,11 @@ function courseOptionsCtrl($scope,$http) {
                         course.time_end = intTimeToObject(course.time_end);
                         course.selected = false;
                         course.style = $scope.courseCalendarStyle(course);
+                        course.cores = (course.core) ? course.core.split(',') : [];
+                        if (/lab/gi.test(course.fullname)) {
+                            course.cores.push('LAB');
+                            console.log(course.id, 'LAB');
+                        }
 
                         // add to courses
                         $scope.courses[course.name].push(course);
@@ -93,8 +98,8 @@ function courseOptionsCtrl($scope,$http) {
                 console.log($scope.courses);
             });
     };
-//    $scope.addCourse('RSOC 9');
-//    $scope.addCourse('ACTG 12');
+    $scope.addCourse('RSOC 9');
+    $scope.addCourse('CHEM 33');
 
 
     // remove course on delete button click
@@ -149,10 +154,11 @@ function courseOptionsCtrl($scope,$http) {
 
     // calculate course position on calendar
     $scope.courseCalendarStyle = function(course) {
+        var hourheight = 35;
         var style = {};
 
-        style.top = 25 + (40 * (course.time_start.hour24 - 7 + course.time_start.minute/60)) + 'px';
-        style.height = 40 * (course.time_end.hour24 - course.time_start.hour24 + (course.time_end.minute - course.time_start.minute)/60) + 'px';
+        style.top = 25 + (hourheight * (course.time_start.hour24 - 7 + course.time_start.minute/60)) + 'px';
+        style.height = hourheight * (course.time_end.hour24 - course.time_start.hour24 + (course.time_end.minute - course.time_start.minute)/60) + 'px';
 
         return style;
     };
@@ -173,6 +179,12 @@ function courseOptionsCtrl($scope,$http) {
     $scope.plural = function(seats) {
         if (seats == 1) return '';
         else return 's';
+    };
+
+
+    // format core and lab attributes
+    $scope.formatCore = function(core) {
+        return js_pathways[core];
     };
 }
 courseOptionsCtrl.$inject = ['$scope','$http'];

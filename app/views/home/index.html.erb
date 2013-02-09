@@ -42,6 +42,9 @@
                     <br>
                     <span><strong>Class ID:</strong> <a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{section.id}}&term=<%= TERM %>" target="_blank">{{section.id}}</a></span>
                   </td>
+                  <td ng-show="section.cores.length > 0">
+                    <span ng-repeat="core in section.cores" class="label label-important">{{formatCore(core)}}</span>
+                  </td>
                 </tr>
                 </tbody>
               </table>
@@ -83,12 +86,13 @@
                   </div>
                 </div>
               </div>
-
-
-
             </div>
           <% end %>
         </div>
+      </div>
+
+      <div class="calendars">
+
       </div>
     </div>
   </div>
