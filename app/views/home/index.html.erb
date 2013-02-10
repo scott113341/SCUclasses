@@ -19,6 +19,7 @@
         <strong>OR</strong>
         <select>
           <option>Find by Core requirement</option>
+          <option>1</option>
           <option>2</option>
           <option>3</option>
           <option>4</option>
@@ -53,19 +54,14 @@
                     <br>
                     <span class="remaining">seat{{plural(section.seats)}} remaining</span>
                   </td>
-                  <!--<td class="units">-->
-                    <!--<span class="number">{{section.units}}</span>-->
-                    <!--<br>-->
-                    <!--<span class="units">unit{{plural(section.units)}}</span>-->
-                  <!--</td>-->
                   <td class="moreinfo">
-                    <a ng-click="console.log('sodfnds')" class="btn btn-mini">More Info</a>
+                    <a class="btn btn-mini" rel="popover" data-title="{{section.fullname}}" data-content="{{popoverInfo(section)}}">More Info</a>
                     <span ng-show="section.islab" class="label label-info">lab section</span>
                   </td>
                   <td class="info">
-                    <span><strong>Professor:</strong> <a class="course-evaluation" href="">{{section.instructors}}</a></span>
+                    <span><strong>Class ID:</strong> <a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{section.id}}&term=<%= TERM %>" title="Opens the CourseAvail listing for this section" target="_blank">{{section.id}}</a></span>
                     <br>
-                    <span><strong>Class ID:</strong> <a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{section.id}}&term=<%= TERM %>" target="_blank">{{section.id}}</a></span>
+                    <span><strong>Professor:</strong> <a class="course-evaluation" title="Opens course evaluations for this professor">{{section.instructors}}</a></span>
                   </td>
                 </tr>
                 </tbody>
@@ -121,6 +117,7 @@
 
 <script type="text/javascript">
   var js_courses = <%= raw @js_courses.to_json %>;
+  var js_term = <%= TERM %>;
 </script>
 
 <form id="course-evaluation-form" action="http://evaluations.scu.edu/" method="post" target="_blank">

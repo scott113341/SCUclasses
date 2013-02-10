@@ -13,8 +13,17 @@ $(function() {
     });
 
 
+    // more info popovers
+    $(document).popover({
+        selector: '[rel=popover]',
+        trigger: 'click',
+        html: true
+    });
+
+
     // course evaluation linkout
-    $(document).on('click', '.course-evaluation', function() {
+    $(document).on('click', '.course-evaluation', function(e) {
+        e.preventDefault();
         $('#course-evaluation-form').find('input').val($(this).text());
         $('#course-evaluation-form').submit();
     });
@@ -55,25 +64,15 @@ function intTimeToObject(time) {
 
 
 function courseOptionsCtrl($scope,$http) {
-    $scope.courses = {};
-    $scope.schedule = {};
+    // load from localstorage
+    $scope.courses = (a = JSON.parse(localStorage.getItem('courses'))) ? a : {};
+    $scope.schedules = (a = JSON.parse(localStorage.getItem('schedules'))) ? a : {};
 
 
-    console.log($scope.schedule);
-
-
-    // save calendar to localstorage
+    // save to localstorage
     $scope.$watch('courses', function(newvalue) {
         localStorage.setItem('courses', JSON.stringify($scope.courses));
     }, true);
-
-
-    // load calendar from localstorage
-
-
-
-
-
 
 
     // update model after typeahead submit
@@ -126,7 +125,7 @@ function courseOptionsCtrl($scope,$http) {
                 console.log($scope.courses);
             });
     };
-    $scope.addCourse('RSOC 9');
+//    $scope.addCourse('RSOC 9');
 //    $scope.addCourse('CHEM 13');
 
 
@@ -232,6 +231,28 @@ function courseOptionsCtrl($scope,$http) {
     $scope.expandArrow = function(course) {
         if (course.show) return 'icon-circle-arrow-up';
         else return 'icon-circle-arrow-down';
+    };
+
+
+    // popover content
+    $scope.popoverInfo = function(section) {
+        var popover = '<table><tbody>';
+        popover += '<tr><td>Class: </td><td>'+ section.name +'</td></tr>';
+        popover += '<tr><td>Name: </td><td>'+ section.fullname +'</td></tr>';
+        popover += '<tr><td>Course ID: </td><td><a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr='+ section.id +'&term='+ js_term +'" target="_blank">'+ section.id +'</a></td></tr>';
+        popover += '<tr><td>Professor: </td><td><a class="course-evaluation" href="">' + section.instructors + '</a></td></tr>';
+
+        popover += '<tr><td>Core fulfilled: </td><td>';
+        _.each(section.cores, function(core) {
+            popover += '<span class="label">' + js_pathways[core] + '</span> ';
+        });
+        popover += '</td></tr>';
+
+        popover += '<tr><td>Seats left: </td><td>'+ section.seats +'</td></tr>';
+        popover += '<tr><td>Units: </td><td>'+ section.units +'</td></tr>';
+        popover += '<tr><td>Description: </td><td>'+ section.description +'</td></tr>';
+        popover += '</tbody></table>';
+        return popover;
     };
 }
 courseOptionsCtrl.$inject = ['$scope','$http'];
