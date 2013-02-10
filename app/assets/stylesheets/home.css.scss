@@ -9,6 +9,11 @@
     min-width: 212px;
     text-align: center;
   }
+
+  .info {
+    background: #d3d3d3;
+    text-align: left;
+  }
 }
 
 
@@ -187,4 +192,7 @@ div.calendar {
       }
     }
   }
+}
+.spacer {
+  height: 506px;
 }

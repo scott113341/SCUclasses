@@ -6,9 +6,8 @@ $(function() {
         updater: function(item) {
             // trigger input submit
             setTimeout(function() {
-                var scope = angular.element(document).scope();
-                scope.$broadcast('submit');
-            },0);
+                angular.element(document).scope().$broadcast('submit');
+            }, 0);
             return item;
         }
     });
@@ -57,12 +56,15 @@ function intTimeToObject(time) {
 
 function courseOptionsCtrl($scope,$http) {
     $scope.courses = {};
+    $scope.schedule = {};
+
+
+    console.log($scope.schedule);
 
 
     // save calendar to localstorage
     $scope.$watch('courses', function(newvalue) {
         localStorage.setItem('courses', JSON.stringify($scope.courses));
-        console.log(localStorage.getItem('courses'));
     }, true);
 
 
@@ -124,8 +126,8 @@ function courseOptionsCtrl($scope,$http) {
                 console.log($scope.courses);
             });
     };
-    $scope.addCourse('RSOC 9');
-    $scope.addCourse('CHEM 13');
+//    $scope.addCourse('RSOC 9');
+//    $scope.addCourse('CHEM 13');
 
 
     // remove course on delete button click
@@ -228,8 +230,8 @@ function courseOptionsCtrl($scope,$http) {
 
     // class for expand arrow
     $scope.expandArrow = function(course) {
-        if (course.show) return 'up';
-        else return 'down';
+        if (course.show) return 'icon-circle-arrow-up';
+        else return 'icon-circle-arrow-down';
     };
 }
 courseOptionsCtrl.$inject = ['$scope','$http'];
