@@ -104,7 +104,7 @@ task :update_courses_details => :environment do
       end
 
       if 'Units (min/max)' == detail.css('th').text.strip
-        course.units = value.scan(/\d/)[0]
+        course.units = (units = value.scan(/\d/)[0]) ? units : 0;
       end
 
       if location = detail.css('td')[4]

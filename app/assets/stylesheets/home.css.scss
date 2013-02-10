@@ -1,3 +1,20 @@
+.top {
+  text-align: center;
+
+  input {
+    text-align: center;
+    width: 200px;
+  }
+  .dropdown-menu {
+    min-width: 212px;
+    text-align: center;
+  }
+}
+
+
+
+
+
 .course {
   background: #f7f7f7;
   border: 1px solid #ccc;
@@ -51,6 +68,10 @@
         .remaining {
           font-size: 10px;
         }
+      }
+
+      .moreinfo {
+        width: 70px;
       }
 
       .units {

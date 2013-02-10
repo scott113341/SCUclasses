@@ -51,6 +51,21 @@ function courseOptionsCtrl($scope,$http) {
     $scope.courses = {};
 
 
+    // save calendar to localstorage
+    $scope.$watch('courses', function(newvalue) {
+        localStorage.setItem('courses', JSON.stringify($scope.courses));
+        console.log(localStorage.getItem('courses'));
+    }, true);
+
+
+    // load calendar from localstorage
+
+
+
+
+
+
+
     // update model after typeahead submit
     $('[ng-model="addCourseText"]').change(function(event) {
         $scope.$apply(function(scope){
@@ -97,12 +112,17 @@ function courseOptionsCtrl($scope,$http) {
             });
     };
     $scope.addCourse('RSOC 9');
-//    $scope.addCourse('CHEM 33');
 
 
     // remove course on delete button click
     $scope.removeCourse = function(name) {
         delete $scope.courses[name];
+    };
+
+
+    // remove course on delete button click
+    $scope.clearCourses = function() {
+        $scope.courses = {};
     };
 
 

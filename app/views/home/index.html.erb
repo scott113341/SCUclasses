@@ -1,16 +1,24 @@
-<div class="container-fluid">
-  <div ng-controller="courseOptionsCtrl" class="row-fluid">
+<div ng-controller="courseOptionsCtrl" class="container-fluid">
+  <div class="row-fluid">
     <div class="span6">
-      <h4>Classes</h4>
+      <div class="top">
+        <h3>SCU&#8226;Classes is CourseAvail on steroids.</h3>
 
-      <input ng-model="addCourseText" type="text" placeholder='Type a class, like "RSOC 9"'/>
+        <p><strong>Create and save multiple schedules.  Search by class requirements.</strong></p>
+
+        <button ng-click="clearCourses()" class="btn btn-success btn-small"><i class="icon-ok-sign icon-white"></i> Save Schedule</button>
+        <button ng-click="clearCourses()" class="btn btn-danger btn-small"><i class="icon-remove-sign icon-white"></i> Clear Schedule</button>
+        <button ng-click="clearCourses()" class="btn btn-primary btn-small"><i class="icon-th-list icon-white"></i> View Schedules</button>
+        <br><br>
+        <input ng-model="addCourseText" type="text" placeholder='Type a class, like "RSOC 9"'/>
+      </div>
 
       <div ng-repeat="(name, course) in courses" class="course show-{{course.show}}">
         <div class="inner">
           <h4>
             <div class="btn-group">
-              <button ng-click="toggleExpand(course)" class="btn btn-small"><i class="icon-circle-arrow-{{expandArrow(course)}}"></i></button>
-              <button ng-click="removeCourse(name)" class="btn btn-small"><i class="icon-remove-sign"></i></button>
+              <button ng-click="toggleExpand(course)" class="btn btn-small" title="Expand/collapse this class"><i class="icon-circle-arrow-{{expandArrow(course)}}"></i></button>
+              <button ng-click="removeCourse(name)" class="btn btn-small" title="Remove this class"><i class="icon-remove-sign"></i></button>
             </div>
             {{name}} - {{course.0.fullname}}
           </h4>
@@ -32,19 +40,23 @@
                     <br>
                     <span class="remaining">seat{{plural(section.seats)}} remaining</span>
                   </td>
-                  <td class="units">
-                    <span class="number">{{section.units}}</span>
-                    <br>
-                    <span class="units">unit{{plural(section.units)}}</span>
+                  <!--<td class="units">-->
+                    <!--<span class="number">{{section.units}}</span>-->
+                    <!--<br>-->
+                    <!--<span class="units">unit{{plural(section.units)}}</span>-->
+                  <!--</td>-->
+                  <td class="moreinfo">
+                    <a ng-click="console.log('sodfnds')" class="btn btn-mini">More Info</a>
                   </td>
                   <td class="info">
                     <span><strong>Professor:</strong> <a class="course-evaluation" href="">{{section.instructors}}</a></span>
                     <br>
                     <span><strong>Class ID:</strong> <a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{section.id}}&term=<%= TERM %>" target="_blank">{{section.id}}</a></span>
                   </td>
-                  <td ng-show="section.cores.length > 0">
-                    <span ng-repeat="core in section.cores" class="label label-important">{{formatCore(core)}}</span>
-                  </td>
+
+                  <!--<td ng-show="section.cores.length > 0">-->
+                    <!--<span ng-repeat="core in section.cores" class="label label-important">{{formatCore(core)}}</span>-->
+                  <!--</td>-->
                 </tr>
                 </tbody>
               </table>
