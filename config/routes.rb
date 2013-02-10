@@ -1,5 +1,5 @@
 Coursemaster::Application.routes.draw do
-  match 'courses' => 'courses#courses'
+  match 'sections' => 'sections#sections'
 
   root :to => 'home#index'
   get 'home/index'

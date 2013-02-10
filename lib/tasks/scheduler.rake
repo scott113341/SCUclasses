@@ -1,20 +1,20 @@
-task :update_courses => :environment do
-  print(Course.count, " existing courses\n")
+task :update_sections => :environment do
+  print(Section.count, " existing sections\n")
 
-  # get course list
+  # get section list
   require 'rest-client'
   require 'nokogiri'
   res = RestClient.get('http://www.scu.edu/courseavail/search/index.cfm?fuseAction=search&StartRow=1&MaxRow=4000&acad_career=all&school=&subject=&catalog_num=&instructor_name1=&days1=&start_time1=&start_time2=23&header=yes&footer=yes&term=' + TERM)
   res = Nokogiri.HTML(res)
-  Course.delete_all
+  Section.delete_all
 
-  # parse, set, and save course list
-  res.css('#zebra tr').each do |course|
-    if course.css('td').length == 8
-      id = course.css('td')[1].text.to_i
+  # parse, set, and save section list
+  res.css('#zebra tr').each do |section|
+    if section.css('td').length == 8
+      id = section.css('td')[1].text.to_i
 
       # parse date and time
-      scheduletext = course.css('td')[4].text.strip
+      scheduletext = section.css('td')[4].text.strip
       if scheduletext == '-'
         days = ''
         time_start = 0
@@ -35,28 +35,28 @@ task :update_courses => :environment do
       end
 
       # create new or update existing
-      if Course.exists?(id)
-        thiscourse = Course.find(id)
+      if Section.exists?(id)
+        thissection = Section.find(id)
       else
-        thiscourse = Course.new
+        thissection = Section.new
       end
 
-      # set course properties
-      thiscourse.id = id
-      thiscourse.name = course.css('td')[0].text.strip
-      thiscourse.fullname = course.css('td')[3].text.strip
-      thiscourse.seats = course.css('td')[7].text.to_i
-      thiscourse.instructors = course.css('td')[6].text.strip
-      thiscourse.days = days
-      thiscourse.time_start = time_start
-      thiscourse.time_end = time_end
-      thiscourse.save
+      # set section properties
+      thissection.id = id
+      thissection.name = section.css('td')[0].text.strip
+      thissection.fullname = section.css('td')[3].text.strip
+      thissection.seats = section.css('td')[7].text.to_i
+      thissection.instructors = section.css('td')[6].text.strip
+      thissection.days = days
+      thissection.time_start = time_start
+      thissection.time_end = time_end
+      thissection.save
     end
   end
 
-  print(Course.count, " courses updated\n")
+  print(Section.count, " sections updated\n")
 
-  Rake::Task['update_courses_details'].execute
+  Rake::Task['update_sections_details'].execute
 end
 
 
@@ -79,42 +79,42 @@ end
 
 
 
-task :update_courses_details => :environment do
-  courses = Course.all
+task :update_sections_details => :environment do
+  sections = Section.all
   i = 1
 
-  courses.each do |course|
-    # get course details
+  sections.each do |section|
+    # get section details
     require 'rest-client'
     require 'nokogiri'
-    res = RestClient.get('http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr=' + course.id.to_s + '&term=' + TERM)
+    res = RestClient.get('http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr=' + section.id.to_s + '&term=' + TERM)
     res = Nokogiri.HTML(res)
 
-    # parse course details
+    # parse section details
     res.css('#page-primary tr').each do |detail|
       detail_name = detail.css('th').text.strip
       value = detail.css('td').text.strip
 
       if 'Description' == detail.css('th').text.strip
-        course.description = value
+        section.description = value
       end
 
       if detail_name.match(/2009 Core/)
-        course.core = value.scan(/\w{1}_\w+/).join(',')
+        section.core = value.scan(/\w{1}_\w+/).join(',')
       end
 
       if 'Units (min/max)' == detail.css('th').text.strip
-        course.units = (units = value.scan(/\d/)[0]) ? units : 0;
+        section.units = (units = value.scan(/\d/)[0]) ? units : 0;
       end
 
       if location = detail.css('td')[4]
-        course.location = location.text.strip
+        section.location = location.text.strip
       end
     end
 
-    course.save
+    section.save
 
-    print("course ",i," of ",courses.length,"\n")
+    print("section ",i," of ",sections.length,"\n")
     i += 1
   end
 end

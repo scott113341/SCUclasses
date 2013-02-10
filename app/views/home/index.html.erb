@@ -6,9 +6,8 @@
 
         <div class="info">
           <input ng-model="schedule.name" type="text">
+          {{schedule.name}}
         </div>
-
-        {{schedule.name}}
 
         <button ng-click="clearCourses()" class="btn btn-success btn-small"><i class="icon-ok-sign icon-white"></i> Save Schedule</button>
         <button ng-click="clearCourses()" class="btn btn-danger btn-small"><i class="icon-remove-sign icon-white"></i> Clear Schedule</button>
@@ -68,10 +67,6 @@
                     <br>
                     <span><strong>Class ID:</strong> <a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{section.id}}&term=<%= TERM %>" target="_blank">{{section.id}}</a></span>
                   </td>
-
-                  <!--<td ng-show="section.cores.length > 0">-->
-                    <!--<span ng-repeat="core in section.cores" class="label label-important">{{formatCore(core)}}</span>-->
-                  <!--</td>-->
                 </tr>
                 </tbody>
               </table>
@@ -102,7 +97,7 @@
 
               <div ng-repeat="(name, course) in courses">
                 <div ng-repeat="section in course">
-                  <div ng-show="showCourseBlock(section, '<%= d %>')" class="course-block" style="top:{{section.style.top}}; height:{{section.style.height}};">
+                  <div ng-show="showSectionBlock(section, '<%= d %>')" class="course-block" style="top:{{section.style.top}}; height:{{section.style.height}};">
                     <div class="name">{{section.name}}</div>
                     <div class="times">{{section.time_start.formatted}} - {{section.time_end.formatted}}</div>
                   </div>

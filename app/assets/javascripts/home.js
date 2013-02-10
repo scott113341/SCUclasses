@@ -98,35 +98,35 @@ function courseOptionsCtrl($scope,$http) {
     // add course details via ajax
     $scope.addCourse = function(name) {
         // request courses and add to model
-        $http.get('/courses?name=' + name).
-            success(function(courses) {
+        $http.get('/sections?name=' + name).
+            success(function(sections) {
                 // if not already added
                 if (!$scope.courses[name]) {
                     // add course
                     $scope.courses[name] = [];
                     $scope.courses[name].show = true;
-                    _.each(courses,function(course) {
+                    _.each(sections,function(section) {
                         // compute more values
-                        course.time_start = intTimeToObject(course.time_start);
-                        course.time_end = intTimeToObject(course.time_end);
-                        course.selected = false;
-                        course.style = $scope.courseCalendarStyle(course);
-                        course.cores = (course.core) ? course.core.split(',') : [];
+                        section.time_start = intTimeToObject(section.time_start);
+                        section.time_end = intTimeToObject(section.time_end);
+                        section.selected = false;
+                        section.style = $scope.sectionCalendarStyle(section);
+                        section.cores = (section.core) ? section.core.split(',') : [];
 
-                        if (/lab/gi.test(course.fullname)) {
-                            course.cores.push('LAB');
-                            course.islab = true;
+                        if (/lab/gi.test(section.fullname)) {
+                            section.cores.push('LAB');
+                            section.islab = true;
                         }
-                        else course.islab = false;
+                        else section.islab = false;
 
                         // add to courses
-                        $scope.courses[course.name].push(course);
+                        $scope.courses[section.name].push(section);
                     });
                 }
                 console.log($scope.courses);
             });
     };
-//    $scope.addCourse('RSOC 9');
+    $scope.addCourse('RSOC 9');
 //    $scope.addCourse('CHEM 13');
 
 
@@ -186,23 +186,23 @@ function courseOptionsCtrl($scope,$http) {
     };
 
 
-    // calculate course position on calendar
-    $scope.courseCalendarStyle = function(course) {
+    // calculate section position on calendar
+    $scope.sectionCalendarStyle = function(section) {
         var hourheight = 35;
         var style = {};
 
-        style.top = 25 + (hourheight * (course.time_start.hour24 - 7 + course.time_start.minute/60)) + 'px';
-        style.height = hourheight * (course.time_end.hour24 - course.time_start.hour24 + (course.time_end.minute - course.time_start.minute)/60) + 'px';
+        style.top = 25 + (hourheight * (section.time_start.hour24 - 7 + section.time_start.minute/60)) + 'px';
+        style.height = hourheight * (section.time_end.hour24 - section.time_start.hour24 + (section.time_end.minute - section.time_start.minute)/60) + 'px';
 
         return style;
     };
 
 
-    // tell if should show course on particular day
-    $scope.showCourseBlock = function(course, day) {
-        if (course.selected == false) return false;
+    // tell if should show section on particular day
+    $scope.showSectionBlock = function(section, day) {
+        if (section.selected == false) return false;
         else {
-            var days = course.days.split('');
+            var days = section.days.split('');
             if (_.contains(days,day)) return true;
             else return false;
         }
@@ -223,8 +223,8 @@ function courseOptionsCtrl($scope,$http) {
 
 
     // toggle showing of course sections
-    $scope.toggleExpand = function(course) {
-        course.show = !course.show;
+    $scope.toggleExpand = function(section) {
+        section.show = !section.show;
     };
 
 

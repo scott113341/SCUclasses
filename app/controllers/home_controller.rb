@@ -18,7 +18,7 @@ class HomeController < ApplicationController
 
     # javascript course list (array of course.name)
     @js_courses = []
-    Course.select('DISTINCT(name)').each do |course|
+    Section.select('DISTINCT(name)').each do |course|
       @js_courses.push(course.name)
     end
     @js_courses.sort! {|a,b| /[0-9]+/.match(a).to_s.to_i <=> /[0-9]+/.match(b).to_s.to_i}

@@ -1,6 +1,6 @@
-class CreateCourses < ActiveRecord::Migration
+class CreateSection < ActiveRecord::Migration
   def change
-    create_table :courses do |t|
+    create_table :sections do |t|
       t.string :name
       t.string :fullname
       t.string :instructors
