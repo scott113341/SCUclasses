@@ -15,9 +15,17 @@ $(function() {
 
 
     // course evaluation linkout
-    $(document).on('click','.course-evaluation',function() {
+    $(document).on('click', '.course-evaluation', function() {
         $('#course-evaluation-form').find('input').val($(this).text());
         $('#course-evaluation-form').submit();
+    });
+
+
+    // scroll to top
+    $(document).on('click', 'p.scroll', function() {
+        $('html, body').animate({
+            scrollTop: 0
+        }, 500);
     });
 });
 
@@ -102,7 +110,12 @@ function courseOptionsCtrl($scope,$http) {
                         course.selected = false;
                         course.style = $scope.courseCalendarStyle(course);
                         course.cores = (course.core) ? course.core.split(',') : [];
-                        if (/lab/gi.test(course.fullname)) course.cores.push('LAB');
+
+                        if (/lab/gi.test(course.fullname)) {
+                            course.cores.push('LAB');
+                            course.islab = true;
+                        }
+                        else course.islab = false;
 
                         // add to courses
                         $scope.courses[course.name].push(course);
@@ -112,6 +125,7 @@ function courseOptionsCtrl($scope,$http) {
             });
     };
     $scope.addCourse('RSOC 9');
+    $scope.addCourse('CHEM 13');
 
 
     // remove course on delete button click

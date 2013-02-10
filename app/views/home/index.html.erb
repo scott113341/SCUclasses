@@ -2,15 +2,25 @@
   <div class="row-fluid">
     <div class="span6">
       <div class="top">
-        <h3>SCU&#8226;Classes is CourseAvail on steroids.</h3>
+        <h3>Welcome to SCU&#8226;Classes, CourseAvail on steroids.</h3>
 
-        <p><strong>Create and save multiple schedules.  Search by class requirements.</strong></p>
+        <!--<p><strong>Create and save multiple schedules.  Search by class requirements.</strong></p>-->
 
         <button ng-click="clearCourses()" class="btn btn-success btn-small"><i class="icon-ok-sign icon-white"></i> Save Schedule</button>
         <button ng-click="clearCourses()" class="btn btn-danger btn-small"><i class="icon-remove-sign icon-white"></i> Clear Schedule</button>
         <button ng-click="clearCourses()" class="btn btn-primary btn-small"><i class="icon-th-list icon-white"></i> View Schedules</button>
+
         <br><br>
+
         <input ng-model="addCourseText" type="text" placeholder='Type a class, like "RSOC 9"'/>
+        <strong>OR</strong>
+        <select>
+          <option>Find by Core requirement</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
       </div>
 
       <div ng-repeat="(name, course) in courses" class="course show-{{course.show}}">
@@ -47,6 +57,7 @@
                   <!--</td>-->
                   <td class="moreinfo">
                     <a ng-click="console.log('sodfnds')" class="btn btn-mini">More Info</a>
+                    <span ng-show="section.islab" class="label label-info">lab section</span>
                   </td>
                   <td class="info">
                     <span><strong>Professor:</strong> <a class="course-evaluation" href="">{{section.instructors}}</a></span>
@@ -62,14 +73,9 @@
               </table>
             </label>
           </div>
+          <p class="scroll"><a><i class="icon-arrow-up"></i>Scroll to top</a></p>
         </div>
       </div>
-
-      <ul>
-        <div ng-repeat="(name, course) in courses">
-          <li ng-repeat="section in course" ng-show="section.selected">{{section.id}}</li>
-        </div>
-      </ul>
     </div>
 
 
@@ -101,10 +107,6 @@
             </div>
           <% end %>
         </div>
-      </div>
-
-      <div class="calendars">
-
       </div>
     </div>
   </div>

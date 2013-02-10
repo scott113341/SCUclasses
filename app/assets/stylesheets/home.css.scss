@@ -105,6 +105,11 @@
     .section.validchoice-false:hover label {
       cursor: not-allowed;
     }
+
+    p.scroll {
+      text-align: center;
+      margin: 0;
+    }
   }
 }
 .course.show-false .inner {
@@ -121,6 +126,8 @@
 
 div.calendar {
   $hourheight: 35px;
+  position: fixed;
+  width: 47.4%;
 
   .days {
     #S, #U {
