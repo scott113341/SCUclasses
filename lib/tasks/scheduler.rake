@@ -15,7 +15,6 @@ task :update_courses => :environment do
 
       # parse date and time
       scheduletext = course.css('td')[4].text.strip
-      print(id,scheduletext,"\n")
       if scheduletext == '-'
         days = ''
         time_start = 0

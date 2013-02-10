@@ -79,6 +79,7 @@ function courseOptionsCtrl($scope,$http) {
                 if (!$scope.courses[name]) {
                     // add course
                     $scope.courses[name] = [];
+                    $scope.courses[name].show = true;
                     _.each(courses,function(course) {
                         // compute more values
                         course.time_start = intTimeToObject(course.time_start);
@@ -86,10 +87,7 @@ function courseOptionsCtrl($scope,$http) {
                         course.selected = false;
                         course.style = $scope.courseCalendarStyle(course);
                         course.cores = (course.core) ? course.core.split(',') : [];
-                        if (/lab/gi.test(course.fullname)) {
-                            course.cores.push('LAB');
-                            console.log(course.id, 'LAB');
-                        }
+                        if (/lab/gi.test(course.fullname)) course.cores.push('LAB');
 
                         // add to courses
                         $scope.courses[course.name].push(course);
@@ -99,7 +97,7 @@ function courseOptionsCtrl($scope,$http) {
             });
     };
     $scope.addCourse('RSOC 9');
-    $scope.addCourse('CHEM 33');
+//    $scope.addCourse('CHEM 33');
 
 
     // remove course on delete button click
@@ -185,6 +183,19 @@ function courseOptionsCtrl($scope,$http) {
     // format core and lab attributes
     $scope.formatCore = function(core) {
         return js_pathways[core];
+    };
+
+
+    // toggle showing of course sections
+    $scope.toggleExpand = function(course) {
+        course.show = !course.show;
+    };
+
+
+    // class for expand arrow
+    $scope.expandArrow = function(course) {
+        if (course.show) return 'up';
+        else return 'down';
     };
 }
 courseOptionsCtrl.$inject = ['$scope','$http'];

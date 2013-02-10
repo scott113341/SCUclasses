@@ -1,11 +1,10 @@
 .course {
   background: #f7f7f7;
-  border-left: 2px solid black;
+  border: 1px solid #ccc;
+  border-left: 3px solid black;
   margin-bottom: 15px;
 
   .inner {
-    border: 1px solid #ccc;
-    border-left: none;
     padding: 0 10px 10px;
     overflow: hidden;
 
@@ -87,9 +86,12 @@
     }
   }
 }
-.course.collapsed-true .inner {
-  height: 40px;
+.course.show-false .inner {
+  height: 35px;
   overflow: hidden;
+}
+.course.added-true {
+  border-left-color: green;
 }
 
 

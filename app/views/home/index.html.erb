@@ -5,12 +5,12 @@
 
       <input ng-model="addCourseText" type="text" placeholder='Type a class, like "RSOC 9"'/>
 
-      <div ng-repeat="(name, course) in courses" class="course collapsed-{{course.show}}">
+      <div ng-repeat="(name, course) in courses" class="course show-{{course.show}}">
         <div class="inner">
           <h4>
             <div class="btn-group">
-              <button class="btn"><i class="icon-circle-arrow-up"></i></button>
-              <button class="btn btn-danger" ng-click="removeCourse(name)"><i class="icon-remove-sign icon-white"></i></button>
+              <button ng-click="toggleExpand(course)" class="btn btn-small"><i class="icon-circle-arrow-{{expandArrow(course)}}"></i></button>
+              <button ng-click="removeCourse(name)" class="btn btn-small"><i class="icon-remove-sign"></i></button>
             </div>
             {{name}} - {{course.0.fullname}}
           </h4>
