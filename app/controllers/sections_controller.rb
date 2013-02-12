@@ -1,7 +1,9 @@
 class SectionsController < ApplicationController
   def sections
     if params[:name]
-      courses = Section.where('name = ?', params[:name]).order('time_start')
+      courses = Section.where('name = ? AND seats > 0', params[:name]).order('time_start')
+      courses_noseats = Section.where('name = ? AND seats = 0', params[:name]).order('time_start')
+      courses = (courses + courses_noseats)
     elsif params[:id]
       courses = Section.find(params[:id])
     elsif params[:core]

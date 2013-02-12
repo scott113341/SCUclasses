@@ -6,7 +6,6 @@ task :update_sections => :environment do
   require 'nokogiri'
   res = RestClient.get('http://www.scu.edu/courseavail/search/index.cfm?fuseAction=search&StartRow=1&MaxRow=4000&acad_career=all&school=&subject=&catalog_num=&instructor_name1=&days1=&start_time1=&start_time2=23&header=yes&footer=yes&term=' + TERM)
   res = Nokogiri.HTML(res)
-  Section.delete_all
 
   # parse, set, and save section list
   res.css('#zebra tr').each do |section|
@@ -51,14 +50,19 @@ task :update_sections => :environment do
       thissection.time_start = time_start
       thissection.time_end = time_end
       thissection.save
+      thissection.touch
     end
   end
+
+  # remove sections that don't exist anymore
+  todelete = Section.where('updated_at < ?', Time.now - 60*1) # 100 mintue grace period
+  print(todelete.length, " sections deleted\n")
+  todelete.destroy_all
 
   print(Section.count, " sections updated\n")
 
   Rake::Task['update_sections_details'].execute
 end
-
 
 def parseTime(time)
   time = /(\d{2}):(\d{2})\s([APM]{2})/.match(time)
@@ -69,11 +73,6 @@ def parseTime(time)
   time = hours + minutes + ((ampm=='PM' && hours<1200) ? 1200 : 0)
   return time
 end
-
-
-
-
-
 
 
 
@@ -114,7 +113,11 @@ task :update_sections_details => :environment do
 
     section.save
 
-    print("section ",i," of ",sections.length,"\n")
+    if i%100 == 0
+      print("added details for section ",i," of ",sections.length,"\n")
+    end
     i += 1
   end
+
+  print("done!\n")
 end

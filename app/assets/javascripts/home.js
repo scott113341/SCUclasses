@@ -228,13 +228,22 @@ function courseOptionsCtrl($scope,$http) {
     };
 
 
+    // show welcome message
+    $scope.hideWelcomeMessage = function() {
+        if (_.size($scope.courses)) return true;
+        else return false;
+    };
+
+
     // popover content
     $scope.popoverInfo = function(section) {
         var popover = '<table><tbody>';
         popover += '<tr><td>Class: </td><td>'+ section.name +'</td></tr>';
         popover += '<tr><td>Name: </td><td>'+ section.fullname +'</td></tr>';
-        popover += '<tr><td>Course ID: </td><td><a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr='+ section.id +'&term='+ js_term +'" target="_blank">'+ section.id +'</a></td></tr>';
-        popover += '<tr><td>Professor: </td><td><a class="course-evaluation" href="">' + section.instructors + '</a></td></tr>';
+        popover += '<tr><td>Course ID: </td><td>'+ section.id +'</td></tr>';
+//        popover += '<tr><td>Course ID: </td><td><a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr='+ section.id +'&term='+ js_term +'" target="_blank">'+ section.id +'</a></td></tr>';
+        popover += '<tr><td>Professor: </td><td>' + section.instructors + '</td></tr>';
+//        popover += '<tr><td>Professor: </td><td><a class="course-evaluation" href="">' + section.instructors + '</a></td></tr>';
 
         popover += '<tr><td>Core fulfilled: </td><td>';
         _.each(section.cores, function(core) {

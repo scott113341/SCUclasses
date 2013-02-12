@@ -22,5 +22,9 @@ class HomeController < ApplicationController
       @js_courses.push(course.name)
     end
     @js_courses.sort! {|a,b| /[0-9]+/.match(a).to_s.to_i <=> /[0-9]+/.match(b).to_s.to_i}
+
+    # last updated
+    @lastupdated = ((Time.now - Section.first.updated_at) / 60).ceil
+    @lastupdated = @lastupdated.to_s + ' ' + 'minute'.pluralize(@lastupdated)
   end
 end
