@@ -33,7 +33,7 @@
 
         <div class="welcome hide-{{hideWelcomeMessage()}}">
           <h3>Welcome to SCU&#8226;Classes, CourseAvail on steroids.</h3>
-          <p>Last updated <%= @lastupdated %> ago</p>
+          <p>Last updated {{lastupdated}} minute{{plural(lastupdated)}} ago</p>
         </div>
       </div>
 
@@ -128,6 +128,7 @@
 <script type="text/javascript">
     var js_courses = <%= raw @js_courses.to_json %>;
     var js_term = <%= TERM %>;
+    var js_lastupdated = <%= @lastupdated %>;
 </script>
 
 <form id="course-evaluation-form" action="http://evaluations.scu.edu/" method="post" target="_blank">

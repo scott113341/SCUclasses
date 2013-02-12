@@ -55,7 +55,7 @@ task :update_sections => :environment do
   end
 
   # remove sections that don't exist anymore
-  todelete = Section.where('updated_at < ?', Time.now - 60*1) # 100 mintue grace period
+  todelete = Section.where('updated_at < ?', Time.now - 100*60) # 100 mintue grace period
   print(todelete.length, " sections deleted\n")
   todelete.destroy_all
 

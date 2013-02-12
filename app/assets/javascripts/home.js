@@ -35,6 +35,10 @@ $(function() {
             scrollTop: 0
         }, 500);
     });
+
+
+    // last updated counter
+
 });
 
 
@@ -63,7 +67,7 @@ function intTimeToObject(time) {
 
 
 
-function courseOptionsCtrl($scope,$http) {
+function courseOptionsCtrl($scope,$http,$timeout) {
     $scope.courses = {};
     $scope.core_all = js_core_all;
     $scope.core = js_core;
@@ -257,5 +261,14 @@ function courseOptionsCtrl($scope,$http) {
         popover += '</tbody></table>';
         return popover;
     };
+
+
+    // last updated
+    $scope.lastupdated = js_lastupdated - 1;
+    $scope.incrementMinute = function() {
+        $scope.lastupdated++;
+        $timeout($scope.incrementMinute, 60*1000);
+    };
+    $scope.incrementMinute();
 }
-courseOptionsCtrl.$inject = ['$scope','$http'];
+courseOptionsCtrl.$inject = ['$scope','$http','$timeout'];

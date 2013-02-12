@@ -25,6 +25,6 @@ class HomeController < ApplicationController
 
     # last updated
     @lastupdated = ((Time.now - Section.first.updated_at) / 60).ceil
-    @lastupdated = @lastupdated.to_s + ' ' + 'minute'.pluralize(@lastupdated)
+    #@lastupdated = @lastupdated.to_s + ' ' + 'minute'.pluralize(@lastupdated)
   end
 end
