@@ -16,7 +16,7 @@ $(function() {
     // more info popovers
     $(document).popover({
         selector: '[rel=popover]',
-        trigger: 'click',
+        trigger: 'hover',
         html: true
     });
 
@@ -64,15 +64,9 @@ function intTimeToObject(time) {
 
 
 function courseOptionsCtrl($scope,$http) {
-    // load from localstorage
-    $scope.courses = (a = JSON.parse(localStorage.getItem('courses'))) ? a : {};
-    $scope.schedules = (a = JSON.parse(localStorage.getItem('schedules'))) ? a : {};
-
-
-    // save to localstorage
-    $scope.$watch('courses', function(newvalue) {
-        localStorage.setItem('courses', JSON.stringify($scope.courses));
-    }, true);
+    $scope.courses = {};
+    $scope.core_all = js_core_all;
+    $scope.core = js_core;
 
 
     // update model after typeahead submit
@@ -217,7 +211,7 @@ function courseOptionsCtrl($scope,$http) {
 
     // format core and lab attributes
     $scope.formatCore = function(core) {
-        return js_pathways[core];
+        return js_core[core];
     };
 
 
@@ -244,7 +238,7 @@ function courseOptionsCtrl($scope,$http) {
 
         popover += '<tr><td>Core fulfilled: </td><td>';
         _.each(section.cores, function(core) {
-            popover += '<span class="label">' + js_pathways[core] + '</span> ';
+            popover += '<span class="label">' + js_core_all[core] + '</span> ';
         });
         popover += '</td></tr>';
 

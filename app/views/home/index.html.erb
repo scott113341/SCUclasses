@@ -4,14 +4,9 @@
       <div class="top">
         <h3>Welcome to SCU&#8226;Classes, CourseAvail on steroids.</h3>
 
-        <div class="info">
-          <input ng-model="schedule.name" type="text">
-          {{schedule.name}}
-        </div>
-
         <button ng-click="clearCourses()" class="btn btn-success btn-small"><i class="icon-ok-sign icon-white"></i> Save Schedule</button>
         <button ng-click="clearCourses()" class="btn btn-danger btn-small"><i class="icon-remove-sign icon-white"></i> Clear Schedule</button>
-        <button ng-click="clearCourses()" class="btn btn-primary btn-small"><i class="icon-th-list icon-white"></i> View Schedules</button>
+        <button ng-click="clearCourses()" class="btn btn-primary btn-small"><i class="icon-th-list icon-white"></i> Schedule Info</button>
 
         <br><br>
 
@@ -19,11 +14,7 @@
         <strong>OR</strong>
         <select>
           <option>Find by Core requirement</option>
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
-          <option>4</option>
-          <option>5</option>
+          <option ng-repeat="(core, name) in core" value="{{core}}">{{name}}</option>
         </select>
       </div>
 
@@ -116,8 +107,8 @@
 
 
 <script type="text/javascript">
-  var js_courses = <%= raw @js_courses.to_json %>;
-  var js_term = <%= TERM %>;
+    var js_courses = <%= raw @js_courses.to_json %>;
+    var js_term = <%= TERM %>;
 </script>
 
 <form id="course-evaluation-form" action="http://evaluations.scu.edu/" method="post" target="_blank">
