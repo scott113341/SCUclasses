@@ -37,16 +37,16 @@
         </div>
       </div>
 
-      <div ng-repeat="(name, course) in courses" class="course course-{{course.number}} show-{{course.show}}">
+      <div ng-repeat="course in courses | orderBy:'number':true" class="course course-{{course.number}} show-{{course.show}}">
         <div class="inner">
           <h4>
             <div class="btn-group">
               <button ng-click="toggleExpand(course)" class="btn btn-small" title="Expand/collapse this class"><i class="{{expandArrow(course)}}"></i></button>
-              <button ng-click="removeCourse(name)" class="btn btn-small" title="Remove this class"><i class="icon-remove-sign"></i></button>
+              <button ng-click="removeCourse(course)" class="btn btn-small" title="Remove this class"><i class="icon-remove-sign"></i></button>
             </div>
-            {{name}} - {{course.0.fullname}}
+            {{course.name}} - {{course.sections.0.fullname}}
           </h4>
-          <div ng-repeat="section in course" class="section selected-{{section.selected}} validchoice-{{isValidChoice(section)}}">
+          <div ng-repeat="section in course.sections" class="section selected-{{section.selected}} validchoice-{{isValidChoice(section)}}">
             <label for="section-{{section.id}}">
               <table>
                 <tbody>
@@ -101,8 +101,8 @@
               <% end %>
               <div class="hour last"></div>
 
-              <div ng-repeat="(name, course) in courses">
-                <div ng-repeat="section in course">
+              <div ng-repeat="course in courses">
+                <div ng-repeat="section in course.sections">
                   <div ng-show="showSectionBlock(section, '<%= d %>')" class="course-block course-{{course.number}}" style="top:{{section.style.top}}; height:{{section.style.height}};">
                     <div class="name">{{section.name}}</div>
                     <div class="times">{{section.time_start.formatted}} - {{section.time_end.formatted}}</div>

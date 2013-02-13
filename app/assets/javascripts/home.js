@@ -35,10 +35,6 @@ $(function() {
             scrollTop: 0
         }, 500);
     });
-
-
-    // last updated counter
-
 });
 
 
@@ -63,12 +59,20 @@ function intTimeToObject(time) {
     return time;
 }
 
+Array.prototype.remove = function(from, to) {
+    var rest = this.slice((to || from) + 1 || this.length);
+    this.length = from < 0 ? this.length + from : from;
+    return this.push.apply(this, rest);
+};
+
+
+
 
 
 
 
 function courseOptionsCtrl($scope,$http,$timeout) {
-    $scope.courses = {};
+    $scope.courses = [];
     $scope.core_all = js_core_all;
     $scope.core = js_core;
 
@@ -85,7 +89,7 @@ function courseOptionsCtrl($scope,$http,$timeout) {
     $scope.$on('submit', function(e,a) {
         // extract course name from input and clear
         var name = $scope.addCourseText;
-        $('[ng-model="addCourseText"]').val('');
+        $('[ng-model="addCourseText"]').val('').focus();
 
         // add course
         $scope.addCourse(name);
@@ -101,12 +105,18 @@ function courseOptionsCtrl($scope,$http,$timeout) {
         $http.get('/sections?name=' + name).
             success(function(sections) {
                 // if not already added
-                if (!$scope.courses[name]) {
+                if (_.where($scope.courses, {name: name}) == false) {
                     // add course
-                    $scope.courses[name] = [];
-                    $scope.courses[name].show = true;
-                    $scope.courses[name].number = _.size($scope.courses);
+                    var thiscourse = {};
+                    $scope.courses.push(thiscourse);
 
+                    // set course details
+                    thiscourse.name = name;
+                    thiscourse.show = true;
+                    thiscourse.number = _.size($scope.courses) - 1;
+                    thiscourse.sections = [];
+
+                    // add sections
                     _.each(sections,function(section) {
                         // compute more values
                         section.time_start = intTimeToObject(section.time_start);
@@ -122,24 +132,34 @@ function courseOptionsCtrl($scope,$http,$timeout) {
                         else section.islab = false;
 
                         // add to courses
-                        $scope.courses[section.name].push(section);
+                        thiscourse.sections.push(section);
                     });
                 }
                 console.log($scope.courses);
             });
+
+        // check for lab section
+        var lab = _.filter(js_courses, function(course) {
+            return (course.indexOf(name + 'L') != -1);
+        });
+        if (lab[0]) $scope.addCourse(lab[0]);
     };
-//    $scope.addCourse('RSOC 9');
 
 
     // remove course on delete button click
-    $scope.removeCourse = function(name) {
-        delete $scope.courses[name];
+    $scope.removeCourse = function(course) {
+        a = course.number;
+        $scope.courses.remove(a);
+        _.each($scope.courses, function(course, b) {
+            console.log(course,b);
+            if (b >= a) course.number += -1;
+        });
     };
 
 
     // clear all courses on clear schedule click
     $scope.clearCourses = function() {
-        $scope.courses = {};
+        $scope.courses = [];
         $('input[ng-model=addCourseText]').val('').select();
     };
 
@@ -150,7 +170,7 @@ function courseOptionsCtrl($scope,$http,$timeout) {
         else {
             var valid = true;
             _.each($scope.courses, function(course, name) { // for each course
-                _.each(course, function(section2) { // for each section2
+                _.each(course.sections, function(section2) { // for each section2
                     if (section2.selected == true) { // if section2 is selected
                         // don't share a common day
                         if (_.intersection(section.days.split(''), section2.days.split('')).length == 0) {

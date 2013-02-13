@@ -18,13 +18,12 @@ class HomeController < ApplicationController
 
     # javascript course list (array of course.name)
     @js_courses = []
-    Section.select('DISTINCT(name), fullname').each do |course|
+    Section.select('fullname, name').group('name').each do |course|
       @js_courses.push(course.name + ' - ' + course.fullname)
     end
     @js_courses.sort! {|a,b| /[0-9]+/.match(a).to_s.to_i <=> /[0-9]+/.match(b).to_s.to_i}
 
     # last updated
     @lastupdated = ((Time.now - Section.first.updated_at) / 60).ceil
-    #@lastupdated = @lastupdated.to_s + ' ' + 'minute'.pluralize(@lastupdated)
   end
 end
