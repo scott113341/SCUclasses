@@ -2,7 +2,7 @@ $(function() {
     // course typeahead
     $('[ng-model="addCourseText"]').typeahead({
         source: js_courses,
-        items: 10,
+        items: 25,
         updater: function(item) {
             // trigger input submit
             setTimeout(function() {
@@ -94,6 +94,9 @@ function courseOptionsCtrl($scope,$http,$timeout) {
 
     // add course details via ajax
     $scope.addCourse = function(name) {
+        // parse name
+        name = name.split(' - ')[0];
+
         // request courses and add to model
         $http.get('/sections?name=' + name).
             success(function(sections) {
@@ -102,6 +105,8 @@ function courseOptionsCtrl($scope,$http,$timeout) {
                     // add course
                     $scope.courses[name] = [];
                     $scope.courses[name].show = true;
+                    $scope.courses[name].number = _.size($scope.courses);
+
                     _.each(sections,function(section) {
                         // compute more values
                         section.time_start = intTimeToObject(section.time_start);
@@ -124,7 +129,6 @@ function courseOptionsCtrl($scope,$http,$timeout) {
             });
     };
 //    $scope.addCourse('RSOC 9');
-//    $scope.addCourse('CHEM 13');
 
 
     // remove course on delete button click
@@ -133,9 +137,10 @@ function courseOptionsCtrl($scope,$http,$timeout) {
     };
 
 
-    // remove course on delete button click
+    // clear all courses on clear schedule click
     $scope.clearCourses = function() {
         $scope.courses = {};
+        $('input[ng-model=addCourseText]').val('').select();
     };
 
 

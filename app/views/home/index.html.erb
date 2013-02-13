@@ -24,7 +24,7 @@
 
         <br><br>
 
-        <input ng-model="addCourseText" type="text" placeholder='Type a class, like "RSOC 9"'/>
+        <input ng-model="addCourseText" type="text" placeholder='Type a class, like "RSOC 9"' autofocus="autofocus"/>
         <!--<strong>OR</strong>-->
         <!--<select>-->
           <!--<option>Find by Core requirement</option>-->
@@ -37,7 +37,7 @@
         </div>
       </div>
 
-      <div ng-repeat="(name, course) in courses" class="course show-{{course.show}}">
+      <div ng-repeat="(name, course) in courses" class="course course-{{course.number}} show-{{course.show}}">
         <div class="inner">
           <h4>
             <div class="btn-group">
@@ -103,7 +103,7 @@
 
               <div ng-repeat="(name, course) in courses">
                 <div ng-repeat="section in course">
-                  <div ng-show="showSectionBlock(section, '<%= d %>')" class="course-block" style="top:{{section.style.top}}; height:{{section.style.height}};">
+                  <div ng-show="showSectionBlock(section, '<%= d %>')" class="course-block course-{{course.number}}" style="top:{{section.style.top}}; height:{{section.style.height}};">
                     <div class="name">{{section.name}}</div>
                     <div class="times">{{section.time_start.formatted}} - {{section.time_end.formatted}}</div>
                   </div>

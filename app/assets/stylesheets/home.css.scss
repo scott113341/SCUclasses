@@ -2,12 +2,12 @@
   text-align: center;
 
   input {
-    text-align: center;
+    text-align: left;
     width: 200px;
   }
   .dropdown-menu {
     min-width: 212px;
-    text-align: center;
+    text-align: left;
   }
 
   .welcome {
@@ -32,7 +32,6 @@
 .course {
   background: #f7f7f7;
   border: 1px solid #ccc;
-  border-left: 3px solid black;
   margin-bottom: 15px;
 
   .inner {
@@ -61,7 +60,8 @@
       }
 
       .select {
-        display: none;
+        //display: none;
+        width: 20px;
       }
 
       .schedule {
@@ -120,14 +120,6 @@
       }
     }
 
-    .section:hover, .section.selected-true {
-      background: #C6FFC4;
-    }
-
-    .section.selected-true {
-      border-left: 5px solid green;
-    }
-
     .section.validchoice-false {
       color: gray;
       background: #a9a9a9;
@@ -145,9 +137,6 @@
 .course.show-false .inner {
   height: 35px;
   overflow: hidden;
-}
-.course.added-true {
-  border-left-color: green;
 }
 
 
@@ -189,7 +178,6 @@ div.calendar {
       width: ((100% - 4) / 5);
 
       .course-block {
-        background: #42D692;
         position: absolute;
         width: 92%;
         margin: 0 2%;
@@ -220,4 +208,49 @@ div.calendar {
 }
 .spacer {
   height: 506px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// default/fallback colors
+.course {
+  border-left: 3px solid green;
+  .section.selected-true {
+    border-left: 3px solid green;
+  }
+  .section:hover, .section.selected-true {
+    background: #C6FFC4;
+  }
+}
+.course-block {
+  background: #42D692;
+}
+
+
+// real colors
+$colors:#8AB5E3 #8BCB70 #E3A345 #DD8DDD #BCCC90 #E79586 #76D4CB #CDD048 #6BD98B #CFBDC4;
+@for $i from 1 through length($colors) {
+  $color: nth($colors, $i);
+  .course-#{$i} {
+    border-left: 3px solid $color;
+    .section.selected-true {
+      border-left: 3px solid $color !important;
+    }
+    .section:hover, .section.selected-true {
+      background: lighten($color, 20%);
+    }
+  }
+  .course-block.course-#{$i} {
+    background: $color !important;
+    border: none;
+  }
 }
