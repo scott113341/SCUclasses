@@ -4,7 +4,6 @@ gem 'rails', '3.2.11'
 gem 'thin'
 
 gem 'jquery-rails'
-gem 'underscore-rails'
 gem 'bootstrap-sass'
 
 gem 'nokogiri'

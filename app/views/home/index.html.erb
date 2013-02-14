@@ -25,11 +25,10 @@
         <br><br>
 
         <input ng-model="addCourseText" type="text" placeholder='Type a class, like "RSOC 9"' autofocus="autofocus"/>
-        <!--<strong>OR</strong>-->
-        <!--<select>-->
-          <!--<option>Find by Core requirement</option>-->
-          <!--<option ng-repeat="(core, name) in core" value="{{core}}">{{name}}</option>-->
-        <!--</select>-->
+        <strong>OR</strong>
+        <select ng-change="addCourseCore()" ng-model="selectedcore" ng-options="value.name as value.fullname for value in core">
+          <!--<option ng-select="addCourseCore(core)" ng-repeat="corecourse in core" value="{{corecourse.name}}">{{corecourse.fullname}}</option>-->
+        </select>
 
         <div class="welcome hide-{{hideWelcomeMessage()}}">
           <h3>Welcome to SCU&#8226;Classes, CourseAvail on steroids.</h3>
@@ -44,7 +43,7 @@
               <button ng-click="toggleExpand(course)" class="btn btn-small" title="Expand/collapse this class"><i class="{{expandArrow(course)}}"></i></button>
               <button ng-click="removeCourse(course)" class="btn btn-small" title="Remove this class"><i class="icon-remove-sign"></i></button>
             </div>
-            {{course.name}} - {{course.sections.0.fullname}}
+            {{course.name}}
           </h4>
           <div ng-repeat="section in course.sections" class="section selected-{{section.selected}} validchoice-{{isValidChoice(section)}}">
             <label for="section-{{section.id}}">
@@ -69,6 +68,8 @@
                     <span ng-show="section.islab" class="label label-info">lab section</span>
                   </td>
                   <td class="info">
+                    <span><strong>Class Name:</strong> {{section.fullname}}</span>
+                    <br>
                     <span><strong>Class ID:</strong> <a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{section.id}}&term=<%= TERM %>" title="Opens the CourseAvail listing for this section" target="_blank">{{section.id}}</a></span>
                     <br>
                     <span><strong>Professor:</strong> <a class="course-evaluation" title="Opens course evaluations for this professor">{{section.instructors}}</a></span>

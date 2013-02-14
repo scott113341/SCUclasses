@@ -24,8 +24,7 @@ $(function() {
     // course evaluation linkout
     $(document).on('click', '.course-evaluation', function(e) {
         e.preventDefault();
-        $('#course-evaluation-form').find('input').val($(this).text());
-        $('#course-evaluation-form').submit();
+        $('#course-evaluation-form').find('input').val($(this).text()).submit();
     });
 
 
@@ -46,7 +45,7 @@ function pad(time) {
 
 // convert stored time to object
 function intTimeToObject(time) {
-    var time = {
+    time = {
         time: time,
         hour24: Math.floor(time / 100)
     };
@@ -64,8 +63,6 @@ Array.prototype.remove = function(from, to) {
     this.length = from < 0 ? this.length + from : from;
     return this.push.apply(this, rest);
 };
-
-
 
 
 
@@ -92,17 +89,19 @@ function courseOptionsCtrl($scope,$http,$timeout) {
         $('[ng-model="addCourseText"]').val('').focus();
 
         // add course
-        $scope.addCourse(name);
+        $scope.addCourse(name, false);
     });
 
 
-    // add course details via ajax
-    $scope.addCourse = function(name) {
+    // add course by name via ajax
+    $scope.addCourse = function(name, core) {
         // parse name
-        name = name.split(' - ')[0];
+        if (name) name = name.split(' - ')[0];
 
         // request courses and add to model
-        $http.get('/sections?name=' + name).
+        var req = '?' + ((name) ? 'name='+name : 'core='+core);
+
+        $http.get('/sections' + req).
             success(function(sections) {
                 // if not already added
                 if (_.where($scope.courses, {name: name}) == false) {
@@ -111,7 +110,7 @@ function courseOptionsCtrl($scope,$http,$timeout) {
                     $scope.courses.push(thiscourse);
 
                     // set course details
-                    thiscourse.name = name;
+                    thiscourse.name = (name) ? name+' - '+sections[0].fullname : 'Core: '+_.findWhere(js_core, {name:core}).fullname;
                     thiscourse.show = true;
                     thiscourse.number = _.size($scope.courses) - 1;
                     thiscourse.sections = [];
@@ -146,12 +145,21 @@ function courseOptionsCtrl($scope,$http,$timeout) {
     };
 
 
+    // add course by core
+    $scope.selectedcore = 1;
+    $scope.addCourseCore = function() {
+        console.log($scope.selectedcore);
+        if ($scope.selectedcore != 'default') {
+            $scope.addCourse(false, $scope.selectedcore);
+        }
+    };
+
+
     // remove course on delete button click
     $scope.removeCourse = function(course) {
         a = course.number;
         $scope.courses.remove(a);
         _.each($scope.courses, function(course, b) {
-            console.log(course,b);
             if (b >= a) course.number += -1;
         });
     };
@@ -238,12 +246,6 @@ function courseOptionsCtrl($scope,$http,$timeout) {
     };
 
 
-    // format core and lab attributes
-    $scope.formatCore = function(core) {
-        return js_core[core];
-    };
-
-
     // toggle showing of course sections
     $scope.toggleExpand = function(section) {
         section.show = !section.show;
@@ -270,13 +272,11 @@ function courseOptionsCtrl($scope,$http,$timeout) {
         popover += '<tr><td>Class: </td><td>'+ section.name +'</td></tr>';
         popover += '<tr><td>Name: </td><td>'+ section.fullname +'</td></tr>';
         popover += '<tr><td>Course ID: </td><td>'+ section.id +'</td></tr>';
-//        popover += '<tr><td>Course ID: </td><td><a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr='+ section.id +'&term='+ js_term +'" target="_blank">'+ section.id +'</a></td></tr>';
         popover += '<tr><td>Professor: </td><td>' + section.instructors + '</td></tr>';
-//        popover += '<tr><td>Professor: </td><td><a class="course-evaluation" href="">' + section.instructors + '</a></td></tr>';
 
         popover += '<tr><td>Core fulfilled: </td><td>';
         _.each(section.cores, function(core) {
-            popover += '<span class="label">' + js_core_all[core] + '</span> ';
+            popover += '<span class="label">' + ((a = _.findWhere(js_core_all, {name: core})) ? a.fullname : '') + '</span> ';
         });
         popover += '</td></tr>';
 
