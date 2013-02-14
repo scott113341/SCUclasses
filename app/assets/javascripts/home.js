@@ -23,8 +23,9 @@ $(function() {
 
     // course evaluation linkout
     $(document).on('click', '.course-evaluation', function(e) {
+        console.log('asodifhaosdaosd');
         e.preventDefault();
-        $('#course-evaluation-form').find('input').val($(this).text()).submit();
+        $('#course-evaluation-form').find('input').val($(this).attr('data-professor')).parent().submit();
     });
 
 
@@ -146,7 +147,7 @@ function courseOptionsCtrl($scope,$http,$timeout) {
 
 
     // add course by core
-    $scope.selectedcore = 1;
+    $scope.selectedcore = 'default';
     $scope.addCourseCore = function() {
         console.log($scope.selectedcore);
         if ($scope.selectedcore != 'default') {
@@ -169,6 +170,18 @@ function courseOptionsCtrl($scope,$http,$timeout) {
     $scope.clearCourses = function() {
         $scope.courses = [];
         $('input[ng-model=addCourseText]').val('').select();
+    };
+
+
+    // sections added
+    $scope.sectionsAdded = function() {
+        var sectionsadded = [];
+        _.each($scope.courses, function(course) {
+            _.each(course.sections, function(section) {
+                if (section.selected) sectionsadded.push(section);
+            });
+        });
+        return sectionsadded;
     };
 
 
@@ -282,9 +295,21 @@ function courseOptionsCtrl($scope,$http,$timeout) {
 
         popover += '<tr><td>Seats left: </td><td>'+ section.seats +'</td></tr>';
         popover += '<tr><td>Units: </td><td>'+ section.units +'</td></tr>';
+        popover += '<tr><td>Location: </td><td>'+ section.location +'</td></tr>';
         popover += '<tr><td>Description: </td><td>'+ section.description +'</td></tr>';
         popover += '</tbody></table>';
         return popover;
+    };
+
+
+    // units added
+    $scope.units = function() {
+        var units = 0;
+        _.each($scope.sectionsAdded(), function(section) {
+            units += section.units;
+        });
+        console.log(units);
+        return units;
     };
 
 

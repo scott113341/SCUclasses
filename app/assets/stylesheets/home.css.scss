@@ -1,3 +1,19 @@
+.modal {
+  width: 80%;
+  margin: -250px 0 0 0;
+  left: 10%;
+
+  table {
+    width: 100%;
+
+    td {
+      text-align: center;
+    }
+  }
+}
+
+
+
 .top {
   text-align: center;
 
@@ -205,6 +221,19 @@ div.calendar {
       }
     }
   }
+
+  .bottom {
+    position: relative;
+    top: 10px;
+    text-align: center;
+
+    .green-true {
+      color: green;
+    }
+    .green-false {
+      color: red;
+    }
+  }
 }
 .spacer {
   height: 506px;
@@ -237,7 +266,7 @@ div.calendar {
 
 
 // real colors
-$colors:#8AB5E3 #8BCB70 #E3A345 #DD8DDD #BCCC90 #E79586 #76D4CB #CDD048 #6BD98B #CFBDC4;
+$colors: #8AB5E3 #8BCB70 #E3A345 #DD8DDD #BCCC90 #E79586 #76D4CB #CDD048 #6BD98B #CFBDC4;
 @for $i from 1 through length($colors) {
   $color: nth($colors, $i);
   .course-#{$i} {

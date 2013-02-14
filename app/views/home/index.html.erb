@@ -6,9 +6,36 @@
       <h3>My Schedule</h3>
     </div>
     <div class="modal-body">
-      aosdfhaosdfhasdaf
+      <p ng-show="sectionsAdded().length == 0">No classes added.</p>
+      <div ng-show="sectionsAdded().length > 0">
+        <table class="table-striped table-bordered table-condensed">
+          <thead>
+          <tr>
+            <th>Class</th>
+            <th>Name</th>
+            <th>Class ID</th>
+            <th>Professor</th>
+            <th>Days</th>
+            <th>Times</th>
+            <th>Location</th>
+            <th>Units</th>
+          </tr>
+          </thead>
+          <tr ng-repeat="section in sectionsAdded()" ng-show="section.selected">
+            <td>{{section.name}}</td>
+            <td>{{section.fullname}}</td>
+            <td><a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{section.id}}&term=<%= TERM %>" title="Opens the CourseAvail listing for this section" target="_blank">{{section.id}}</a></td>
+            <td><a class="course-evaluation" data-professor="{{section.instructors}}" title="Opens course evaluations for this professor">{{section.instructors}}</a></td>
+            <td>{{section.days}}</td>
+            <td>{{section.time_start.formatted}} - {{section.time_end.formatted}}</td>
+            <td>{{section.location}}</td>
+            <td>{{section.units}}</td>
+          </tr>
+        </table>
+      </div>
     </div>
     <div class="modal-footer">
+      <button ng-click="clearCourses()" class="btn btn-success"><i class="icon-download-alt icon-white"></i> Download Schedule</button>
       <button class="btn" data-dismiss="modal">Close</button>
     </div>
   </div>
@@ -18,21 +45,19 @@
       <div class="top">
         <h1>SCU&#8226;Classes</h1>
 
-        <button ng-click="clearCourses()" class="btn btn-success btn-small"><i class="icon-ok-sign icon-white"></i> Save Schedule</button>
-        <button ng-click="clearCourses()" class="btn btn-danger btn-small"><i class="icon-remove-sign icon-white"></i> Clear Schedule</button>
         <button data-toggle="modal" data-target="#schedule" class="btn btn-primary btn-small"><i class="icon-th-list icon-white"></i> Schedule Info</button>
+        <button ng-click="clearCourses()" class="btn btn-success btn-small"><i class="icon-download-alt icon-white"></i> Download Schedule</button>
+        <button ng-click="clearCourses()" class="btn btn-danger btn-small"><i class="icon-remove-sign icon-white"></i> Clear Schedule</button>
 
         <br><br>
 
         <input ng-model="addCourseText" type="text" placeholder='Type a class, like "RSOC 9"' autofocus="autofocus"/>
         <strong>OR</strong>
-        <select ng-change="addCourseCore()" ng-model="selectedcore" ng-options="value.name as value.fullname for value in core">
-          <!--<option ng-select="addCourseCore(core)" ng-repeat="corecourse in core" value="{{corecourse.name}}">{{corecourse.fullname}}</option>-->
-        </select>
+        <select ng-change="addCourseCore()" ng-model="selectedcore" ng-options="value.name as value.fullname for value in core"></select>
 
         <div class="welcome hide-{{hideWelcomeMessage()}}">
-          <h3>Welcome to SCU&#8226;Classes, CourseAvail on steroids.</h3>
-          <p>Last updated {{lastupdated}} minute{{plural(lastupdated)}} ago</p>
+          <h3>Welcome to SCU&#8226;Classes.</h3>
+          <h3>It's like CourseAvail on steroids.</h3>
         </div>
       </div>
 
@@ -68,11 +93,11 @@
                     <span ng-show="section.islab" class="label label-info">lab section</span>
                   </td>
                   <td class="info">
-                    <span><strong>Class Name:</strong> {{section.fullname}}</span>
+                    <span><strong>Name:</strong> {{section.fullname}}</span>
                     <br>
                     <span><strong>Class ID:</strong> <a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{section.id}}&term=<%= TERM %>" title="Opens the CourseAvail listing for this section" target="_blank">{{section.id}}</a></span>
                     <br>
-                    <span><strong>Professor:</strong> <a class="course-evaluation" title="Opens course evaluations for this professor">{{section.instructors}}</a></span>
+                    <span><strong>Professor:</strong> <a class="course-evaluation" data-professor="{{section.instructors}}" title="Opens course evaluations for this professor">{{section.instructors}}</a></span>
                   </td>
                 </tr>
                 </tbody>
@@ -102,16 +127,18 @@
               <% end %>
               <div class="hour last"></div>
 
-              <div ng-repeat="course in courses">
-                <div ng-repeat="section in course.sections">
-                  <div ng-show="showSectionBlock(section, '<%= d %>')" class="course-block course-{{course.number}}" style="top:{{section.style.top}}; height:{{section.style.height}};">
-                    <div class="name">{{section.name}}</div>
-                    <div class="times">{{section.time_start.formatted}} - {{section.time_end.formatted}}</div>
-                  </div>
+              <div ng-repeat="section in sectionsAdded()">
+                <div ng-show="showSectionBlock(section, '<%= d %>')" class="course-block course-{{course.number}}" style="top:{{section.style.top}}; height:{{section.style.height}};">
+                  <div class="name">{{section.name}}</div>
+                  <div class="times">{{section.time_start.formatted}} - {{section.time_end.formatted}}</div>
                 </div>
               </div>
             </div>
           <% end %>
+        </div>
+
+        <div class="bottom">
+          <p>This schedule has <strong class="green-{{units() <= 19}}">{{units()}}</strong> unit{{plural(units())}} || Updated from CourseAvail <strong class="green-true">{{lastupdated}}</strong> minute{{plural(lastupdated)}} ago</p>
         </div>
       </div>
       <div class="spacer"></div>
