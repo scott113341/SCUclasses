@@ -18,8 +18,8 @@ class HomeController < ApplicationController
 
     # javascript course list (array of course.name)
     @js_courses = []
-    Section.select('name').uniq.each do |course|
-      @js_courses.push(course.name + ' - ' + Section.select('fullname').where('name = ?', course.name).first.fullname)
+    Section.select("name, MIN(fullname) AS fullname").group('name').each do |course|
+      @js_courses.push(course.name + ' - ' + course.fullname)
     end
     @js_courses.sort! {|a,b| /[0-9]+/.match(a).to_s.to_i + ((/[0-9]+[A-Z]/.match(a)) ? 0.5 : 0) <=> /[0-9]+/.match(b).to_s.to_i + ((/[0-9]+[A-Z]/.match(b)) ? 0.5 : 0)}
 
