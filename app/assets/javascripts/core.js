@@ -1,5 +1,5 @@
 var js_core_all = [
-    {name:'default', fullname:'Choose a Core requirement'},
+    {name:'default', fullname:'Choose a core requirement'},
     {name:'I_AW', fullname:'Advanced Writing'},
     {name:'E_ARTS', fullname:'Arts'},
     {name:'E_CEPAR', fullname:'Civic Engagement Partial Credit'},

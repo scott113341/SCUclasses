@@ -185,6 +185,12 @@ function courseOptionsCtrl($scope,$http,$timeout) {
     };
 
 
+    // csv list of section ids
+    $scope.sectionIds = function() {
+        return _.pluck($scope.sectionsAdded(), 'id').join(',');
+    };
+
+
     // validate sections based off of selections
     $scope.isValidChoice = function(section) {
         if (section.selected == true) return true;
@@ -308,7 +314,6 @@ function courseOptionsCtrl($scope,$http,$timeout) {
         _.each($scope.sectionsAdded(), function(section) {
             units += section.units;
         });
-        console.log(units);
         return units;
     };
 
