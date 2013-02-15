@@ -105,13 +105,14 @@ function courseOptionsCtrl($scope,$http,$timeout) {
         $http.get('/sections' + req).
             success(function(sections) {
                 // if not already added
-                if (_.where($scope.courses, {name: name}) == false) {
+                if ((_.where($scope.courses, {name: name})==false) && (_.where($scope.courses, {name: core})==false)) {
                     // add course
                     var thiscourse = {};
                     $scope.courses.push(thiscourse);
 
                     // set course details
-                    thiscourse.name = (name) ? name+' - '+sections[0].fullname : 'Core: '+_.findWhere(js_core, {name:core}).fullname;
+                    thiscourse.name = (name) ? name : core;
+                    thiscourse.nameandfullname = (name) ? name+' - '+sections[0].fullname : 'Core: '+_.findWhere(js_core, {name:core}).fullname;
                     thiscourse.show = true;
                     thiscourse.number = _.size($scope.courses) - 1;
                     thiscourse.sections = [];
@@ -136,9 +137,11 @@ function courseOptionsCtrl($scope,$http,$timeout) {
                     });
                 }
                 console.log($scope.courses);
+
+                $scope.selectedcore = 'default';
             });
 
-        // check for lab section
+        // check for lab section on add course
         var lab = _.filter(js_courses, function(course) {
             return (course.indexOf(name + 'L') != -1);
         });

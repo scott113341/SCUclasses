@@ -68,7 +68,7 @@
               <button ng-click="toggleExpand(course)" class="btn btn-small" title="Expand/collapse this class"><i class="{{expandArrow(course)}}"></i></button>
               <button ng-click="removeCourse(course)" class="btn btn-small" title="Remove this class"><i class="icon-remove-sign"></i></button>
             </div>
-            {{course.name}}
+            {{course.nameandfullname}}
           </h4>
           <div ng-repeat="section in course.sections" class="section selected-{{section.selected}} validchoice-{{isValidChoice(section)}}">
             <label for="section-{{section.id}}">
