@@ -1,4 +1,5 @@
 task :update_sections => :environment do
+  start = Time.now
   print(Section.count, " existing sections\n")
 
   # get section list
@@ -62,6 +63,8 @@ task :update_sections => :environment do
   print(Section.count, " sections updated\n")
 
   Rake::Task['update_sections_details'].execute
+
+  print("update took ", (Time.now - start)/60.round(2), " minutes\n")
 end
 
 def parseTime(time)
