@@ -4,7 +4,7 @@ gem 'rails', '3.2.11'
 gem 'thin'
 
 gem 'jquery-rails'
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', '2.3.0.0'
 
 gem 'nokogiri'
 gem 'rest-client'
