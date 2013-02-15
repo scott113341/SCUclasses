@@ -41,6 +41,6 @@ class SectionsController < ApplicationController
       end
     end
 
-    send_data csv
+    send_data csv, :filename => ((params[:name] != '') ? params[:name] : 'schedule') + '.csv'
   end
 end

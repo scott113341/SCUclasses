@@ -4,7 +4,7 @@ class HomeController < ApplicationController
     #@hour_min = (Course.where('time_start > 400').minimum('time_start') / 100).floor
     #@hour_max = (Course.maximum('time_end') / 100).ceil + 1
     @hour_min = 7
-    @hour_max = 8 + 12
+    @hour_max = 9 + 12
     @hours = (@hour_min..@hour_max).to_a
     @days = {
         :M => 'Monday',

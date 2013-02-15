@@ -21,7 +21,11 @@
 .top {
   text-align: center;
 
-  input {
+  input.input-name {
+    text-align: center;
+  }
+
+  input.input-course {
     text-align: left;
     width: 200px;
   }
@@ -42,6 +46,11 @@
     opacity: 0;
     height: 0;
     overflow: hidden;
+  }
+
+  .alert {
+    text-align: left;
+    color: #333;
   }
 }
 
@@ -141,8 +150,8 @@
     }
 
     .section.validchoice-false {
-      color: gray;
-      background: #a9a9a9;
+      color: #777;
+      background: #ccc;
     }
     .section.validchoice-false:hover label {
       cursor: not-allowed;
@@ -240,7 +249,7 @@ div.calendar {
   }
 }
 .spacer {
-  height: 506px;
+  height: 536px;
 }
 
 

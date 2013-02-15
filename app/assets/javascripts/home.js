@@ -35,6 +35,10 @@ $(function() {
             scrollTop: 0
         }, 500);
     });
+
+
+    // focus on name
+    $('.input-name').focus();
 });
 
 
@@ -73,6 +77,7 @@ function courseOptionsCtrl($scope,$http,$timeout) {
     $scope.courses = [];
     $scope.core_all = js_core_all;
     $scope.core = js_core;
+    $scope.schedulename = 'Super-Awesome Schedule Name';
 
 
     // update model after typeahead submit
@@ -173,6 +178,12 @@ function courseOptionsCtrl($scope,$http,$timeout) {
     $scope.clearCourses = function() {
         $scope.courses = [];
         $('input[ng-model=addCourseText]').val('').select();
+    };
+
+
+    // courses added
+    $scope.coursesAdded = function() {
+        return $scope.courses.length;
     };
 
 
