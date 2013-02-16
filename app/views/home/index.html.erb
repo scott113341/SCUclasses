@@ -34,8 +34,9 @@
         </table>
       </div>
     </div>
-    <div class="modal-footer">
-      <a href="/export.csv?sections={{sectionIds()}}" class="btn btn-success"><i class="icon-download-alt icon-white"></i> Download Schedule</a>
+    <div ng-show="sectionsAdded().length > 0" class="modal-footer">
+      <a href="http://scubooks.com/books?courses={{sectionIds()}}&ref=scuclasses" class="btn btn-success" target="_blank"><i class="icon-book icon-white"></i> View Book List on SCU&#8226;books</a>
+      <a href="/export.csv?sections={{sectionIds()}}" class="btn btn-info"><i class="icon-download-alt icon-white"></i> Download Schedule</a>
       <button class="btn" data-dismiss="modal">Close</button>
     </div>
   </div>
@@ -43,10 +44,10 @@
   <div class="row-fluid">
     <div class="span6">
       <div class="top">
-        <h1>SCU&#8226;Classes</h1>
+        <h1>SCU&#8226;classes</h1>
 
         <button data-toggle="modal" data-target="#schedule" class="btn btn-primary btn-small"><i class="icon-th-list icon-white"></i> Schedule Info</button>
-        <a href="/export.csv?sections={{sectionIds()}}&name={{schedulename}}" class="btn btn-success btn-small"><i class="icon-download-alt icon-white"></i> Download Schedule</a>
+        <a href="/export.csv?sections={{sectionIds()}}&name={{schedulename}}" class="btn btn-info btn-small"><i class="icon-download-alt icon-white"></i> Download Schedule</a>
         <button ng-click="clearCourses()" class="btn btn-danger btn-small"><i class="icon-remove-sign icon-white"></i> Clear Schedule</button>
 
         <br><br>
@@ -63,9 +64,13 @@
         <select ng-change="addCourseCore()" ng-model="selectedcore" ng-options="value.name as value.fullname for value in core"></select>
 
         <div class="welcome hide-{{hideWelcomeMessage()}}">
-          <h3>Welcome to SCU&#8226;Classes.</h3>
+          <h3>Welcome to SCU&#8226;classes.</h3>
           <h3>It's like CourseAvail on steroids.</h3>
           <h4>To get started, name your schedule and add a class using the boxes above.</h4>
+        </div>
+
+        <div ng-show="sectionsAdded().length > 0" class="link-scubooks">
+          <a href="http://scubooks.com/books?courses={{sectionIds()}}&ref=scuclasses" class="btn btn-success" target="_blank"><i class="icon-book icon-white"></i> View Book List on SCU&#8226;books</a>
         </div>
 
         <div ng-show="coursesAdded() == 1" class="alert alert-info">
