@@ -93,7 +93,6 @@
       }
 
       .select {
-        //display: none;
         width: 20px;
       }
 
@@ -149,7 +148,7 @@
       }
     }
 
-    .section.validchoice-false {
+    .section.validchoice-false, .section.isfull-true {
       color: #777;
       background: #ccc;
     }
@@ -162,6 +161,9 @@
       margin: 0;
     }
   }
+}
+.course.show-false {
+  border-left-width: 10px;
 }
 .course.show-false .inner {
   height: 35px;
@@ -269,12 +271,12 @@ div.calendar {
 
 // default/fallback colors
 .course {
-  border-left: 3px solid green;
+  border-left: 3px solid #42D692;
   .section.selected-true {
-    border-left: 3px solid green;
+    border-left: 3px solid #42D692;
   }
   .section:hover, .section.selected-true {
-    background: #C6FFC4;
+    background: lighten(#42D692, 20%) !important;
   }
 }
 .course-block {
@@ -283,7 +285,7 @@ div.calendar {
 
 
 // real colors
-$colors: #8AB5E3 #8BCB70 #E3A345 #DD8DDD #BCCC90 #E79586 #76D4CB #CDD048 #6BD98B #CFBDC4;
+$colors: #8AB5E3 #8BCB70 #E3A345 #DD8DDD #BCCC90 #E79586 #76D4CB #CDD048 #FFF07F;
 @for $i from 1 through length($colors) {
   $color: nth($colors, $i);
   .course-#{$i} {
@@ -292,7 +294,7 @@ $colors: #8AB5E3 #8BCB70 #E3A345 #DD8DDD #BCCC90 #E79586 #76D4CB #CDD048 #6BD98B
       border-left: 3px solid $color !important;
     }
     .section:hover, .section.selected-true {
-      background: lighten($color, 20%);
+      background: lighten($color, 20%) !important;
     }
   }
   .course-block.course-#{$i} {

@@ -90,7 +90,7 @@
             </div>
             {{course.nameandfullname}}
           </h4>
-          <div ng-repeat="section in course.sections" class="section selected-{{section.selected}} validchoice-{{isValidChoice(section)}}" data-original-title="{{section.invalidbecause}}" rel="tooltip">
+          <div ng-repeat="section in course.sections" class="section selected-{{section.selected}} validchoice-{{isValidChoice(section)}} isfull-{{section.isfull}}" data-original-title="{{section.invalidbecause}}" rel="tooltip">
             <label for="section-{{section.id}}">
               <table>
                 <tbody>

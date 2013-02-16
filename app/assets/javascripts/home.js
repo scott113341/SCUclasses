@@ -221,7 +221,7 @@ function courseOptionsCtrl($scope,$http,$timeout) {
             var conflictingfunction = '';
             _.each($scope.courses, function(course, name) { // for each course
                 _.each(course.sections, function(section2) { // for each section2
-                    if (section2.selected == true) { // if section2 is selected
+                    if (section2.selected == true && valid == true) { // if section2 is selected
                         // don't share a common day
                         if (_.intersection(section.days.split(''), section2.days.split('')).length == 0) {
                             //console.log(section.id, 'doesnt share a day with', section2.id);
@@ -257,16 +257,10 @@ function courseOptionsCtrl($scope,$http,$timeout) {
             // set invalid reason
             if (valid == false) section.invalidbecause = 'Conflicts with ' + conflictingsection.name;
             if (section.seats == 0) {
-                valid = false;
                 section.invalidbecause = 'Section is full';
+                section.isfull = true;
             }
-
-            // set invalid title
-            if (valid == false) section.isinvalid = 'Invalid Choice';
-            else {
-                section.isinvalid = '';
-                section.invalidbecause = '';
-            }
+            else section.isfull = false;
 
             return valid;
         }
@@ -333,7 +327,7 @@ function courseOptionsCtrl($scope,$http,$timeout) {
 
         popover += '<tr><td>Core fulfilled: </td><td>';
         _.each(section.cores, function(core) {
-            popover += '<span class="label">' + ((a = _.findWhere(js_core_all, {name: core})) ? a.fullname : '') + '</span> ';
+            popover += '<span class="label label-info">' + ((a = _.findWhere(js_core_all, {name: core})) ? a.fullname : '') + '</span> ';
         });
         popover += '</td></tr>';
 
@@ -357,7 +351,7 @@ function courseOptionsCtrl($scope,$http,$timeout) {
 
 
     // last updated
-    $scope.lastupdated = js_lastupdated - 1;
+    $scope.lastupdated = js_lastupdated - 2;
     $scope.incrementMinute = function() {
         $scope.lastupdated++;
         $timeout($scope.incrementMinute, 60*1000);
