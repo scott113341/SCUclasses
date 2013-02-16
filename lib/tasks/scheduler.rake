@@ -64,7 +64,7 @@ task :update_sections => :environment do
 
   Rake::Task['update_sections_details'].execute
 
-  print("update took ", (Time.now - start)/60.round(2), " minutes\n")
+  print("update took ", ((Time.now - start)/60).round(2), " minutes\n")
 end
 
 def parseTime(time)

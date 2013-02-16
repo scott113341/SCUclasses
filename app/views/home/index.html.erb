@@ -14,6 +14,7 @@
             <th>Class</th>
             <th>Name</th>
             <th>Class ID</th>
+            <th>Seats Remaining</th>
             <th>Professor</th>
             <th>Days</th>
             <th>Times</th>
@@ -25,6 +26,7 @@
             <td>{{section.name}}</td>
             <td>{{section.fullname}}</td>
             <td><a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{section.id}}&term=<%= TERM %>" title="Opens the CourseAvail listing for this section" target="_blank">{{section.id}}</a></td>
+            <td>{{section.seats}}</td>
             <td><a class="course-evaluation" data-professor="{{section.instructors}}" title="Opens course evaluations for this professor">{{section.instructors}}</a></td>
             <td>{{section.days}}</td>
             <td>{{section.time_start.formatted}} - {{section.time_end.formatted}}</td>
@@ -36,7 +38,7 @@
     </div>
     <div ng-show="sectionsAdded().length > 0" class="modal-footer">
       <a href="http://scubooks.com/books?courses={{sectionIds()}}&ref=scuclasses" class="btn btn-success" target="_blank"><i class="icon-book icon-white"></i> View Book List on SCU&#8226;books</a>
-      <a href="/export.csv?sections={{sectionIds()}}" class="btn btn-info"><i class="icon-download-alt icon-white"></i> Download Schedule</a>
+      <a href="/export.csv?sections={{sectionIds()}}" class="btn btn-info" target="_blank"><i class="icon-download-alt icon-white"></i> Download Schedule</a>
       <button class="btn" data-dismiss="modal">Close</button>
     </div>
   </div>
@@ -47,7 +49,7 @@
         <h1>SCU&#8226;classes</h1>
 
         <button data-toggle="modal" data-target="#schedule" class="btn btn-primary btn-small"><i class="icon-th-list icon-white"></i> Schedule Info</button>
-        <a href="/export.csv?sections={{sectionIds()}}&name={{schedulename}}" class="btn btn-info btn-small"><i class="icon-download-alt icon-white"></i> Download Schedule</a>
+        <a href="/export.csv?sections={{sectionIds()}}&name={{schedulename}}" class="btn btn-info btn-small" target="_blank"><i class="icon-download-alt icon-white"></i> Download Schedule</a>
         <button ng-click="clearCourses()" class="btn btn-danger btn-small"><i class="icon-remove-sign icon-white"></i> Clear Schedule</button>
 
         <br><br>
@@ -69,11 +71,11 @@
           <h4>To get started, name your schedule and add a class using the boxes above.</h4>
         </div>
 
-        <div ng-show="sectionsAdded().length > 0" class="link-scubooks">
+        <div class="link-scubooks show-{{sectionsAdded().length > 0}}">
           <a href="http://scubooks.com/books?courses={{sectionIds()}}&ref=scuclasses" class="btn btn-success" target="_blank"><i class="icon-book icon-white"></i> View Book List on SCU&#8226;books</a>
         </div>
 
-        <div ng-show="coursesAdded() == 1" class="alert alert-info">
+        <div class="alert alert-info show-{{coursesAdded() == 1}}">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
           <p>Now that you've added a class:</p>
           <ul>

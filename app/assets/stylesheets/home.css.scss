@@ -49,12 +49,39 @@
   }
 
   .link-scubooks {
-    margin-bottom: 20px;
+    height: 0px;
+    margin-bottom: 5px;
+    overflow: hidden;
+
+    -webkit-transition: 300ms;
+    transition: 300ms;
+
+    &.show-true {
+      margin-bottom: 20px;
+      height: 30px;
+    }
   }
 
   .alert {
+    height: 182px;
     text-align: left;
     color: #333;
+    display: none;
+
+    -webkit-transition: 500ms;
+    transition: 500ms;
+
+    &.show-true {
+      display: block;
+    }
+
+    &.show-false {
+      display: block;
+      height: 0;
+      padding: 0;
+      border: none;
+      overflow: hidden;
+    }
   }
 }
 

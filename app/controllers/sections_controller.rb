@@ -24,7 +24,7 @@ class SectionsController < ApplicationController
 
     # make csv
     csv = CSV.generate do |csv|
-      csv << ['Class', 'Name', 'Class ID', 'Professor', 'Days', 'Times', 'Location', 'Units']
+      csv << ['Class', 'Name', 'Class ID', 'Seats Remaining', 'Professor', 'Days', 'Times', 'Location', 'Units']
       Section.find(sections).each do |section|
         # format the time
         s = section.time_start.to_i
@@ -35,9 +35,10 @@ class SectionsController < ApplicationController
           times << time
         end
         times = times.join(' - ')
+        #if (!times) then times = 'undefined'
 
         # push to csv
-        csv << section.attributes.values_at('name', 'fullname', 'id', 'instructors', 'days') + [times] + section.attributes.values_at('location', 'units')
+        csv << section.attributes.values_at('name', 'fullname', 'id', 'seats', 'instructors', 'days') + [times] + section.attributes.values_at('location', 'units')
       end
     end
 
