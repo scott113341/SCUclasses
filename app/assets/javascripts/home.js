@@ -21,6 +21,13 @@ $(function() {
     });
 
 
+    // invalid selection tooltips
+    $(document).tooltip({
+        selector: '[rel=tooltip]',
+        placement: 'right'
+    });
+
+
     // course evaluation linkout
     $(document).on('click', '.course-evaluation', function(e) {
         console.log('asodifhaosdaosd');
@@ -121,6 +128,7 @@ function courseOptionsCtrl($scope,$http,$timeout) {
                     thiscourse.show = true;
                     thiscourse.number = _.size($scope.courses) - 1;
                     thiscourse.sections = [];
+                    thiscourse.iscore = (name) ? false : true;
 
                     // add sections
                     _.each(sections,function(section) {
@@ -210,6 +218,7 @@ function courseOptionsCtrl($scope,$http,$timeout) {
         if (section.selected == true) return true;
         else {
             var valid = true;
+            var conflictingfunction = '';
             _.each($scope.courses, function(course, name) { // for each course
                 _.each(course.sections, function(section2) { // for each section2
                     if (section2.selected == true) { // if section2 is selected
@@ -237,12 +246,27 @@ function courseOptionsCtrl($scope,$http,$timeout) {
                                 //console.log(section.id, 'starts before and ends after', section2.id);
                                 valid = false;
                             }
+
+                            // save conflicting section
+                            if (valid == false) conflictingsection = section2;
                         }
                     }
                 });
             });
 
-            if (section.seats == 0) valid = false;
+            // set invalid reason
+            if (valid == false) section.invalidbecause = 'Conflicts with ' + conflictingsection.name;
+            if (section.seats == 0) {
+                valid = false;
+                section.invalidbecause = 'Section is full';
+            }
+
+            // set invalid title
+            if (valid == false) section.isinvalid = 'Invalid Choice';
+            else {
+                section.isinvalid = '';
+                section.invalidbecause = '';
+            }
 
             return valid;
         }

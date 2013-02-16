@@ -90,13 +90,16 @@
             </div>
             {{course.nameandfullname}}
           </h4>
-          <div ng-repeat="section in course.sections" class="section selected-{{section.selected}} validchoice-{{isValidChoice(section)}}">
+          <div ng-repeat="section in course.sections" class="section selected-{{section.selected}} validchoice-{{isValidChoice(section)}}" data-original-title="{{section.invalidbecause}}" rel="tooltip">
             <label for="section-{{section.id}}">
               <table>
                 <tbody>
                 <tr>
                   <td class="select">
                     <input ng-model="section.selected" id="section-{{section.id}}" type="checkbox" ng-disabled="!isValidChoice(section)">
+                  </td>
+                  <td class="name" ng-show="course.iscore">
+                    {{section.name}}
                   </td>
                   <td class="schedule">
                     <span class="days">{{section.days}}</span>
@@ -109,7 +112,7 @@
                     <span class="remaining">seat{{plural(section.seats)}} remaining</span>
                   </td>
                   <td class="moreinfo">
-                    <a class="btn btn-mini" rel="popover" data-title="{{section.fullname}}" data-content="{{popoverInfo(section)}}">More Info</a>
+                    <a class="btn btn-mini" rel="popover" data-original-title="{{section.fullname}}" data-content="{{popoverInfo(section)}}">More Info</a>
                     <span ng-show="section.islab" class="label label-info">lab section</span>
                   </td>
                   <td class="info">
@@ -150,6 +153,7 @@
               <div ng-repeat="course in courses">
                 <div ng-repeat="section in course.sections">
                   <div ng-show="showSectionBlock(section, '<%= d %>')" class="course-block course-{{course.number}}" style="top:{{section.style.top}}; height:{{section.style.height}};">
+                    <label for="section-{{section.id}}">&times;</label>
                     <div class="name">{{section.name}}</div>
                     <div class="times">{{section.time_start.formatted}} - {{section.time_end.formatted}}</div>
                   </div>

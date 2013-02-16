@@ -66,6 +66,10 @@
   .inner {
     padding: 0 10px 10px;
     overflow: hidden;
+    
+    .tooltip {
+      z-index: 1000;
+    }
 
     .section {
       border-left: 1px solid #333;
@@ -118,6 +122,7 @@
 
         .popover {
           width: 60%;
+          max-width: none;
 
           td:nth-child(1) {
             text-align: right;
@@ -133,14 +138,9 @@
         }
       }
 
-      .units {
-        width: 30px;
-        .number {
-          font-size: 20px;
-        }
-        .units {
-          font-size: 10px;
-        }
+      .name {
+        width: 80px;
+        font-weight: bold;
       }
 
       .info {
@@ -214,6 +214,10 @@ div.calendar {
         left: 0;
         font-weight: bold;
 
+        label {
+          float: right;
+        }
+
         .times {
           font-size: 10px;
           line-height: 12px;
@@ -236,8 +240,8 @@ div.calendar {
   }
 
   .bottom {
-    position: relative;
-    top: 10px;
+    float: left;
+    width: 100%;
     text-align: center;
 
     .green-true {
@@ -249,7 +253,7 @@ div.calendar {
   }
 }
 .spacer {
-  height: 536px;
+  height: 560px;
 }
 
 
