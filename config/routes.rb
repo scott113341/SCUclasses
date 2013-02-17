@@ -1,4 +1,4 @@
-Coursemaster::Application.routes.draw do
+Scuclasses::Application.routes.draw do
   match 'sections' => 'sections#sections'
   match 'export' => 'sections#export'
 

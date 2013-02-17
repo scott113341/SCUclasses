@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Coursemaster::Application.load_tasks
+Scuclasses::Application.load_tasks
