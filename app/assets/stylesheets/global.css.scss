@@ -2,4 +2,14 @@ div.footer {
   border-top: 1px solid #ccc;
   margin-top: 20px;
   padding-top: 10px;
+
+  .left {
+    text-align: left;
+  }
+  .center {
+    text-align: center;
+  }
+  .right {
+    text-align: right;
+  }
 }

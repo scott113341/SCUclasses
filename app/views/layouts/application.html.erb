@@ -5,17 +5,23 @@
     <%= stylesheet_link_tag "application", :media => "all" %>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
+
+    <meta name="description" content="SCU&#8226;classes is a website that makes choosing classes and building schedules much easier.  Never use CourseAvail again!">
   </head>
 
   <body>
 
     <%= yield %>
 
+
     <div class="footer">
       <div class="container-fluid">
-        <div class="row">
-          <div class="span12">
+        <div class="row-fluid">
+          <div class="span4 left">
             <p>&copy; Scott Hardy 2012-<%= Date.today.year %></p>
+          </div>
+          <div class="span4 center">
+            <p>Have feedback?  Let me know at <a href="mailto:shardy@scu.edu?subject=SCUclasses Feedback" target="_blank">shardy@scu.edu</a>.</p>
           </div>
         </div>
       </div>

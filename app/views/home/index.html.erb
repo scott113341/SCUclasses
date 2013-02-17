@@ -3,7 +3,7 @@
   <div id="schedule" class="modal hide fade">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-      <h3>{{schedulename}}</h3>
+      <h3>My Schedule</h3>
     </div>
     <div class="modal-body">
       <p ng-show="sectionsAdded().length == 0">No classes added.</p>
@@ -38,7 +38,7 @@
     </div>
     <div ng-show="sectionsAdded().length > 0" class="modal-footer">
       <a href="http://scubooks.com/books?courses={{sectionIds()}}&ref=scuclasses" class="btn btn-success" target="_blank"><i class="icon-book icon-white"></i> View Book List on SCU&#8226;books</a>
-      <a href="/export.csv?sections={{sectionIds()}}" class="btn btn-info" target="_blank"><i class="icon-download-alt icon-white"></i> Download Schedule</a>
+      <a href="/export.csv?sections={{sectionIds()}}" class="btn btn-info" target="_blank"><i class="icon-download-alt icon-white"></i> Download Schedule to Excel</a>
       <button class="btn" data-dismiss="modal">Close</button>
     </div>
   </div>
@@ -49,17 +49,10 @@
         <h1>SCU&#8226;classes</h1>
 
         <button data-toggle="modal" data-target="#schedule" class="btn btn-primary btn-small"><i class="icon-th-list icon-white"></i> Schedule Info</button>
-        <a href="/export.csv?sections={{sectionIds()}}&name={{schedulename}}" class="btn btn-info btn-small" target="_blank"><i class="icon-download-alt icon-white"></i> Download Schedule</a>
+        <a href="/export.csv?sections={{sectionIds()}}" class="btn btn-info btn-small" target="_blank"><i class="icon-download-alt icon-white"></i> Download Schedule to Excel</a>
         <button ng-click="clearCourses()" class="btn btn-danger btn-small"><i class="icon-remove-sign icon-white"></i> Clear Schedule</button>
 
         <br><br>
-
-        <div class="input-prepend">
-          <span class="add-on">Schedule Name</span>
-          <input ng-model="schedulename" class="input-large input-name" type="text">
-        </div>
-
-        <br>
 
         <input ng-model="addCourseText" class="input-course" type="text" placeholder='Type a class, like "RSOC 9"'/>
         <strong>OR</strong>
@@ -68,22 +61,28 @@
         <div class="welcome hide-{{hideWelcomeMessage()}}">
           <h3>Welcome to SCU&#8226;classes.</h3>
           <h3>It's like CourseAvail on steroids.</h3>
-          <h4>To get started, name your schedule and add a class using the boxes above.</h4>
+          <br>
+          <h4>To get started, add a class using the boxes above.</h4>
+          <h4>When you're finished, download your schedule to Excel for easy registration!</h4>
         </div>
 
         <div class="link-scubooks show-{{sectionsAdded().length > 0}}">
           <a href="http://scubooks.com/books?courses={{sectionIds()}}&ref=scuclasses" class="btn btn-success" target="_blank"><i class="icon-book icon-white"></i> View Book List on SCU&#8226;books</a>
+          <br>
+          <i>Most professors haven't posted their books yet, so this list may be inaccurate!</i>
         </div>
 
-        <div class="alert alert-info show-{{coursesAdded() == 1}}">
+        <div ng-show="coursesAdded() == 1" class="alert alert-info">
           <button type="button" class="close" data-dismiss="alert">&times;</button>
           <p>Now that you've added a class:</p>
           <ul>
-            <li>Click on a section to add it to your schedule.  Conflicting classes are disabled.</li>
-            <li>Look at summary of your schedule, or download your schedule as an Excel file using the buttons above</li>
-            <li>Click the <button class="btn btn-mini" title="Expand/collapse this class"><i class="icon-circle-arrow-up"></i></button> button to collapse a class, and the <button class="btn btn-mini" title="Remove this class"><i class="icon-remove-sign"></i></button> button to delete a class</li>
-            <li>Watch your schedule's unit count on the right.  Normally, you can register for a max of 19 units.</li>
-            <li>All of the information on this website comes from CourseAvail and is updated at the top of every hour</li>
+            <!--<li>Click on a section to add it to your schedule.  Conflicting classes are disabled.</li>-->
+            <li>Open a CourseAvail listing by clicking the <strong>Class ID</strong></li>
+            <li>Open a professor's evaluations by clicking their name</li>
+            <!--<li>Look at summary of your schedule, or download your schedule as an Excel file using the buttons above</li>-->
+            <!--<li>Click the <button class="btn btn-mini" title="Expand/collapse this class"><i class="icon-circle-arrow-up"></i></button> button to collapse a class, and the <button class="btn btn-mini" title="Remove this class"><i class="icon-remove-sign"></i></button> button to delete a class</li>-->
+            <li>Watch your schedule's unit count on the right.  Normally, you can register for a max of <strong>19</strong> units.</li>
+            <li>All of the information on this website comes from CourseAvail and is updated every hour</li>
           </ul>
         </div>
       </div>

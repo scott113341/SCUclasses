@@ -84,7 +84,6 @@ function courseOptionsCtrl($scope,$http,$timeout) {
     $scope.courses = [];
     $scope.core_all = js_core_all;
     $scope.core = js_core;
-    $scope.schedulename = 'Super-Awesome Schedule Name';
 
 
     // update model after typeahead submit
@@ -261,6 +260,9 @@ function courseOptionsCtrl($scope,$http,$timeout) {
                 section.isfull = true;
             }
             else section.isfull = false;
+
+            // set valid no-reason
+            if (valid) section.invalidbecause = '';
 
             return valid;
         }
