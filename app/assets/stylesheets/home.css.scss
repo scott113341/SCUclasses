@@ -53,35 +53,18 @@
     margin-bottom: 5px;
     overflow: hidden;
 
-    -webkit-transition: 300ms;
-    transition: 300ms;
+    -webkit-transition: 200ms;
+    transition: 200ms;
 
     &.show-true {
       margin-bottom: 20px;
-      height: 30px;
+      height: 50px;
     }
   }
 
   .alert {
-    height: 182px;
     text-align: left;
     color: #333;
-    display: none;
-
-    -webkit-transition: 500ms;
-    transition: 500ms;
-
-    &.show-true {
-      display: block;
-    }
-
-    &.show-false {
-      display: block;
-      height: 0;
-      padding: 0;
-      border: none;
-      overflow: hidden;
-    }
   }
 }
 
@@ -316,7 +299,7 @@ div.calendar {
 
 
 // real colors
-$colors: #8AB5E3 #8BCB70 #E3A345 #DD8DDD #BCCC90 #E79586 #76D4CB #CDD048 #FFF07F;
+$colors: #8AB5E3 #FF6068 #E3A345 #DD8DDD #BCCC90 #C6928D #6ED3EF #FFF07F;
 @for $i from 1 through length($colors) {
   $color: nth($colors, $i);
   .course-#{$i} {
