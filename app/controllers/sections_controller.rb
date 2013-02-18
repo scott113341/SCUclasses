@@ -35,7 +35,6 @@ class SectionsController < ApplicationController
           times << time
         end
         times = times.join(' - ')
-        #if (!times) then times = 'undefined'
 
         # push to csv
         csv << section.attributes.values_at('name', 'fullname', 'id', 'seats', 'instructors', 'days') + [times] + section.attributes.values_at('location', 'units')
