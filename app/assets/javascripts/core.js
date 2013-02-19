@@ -51,9 +51,20 @@ var js_core_all = [
     {name:'MULTIWS', fullname:'Winter & Spring'}
 ];
 
-var js_core = js_core_all;
-delete js_core.LAB;
-delete js_core.E_STSPAR;
-delete js_core.MULTIFS;
-delete js_core.MULTIFW;
-delete js_core.MULTIWS;
+
+
+
+
+$(function() {
+    window.js_core = _.filter(js_core_all, function(core) {
+        var remove = [
+            'LAB',
+            'MULTIFS',
+            'MULTIFW',
+            'MULTIWS'
+        ];
+
+        if (_.contains(remove, core.name)) return false;
+        else return true;
+    });
+});

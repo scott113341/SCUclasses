@@ -10,7 +10,7 @@ $(function() {
             }, 0);
             return item;
         }
-    });
+    }).focus();
 
 
     // more info popovers
@@ -30,7 +30,6 @@ $(function() {
 
     // course evaluation linkout
     $(document).on('click', '.course-evaluation', function(e) {
-        console.log('asodifhaosdaosd');
         e.preventDefault();
         $('#course-evaluation-form').find('input').val($(this).attr('data-professor')).parent().submit();
     });
@@ -42,10 +41,6 @@ $(function() {
             scrollTop: 0
         }, 500);
     });
-
-
-    // focus on name
-    $('.input-name').focus();
 });
 
 
@@ -164,7 +159,6 @@ function courseOptionsCtrl($scope,$http,$timeout) {
     // add course by core
     $scope.selectedcore = 'default';
     $scope.addCourseCore = function() {
-        console.log($scope.selectedcore);
         if ($scope.selectedcore != 'default') {
             $scope.addCourse(false, $scope.selectedcore);
         }
@@ -221,30 +215,16 @@ function courseOptionsCtrl($scope,$http,$timeout) {
             _.each($scope.courses, function(course, name) { // for each course
                 _.each(course.sections, function(section2) { // for each section2
                     if (section2.selected == true && valid == true) { // if section2 is selected
-                        // don't share a common day
-                        if (_.intersection(section.days.split(''), section2.days.split('')).length == 0) {
-                            //console.log(section.id, 'doesnt share a day with', section2.id);
-                        }
-
-                        // share common days
-                        else {
+                        // if the sections share common days
+                        if (_.intersection(section.days.split(''), section2.days.split('')).length > 0) {
                             // test if starts during
-                            if (section.time_start.time >= section2.time_start.time && section.time_start.time <= section2.time_end.time) {
-                                //console.log(section.id, 'starts during', section2.id);
-                                valid = false;
-                            }
+                            if (section.time_start.time >= section2.time_start.time && section.time_start.time <= section2.time_end.time) valid = false;
 
                             // test if ends during
-                            if (section.time_end.time >= section2.time_start.time && section.time_end.time <= section2.time_end.time) {
-                                //console.log(section.id, 'ends during', section2.id);
-                                valid = false;
-                            }
+                            if (section.time_end.time >= section2.time_start.time && section.time_end.time <= section2.time_end.time) valid = false;
 
                             // test if starts before and ends after
-                            if (section.time_start.time <= section2.time_start.time && section.time_end.time >= section2.time_end.time) {
-                                //console.log(section.id, 'starts before and ends after', section2.id);
-                                valid = false;
-                            }
+                            if (section.time_start.time <= section2.time_start.time && section.time_end.time >= section2.time_end.time) valid = false;
 
                             // save conflicting section
                             if (valid == false) conflictingsection = section2;
