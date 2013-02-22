@@ -43,4 +43,10 @@ class SectionsController < ApplicationController
 
     send_data csv, :filename => 'Schedule.csv'
   end
+
+
+  def scubooks
+    sections = Section.all
+    render json: sections
+  end
 end
