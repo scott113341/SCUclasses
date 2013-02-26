@@ -82,13 +82,20 @@ end
 
 
 task :update_sections_details => :environment do
+  require 'rest-client'
+  require 'nokogiri'
+  require 'ruby-progressbar'
+
   sections = Section.all
-  i = 1
+
+  progress = ProgressBar.create(
+      :title => 'section details',
+      :total => sections.length,
+      :format => '%t: |%B| %P%%, %e'
+  )
 
   sections.each do |section|
     # get section details
-    require 'rest-client'
-    require 'nokogiri'
     res = RestClient.get('http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr=' + section.id.to_s + '&term=' + TERM)
     res = Nokogiri.HTML(res)
 
@@ -116,10 +123,7 @@ task :update_sections_details => :environment do
 
     section.save
 
-    if i%100 == 0
-      print("added details for section ",i," of ",sections.length,"\n")
-    end
-    i += 1
+    progress.increment
   end
 
   print("done!\n")

@@ -80,6 +80,7 @@ GEM
       json (~> 1.4)
     rest-client (1.6.7)
       mime-types (>= 1.16)
+    ruby-progressbar (1.0.2)
     sass (3.2.5)
     sass-rails (3.2.5)
       railties (~> 3.2.0)
@@ -115,6 +116,7 @@ DEPENDENCIES
   pg
   rails (= 3.2.11)
   rest-client
+  ruby-progressbar
   sass-rails
   sqlite3
   thin

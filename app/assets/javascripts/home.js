@@ -101,17 +101,17 @@ function courseOptionsCtrl($scope,$http,$timeout) {
 
 
     // add course by name via ajax
-    $scope.addCourse = function(name, core) {
+    $scope.addCourse = function(name, core, saved_sections) {
         // parse name
         if (name) name = name.split(' - ')[0];
 
         // request courses and add to model
         var req = '?' + ((name) ? 'name='+name : 'core='+core);
 
-        $http.get('/sections' + req).
-            success(function(sections) {
-                // if not already added
-                if ((_.where($scope.courses, {name: name})==false) && (_.where($scope.courses, {name: core})==false)) {
+        // if not already added
+        if ((_.where($scope.courses, {name: name}).length==0) && (_.where($scope.courses, {name: core}).length==0)) {
+            $http.get('/sections' + req).
+                success(function(sections) {
                     // add course
                     var thiscourse = {};
                     $scope.courses.push(thiscourse);
@@ -129,7 +129,7 @@ function courseOptionsCtrl($scope,$http,$timeout) {
                         // compute more values
                         section.time_start = intTimeToObject(section.time_start);
                         section.time_end = intTimeToObject(section.time_end);
-                        section.selected = false;
+                        section.selected = (_.contains(saved_sections,section.id)) ? true : false;
                         section.style = $scope.sectionCalendarStyle(section);
                         section.cores = (section.core) ? section.core.split(',') : [];
 
@@ -142,17 +142,18 @@ function courseOptionsCtrl($scope,$http,$timeout) {
                         // add to courses
                         thiscourse.sections.push(section);
                     });
-                }
-                console.log($scope.courses);
 
-                $scope.selectedcore = 'default';
-            });
+                    console.log($scope.courses);
+
+                    $scope.selectedcore = 'default';
+                });
+        }
 
         // check for lab section on add course
         var lab = _.filter(js_courses, function(course) {
             return (course.indexOf(name + 'L') != -1);
         });
-        if (lab[0]) $scope.addCourse(lab[0]);
+        if (lab[0] && !saved_sections) $scope.addCourse(lab[0]);
     };
 
 
@@ -233,16 +234,18 @@ function courseOptionsCtrl($scope,$http,$timeout) {
                 });
             });
 
-            // set invalid reason
-            if (valid == false) section.invalidbecause = 'Conflicts with ' + conflictingsection.name;
+            // clear invalid reason
+            section.invalidbecause = '';
+
+            // if section is full
             if (section.seats == 0) {
                 section.invalidbecause = 'Section is full';
                 section.isfull = true;
             }
             else section.isfull = false;
 
-            // set valid no-reason
-            if (valid) section.invalidbecause = '';
+            // if section conflicts
+            if (valid == false) section.invalidbecause = 'Conflicts with ' + conflictingsection.name;
 
             return valid;
         }
@@ -332,6 +335,16 @@ function courseOptionsCtrl($scope,$http,$timeout) {
     };
 
 
+    // check for full/closed sections
+    $scope.fullSections = function() {
+        var badsections = [];
+        _.each($scope.sectionsAdded(), function(section) {
+            if (section.seats == 0) badsections.push(section);
+        });
+        return badsections;
+    };
+
+
     // last updated
     $scope.lastupdated = js_lastupdated - 2;
     $scope.incrementMinute = function() {
@@ -339,5 +352,31 @@ function courseOptionsCtrl($scope,$http,$timeout) {
         $timeout($scope.incrementMinute, 60*1000);
     };
     $scope.incrementMinute();
+
+
+    // load from localstorage
+    if (store.enabled && store.get('courses')) {
+        _.each(store.get('courses'), function(course) {
+            // create add array
+            var add = [false, false, []];
+            add[0] = (!course.iscore) ? course.nameandfullname : false;
+            add[1] = (!course.iscore) ? false : _.findWhere(js_core_all, {fullname: course.nameandfullname.substr(6)}).name;
+
+            // add each selected section id to add array
+            _.each(course.sections, function(section) {
+                if (section.selected) add[2].push(section.id);
+            });
+
+            // add course and selected sections
+            $scope.addCourse(add[0], add[1], add[2]);
+        });
+    }
+
+
+    // save to localstorage
+    $scope.$watch('courses', function(courses) {
+        store.set('courses', courses);
+        console.log('saved');
+    }, true);
 }
 courseOptionsCtrl.$inject = ['$scope','$http','$timeout'];

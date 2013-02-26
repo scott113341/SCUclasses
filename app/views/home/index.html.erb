@@ -66,8 +66,16 @@
           <h4>When you're finished, download your schedule to Excel for easy registration!</h4>
         </div>
 
+        <div ng-show="fullSections().length > 0" class="alert alert-error">
+          <span class="label label-important">Warning!</span>
+          <p>This schedule has classes that are full or closed. If this is ok (for example, if you are automatically registered or have a permission number), you can ignore this warning. Otherwise, please find replacement classes for the following:</p>
+          <ul>
+            <li ng-repeat="section in fullSections()"><strong>{{section.name}}</strong>, number {{section.id}}</li>
+          </ul>
+        </div>
+
         <div class="link-scubooks show-{{sectionsAdded().length > 0}}">
-          <a href="http://scubooks.com/books?courses={{sectionIds()}}&ref=scuclasses" class="btn btn-success" target="_blank"><i class="icon-book icon-white"></i> View Book List on SCU&#8226;books</a>
+          <a href="http://scubooks.com/books?courses={{sectionIds()}}" class="btn btn-success" target="_blank"><i class="icon-book icon-white"></i> View Book List on SCU&#8226;books</a>
           <br>
           <i>Most professors haven't posted their books yet, so this list may be inaccurate!</i>
         </div>
