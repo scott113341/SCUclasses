@@ -259,6 +259,10 @@ function courseOptionsCtrl($scope,$http,$timeout) {
 
         style.top = 25 + (hourheight * (section.time_start.hour24 - 7 + section.time_start.minute/60)) + 'px';
         style.height = hourheight * (section.time_end.hour24 - section.time_start.hour24 + (section.time_end.minute - section.time_start.minute)/60) + 'px';
+        style.computed = {
+            top: style.top,
+            height: style.height
+        };
 
         return style;
     };

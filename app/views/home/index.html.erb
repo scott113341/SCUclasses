@@ -166,7 +166,7 @@
 
               <div ng-repeat="course in courses">
                 <div ng-repeat="section in course.sections">
-                  <div ng-show="showSectionBlock(section, '<%= d %>')" class="course-block course-{{course.number}}" style="top:{{section.style.top}}; height:{{section.style.height}};">
+                  <div ng-show="showSectionBlock(section, '<%= d %>')" class="course-block course-{{course.number}}" ng-style="section.style.computed">
                     <label for="section-{{section.id}}">&times;</label>
                     <div class="name">{{section.name}}</div>
                     <div class="times">{{section.time_start.formatted}} - {{section.time_end.formatted}}</div>

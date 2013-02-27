@@ -1,10 +1,11 @@
 task :update_sections => :environment do
+  require 'rest-client'
+  require 'nokogiri'
+
   start = Time.now
   print(Section.count, " existing sections\n")
 
   # get section list
-  require 'rest-client'
-  require 'nokogiri'
   res = RestClient.get('http://www.scu.edu/courseavail/search/index.cfm?fuseAction=search&StartRow=1&MaxRow=4000&acad_career=all&school=&subject=&catalog_num=&instructor_name1=&days1=&start_time1=&start_time2=23&header=yes&footer=yes&term=' + TERM)
   res = Nokogiri.HTML(res)
 
