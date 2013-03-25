@@ -45,6 +45,7 @@ class SectionsController < ApplicationController
   end
 
 
+  # export interface for scubooks
   def scubooks
     sections = Section.all
     render json: sections

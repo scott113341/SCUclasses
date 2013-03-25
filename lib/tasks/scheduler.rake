@@ -16,6 +16,8 @@ task :update_sections => :environment do
 
       # parse date and time
       scheduletext = section.css('td')[4].text.strip
+
+      # check that schedule is defined
       if scheduletext == '-'
         days = ''
         time_start = 0
