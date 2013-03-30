@@ -110,7 +110,7 @@ function courseOptionsCtrl($scope,$http,$timeout) {
 
         // if not already added
         if ((_.where($scope.courses, {name: name}).length==0) && (_.where($scope.courses, {name: core}).length==0)) {
-            $http.get('/sections' + req).
+            $http.get('/search' + req).
                 success(function(sections) {
                     // add course
                     var thiscourse = {};

@@ -1,7 +1,7 @@
 Scuclasses::Application.routes.draw do
-  match 'sections' => 'sections#sections'
-  match 'export' => 'sections#export'
-  match 'scubooks' => 'sections#scubooks'
+  match 'search' => 'home#search'
+  match 'export' => 'home#export'
+  match 'scubooks' => 'home#scubooks'
 
   root :to => 'home#index'
 end
