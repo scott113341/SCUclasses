@@ -279,9 +279,9 @@ function courseOptionsCtrl($scope,$http,$timeout) {
     };
 
 
-    // pluralize seats?
-    $scope.plural = function(seats) {
-        if (seats == 1) return '';
+    // pluralize
+    $scope.plural = function(num) {
+        if (num == 1) return '';
         else return 's';
     };
 
