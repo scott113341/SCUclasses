@@ -358,6 +358,13 @@ function courseOptionsCtrl($scope,$http,$timeout) {
     $scope.incrementMinute();
 
 
+    // clear localstorage if new term
+    if (store.get('term') != js_term) {
+        store.remove('courses');
+        store.set('term', js_term);
+    }
+
+
     // load from localstorage
     if (store.enabled && store.get('courses')) {
         _.each(store.get('courses'), function(course) {

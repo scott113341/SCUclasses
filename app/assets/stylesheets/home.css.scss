@@ -39,6 +39,12 @@
     height: 200px;
     padding-top: 20px;
 
+    .quarter {
+      background-color: #02A672;
+      color: white;
+      padding: 0 3px;
+    }
+
     -webkit-transition: 1s;
     transition: 1s;
   }
