@@ -54,7 +54,7 @@
 
         <br><br>
 
-        <input ng-model="addCourseText" class="input-course" type="text" placeholder='Type a class, like "RSOC 9"'/>
+        <input type="text" placeholder='Type a class, like "RSOC 9"' data-items="25" ng-model="addCourseText" bs-typeahead="addCourseTextSearch" />
         <strong>OR</strong>
         <select ng-change="addCourseCore()" ng-model="selectedcore" ng-options="value.name as value.fullname for value in core"></select>
 

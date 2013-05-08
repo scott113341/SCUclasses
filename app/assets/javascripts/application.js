@@ -13,6 +13,7 @@
 // angular
 //= require lib/angular.min.js
 //= require lib/angular-strap.js
+//= require app/app.js
 //= require_tree ./app
 
 // everything else

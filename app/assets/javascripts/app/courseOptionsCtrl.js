@@ -1,25 +1,25 @@
-function courseOptionsCtrl($scope,$http,$timeout) {
+app.controller('courseOptionsCtrl', function($scope, $http, $timeout) {
   $scope.courses = [];
   $scope.core_all = js_core_all;
   $scope.core = js_core;
 
 
-  // update model after typeahead submit
-  $('[ng-model="addCourseText"]').change(function(event) {
-    $scope.$apply(function(scope){
-      scope.addCourseText = event.target.value;
+  // typeahead search function
+  $scope.addCourseTextSearch = function(query) {
+    return $.map(js_courses, function(country) {
+      return country;
     });
-  });
+  };
 
 
-  // submit listener from typeahead select callback
-  $scope.$on('submit', function(e,a) {
-    // extract course name from input and clear
-    var name = $scope.addCourseText;
-    $('[ng-model="addCourseText"]').val('').focus();
-
+  // typeahead selection listener
+  $scope.$on('typeahead-updated', function() {
     // add course
-    $scope.addCourse(name, false);
+    $scope.addCourse($scope.addCourseText, false);
+
+    // reset input
+    $scope.addCourseText = '';
+    $('[ng-model="addCourseText"]').focus();
   });
 
 
@@ -312,5 +312,4 @@ function courseOptionsCtrl($scope,$http,$timeout) {
     store.set('courses', courses);
     console.log('saved');
   }, true);
-}
-courseOptionsCtrl.$inject = ['$scope','$http','$timeout'];
+});

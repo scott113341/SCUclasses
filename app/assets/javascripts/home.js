@@ -1,16 +1,6 @@
 $(function() {
-    // course typeahead
-    $('[ng-model="addCourseText"]').typeahead({
-        source: js_courses,
-        items: 25,
-        updater: function(item) {
-            // trigger input submit
-            setTimeout(function() {
-                angular.element(document).scope().$broadcast('submit');
-            }, 0);
-            return item;
-        }
-    }).focus();
+    // focus course typeahead
+    $('[ng-model="addCourseText"]').focus();
 
 
     // more info popovers
