@@ -1,4 +1,4 @@
-app.controller('courseOptionsCtrl', function($scope, $http, $timeout) {
+app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
   $scope.courses = [];
   $scope.core_all = js_core_all;
   $scope.core = js_core;
@@ -312,4 +312,4 @@ app.controller('courseOptionsCtrl', function($scope, $http, $timeout) {
     store.set('courses', courses);
     console.log('saved');
   }, true);
-});
+}]);
