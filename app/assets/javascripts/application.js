@@ -8,7 +8,7 @@
 //= require lib/underscore.js
 
 // angular app dependencies
-//= require core.js
+//= require app/core.js
 
 // angular
 //= require lib/angular.min.js
