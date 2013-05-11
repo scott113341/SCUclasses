@@ -18,7 +18,7 @@ angular.module('$strap.directives').directive('bsAlert', [
   '$timeout',
   '$compile',
   function ($parse, $timeout, $compile) {
-    'use strict';
+    
     return {
       restrict: 'A',
       link: function postLink(scope, element, attrs) {
@@ -96,7 +96,7 @@ angular.module('$strap.directives').directive('bsButton', [
   '$parse',
   '$timeout',
   function ($parse, $timeout) {
-    'use strict';
+    
     return {
       restrict: 'A',
       require: '?ngModel',
@@ -151,7 +151,7 @@ angular.module('$strap.directives').directive('bsButton', [
 ]).directive('bsButtonsCheckbox', [
   '$parse',
   function ($parse) {
-    'use strict';
+    
     return {
       restrict: 'A',
       require: '?ngModel',
@@ -165,7 +165,7 @@ angular.module('$strap.directives').directive('bsButton', [
 ]).directive('bsButtonsRadio', [
   '$timeout',
   function ($timeout) {
-    'use strict';
+    
     return {
       restrict: 'A',
       require: '?ngModel',
@@ -204,7 +204,7 @@ angular.module('$strap.directives').directive('bsButtonSelect', [
   '$parse',
   '$timeout',
   function ($parse, $timeout) {
-    'use strict';
+    
     return {
       restrict: 'A',
       require: '?ngModel',
@@ -237,7 +237,7 @@ angular.module('$strap.directives').directive('bsDatepicker', [
   '$timeout',
   '$strapConfig',
   function ($timeout, $strapConfig) {
-    'use strict';
+    
     var isAppleTouch = /(iPad|iPho(ne|d))/g.test(navigator.userAgent);
     var regexpMap = function regexpMap(language) {
       language = language || 'en';
@@ -365,7 +365,7 @@ angular.module('$strap.directives').directive('bsDropdown', [
   '$compile',
   '$timeout',
   function ($parse, $compile, $timeout) {
-    'use strict';
+    
     var buildTemplate = function (items, ul) {
       if (!ul)
         ul = [
@@ -408,7 +408,7 @@ angular.module('$strap.directives').factory('$modal', [
   '$q',
   '$templateCache',
   function ($rootScope, $compile, $http, $timeout, $q, $templateCache) {
-    'use strict';
+    
     var ModalFactory = function ModalFactory(options) {
       function Modal(options) {
         if (!options)
@@ -471,7 +471,7 @@ angular.module('$strap.directives').factory('$modal', [
   '$q',
   '$modal',
   function ($q, $modal) {
-    'use strict';
+    
     return {
       restrict: 'A',
       scope: true,
@@ -494,7 +494,7 @@ angular.module('$strap.directives').factory('$modal', [
 angular.module('$strap.directives').directive('bsNavbar', [
   '$location',
   function ($location) {
-    'use strict';
+    
     return {
       restrict: 'A',
       link: function postLink(scope, element, attrs, controller) {
@@ -522,7 +522,7 @@ angular.module('$strap.directives').directive('bsPopover', [
   '$q',
   '$templateCache',
   function ($parse, $compile, $http, $timeout, $q, $templateCache) {
-    'use strict';
+    
     $('body').on('keyup', function (ev) {
       if (ev.keyCode === 27) {
         $('.popover.in').each(function () {
@@ -606,7 +606,7 @@ angular.module('$strap.directives').directive('bsPopover', [
 angular.module('$strap.directives').directive('bsSelect', [
   '$timeout',
   function ($timeout) {
-    'use strict';
+    
     var NG_OPTIONS_REGEXP = /^\s*(.*?)(?:\s+as\s+(.*?))?(?:\s+group\s+by\s+(.*))?\s+for\s+(?:([\$\w][\$\w\d]*)|(?:\(\s*([\$\w][\$\w\d]*)\s*,\s*([\$\w][\$\w\d]*)\s*\)))\s+in\s+(.*)$/;
     return {
       restrict: 'A',
@@ -633,7 +633,7 @@ angular.module('$strap.directives').directive('bsTabs', [
   '$compile',
   '$timeout',
   function ($parse, $compile, $timeout) {
-    'use strict';
+    
     var template = '<div class="tabs">' + '<ul class="nav nav-tabs">' + '<li ng-repeat="pane in panes" ng-class="{active:pane.active}">' + '<a data-target="#{{pane.id}}" data-index="{{$index}}" data-toggle="tab">{{pane.title}}</a>' + '</li>' + '</ul>' + '<div class="tab-content" ng-transclude>' + '</div>';
     return {
       restrict: 'A',
@@ -698,7 +698,7 @@ angular.module('$strap.directives').directive('bsTabs', [
 angular.module('$strap.directives').directive('bsTimepicker', [
   '$timeout',
   function ($timeout) {
-    'use strict';
+    
     var TIME_REGEXP = '((?:(?:[0-1][0-9])|(?:[2][0-3])|(?:[0-9])):(?:[0-5][0-9])(?::[0-5][0-9])?(?:\\s?(?:am|AM|pm|PM))?)';
     return {
       restrict: 'A',
@@ -737,7 +737,7 @@ angular.module('$strap.directives').directive('bsTooltip', [
   '$parse',
   '$compile',
   function ($parse, $compile) {
-    'use strict';
+    
     return {
       restrict: 'A',
       scope: true,
@@ -787,7 +787,7 @@ angular.module('$strap.directives').directive('bsTooltip', [
 angular.module('$strap.directives').directive('bsTypeahead', [
   '$parse',
   function ($parse) {
-    'use strict';
+    
     return {
       restrict: 'A',
       require: '?ngModel',
