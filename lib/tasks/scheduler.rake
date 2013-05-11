@@ -47,7 +47,7 @@ task :update_sections => :environment do
       # set section properties
       thissection.id = id
       thissection.name = section.css('td')[0].text.strip
-      thissection.fullname = section.css('td')[3].text.strip
+      thissection.fullname = section.css('td')[3].text.strip.gsub(/\s{2,}/, ' ')
       thissection.seats = section.css('td')[7].text.to_i
       thissection.instructors = section.css('td')[6].text.strip
       thissection.days = days
