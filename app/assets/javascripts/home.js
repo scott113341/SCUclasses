@@ -1,8 +1,4 @@
 $(function() {
-    // focus course typeahead
-    $('[ng-model="addCourseText"]').focus();
-
-
     // more info popovers
     $(document).popover({
         selector: '[rel=popover]',
