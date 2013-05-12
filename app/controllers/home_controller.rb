@@ -46,6 +46,90 @@ class HomeController < ApplicationController
 
 
 
+  def search2
+    # sql query and parameters
+    query = 'id != 0'
+    queryparams = {}
+
+    unless params[:name].blank?
+      query += ' AND name = :name'
+      queryparams[:name] = params[:name]
+    end
+
+    unless params[:fullname].blank?
+      query += ' AND fullname = :fullname'
+      queryparams[:fullname] = params[:fullname]
+    end
+
+    unless params[:instructors].blank?
+      query += ' AND instructors = :instructors'
+      queryparams[:instructors] = params[:instructors]
+    end
+
+    unless params[:seats].blank?
+      query += ' AND seats > :seats'
+      queryparams[:seats] = 0
+    end
+
+    unless params[:days].blank?
+      query += ' AND days IN (:days)'
+      queryparams[:days] = ['']
+      queryparams[:days].concat params[:days].chars.to_a &:join
+      queryparams[:days].concat params[:days].chars.to_a.combination(2).map &:join
+      queryparams[:days].concat params[:days].chars.to_a.combination(3).map &:join
+    end
+
+    unless params[:time_start].blank?
+      before = params[:time_start].split(',')[0] == 'b'
+      query += ' AND time_start'
+      query += (before) ? ' <= ' : ' >= '
+      query += ':time_start'
+      queryparams[:time_start] = params[:time_start].split(',')[1]
+    end
+
+    unless params[:time_end].blank?
+      before = params[:time_end].split(',')[0] == 'b'
+      query += ' AND time_end'
+      query += (before) ? ' <= ' : ' >= '
+      query += ':time_end'
+      queryparams[:time_end] = params[:time_end].split(',')[1]
+    end
+
+    unless params[:units].blank?
+      query += ' AND units >= :units_min'
+      query += ' AND units <= :units_max'
+      queryparams[:units_min] = params[:units].split(',')[0]
+      queryparams[:units_max] = params[:units].split(',')[1]
+    end
+
+    unless params[:core].blank?
+      query += " AND (core NOT LIKE 'z'"
+      params[:core].split(',').each_with_index do |core, i|
+        query += ' AND core LIKE :core' + i.to_s
+        queryparams['core' + i.to_s] = '%' + core + '%'
+      end
+      query += ')'
+    end
+
+    # exclude non-timed classes
+    unless params[:time_end].blank? && params[:time_start].blank?
+      query += ' AND time_start != 0'
+      query += ' AND time_end != 0'
+    end
+
+    # execute query
+    if params[:id].blank?
+      sections = Section.where(query, queryparams.symbolize_keys)
+    else
+      sections = Section.find(params[:id])
+    end
+
+    # render query
+    render :json => [query, queryparams, sections]
+  end
+
+
+
   def export
     require 'csv'
 
