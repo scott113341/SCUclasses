@@ -4,6 +4,7 @@ task :update_sections => :environment do
 
   start = Time.now
   print(Section.count, " existing sections\n")
+  newsections = 0
 
   # get section list
   res = RestClient.get('http://www.scu.edu/courseavail/search/index.cfm?fuseAction=search&StartRow=1&MaxRow=4000&acad_career=all&school=&subject=&catalog_num=&instructor_name1=&days1=&start_time1=&start_time2=23&header=yes&footer=yes&term=' + TERM)
@@ -42,6 +43,7 @@ task :update_sections => :environment do
         thissection = Section.find(id)
       else
         thissection = Section.new
+        newsections += 1
       end
 
       # set section properties
@@ -64,8 +66,11 @@ task :update_sections => :environment do
   todelete.destroy_all
 
   print(Section.count, " sections updated\n")
+  print(newsections, " new sections\n")
 
-  Rake::Task['update_sections_details'].execute
+  if newsections > 0 || Time.now.hour%4 == 0
+    Rake::Task['update_sections_details'].execute
+  end
 
   print("update took ", ((Time.now - start)/60).round(2), " minutes\n")
 end
@@ -108,7 +113,7 @@ task :update_sections_details => :environment do
       value = detail.css('td').text.strip
 
       if 'Description' == detail.css('th').text.strip
-        section.description = value
+        section.description = value.gsub(/\s{2,}/, ' ')
       end
 
       if detail_name.match(/2009 Core/)
