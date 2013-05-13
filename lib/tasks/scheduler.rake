@@ -7,7 +7,8 @@ task :update_sections => :environment do
   newsections = 0
 
   # get section list
-  res = RestClient.get('http://www.scu.edu/courseavail/search/index.cfm?fuseAction=search&StartRow=1&MaxRow=4000&acad_career=all&school=&subject=&catalog_num=&instructor_name1=&days1=&start_time1=&start_time2=23&header=yes&footer=yes&term=' + TERM)
+  url = 'http://www.scu.edu/courseavail/search/index.cfm?fuseAction=search&StartRow=1&MaxRow=4000&acad_career=all&school=&subject=&catalog_num=&instructor_name1=&days1=&start_time1=&start_time2=23&header=yes&footer=yes&term=' + TERM
+  res = RestClient::Request.execute(:method => :get, :url => url, :timeout => 100)
   res = Nokogiri.HTML(res)
 
   # parse, set, and save section list
