@@ -46,7 +46,8 @@ class HomeController < ApplicationController
 
 
 
-  def search2
+  # advanced search
+  def advanced_search
     # sql query and parameters
     query = 'id != 0'
     queryparams = {}
@@ -80,19 +81,21 @@ class HomeController < ApplicationController
     end
 
     unless params[:time_start].blank?
-      before = params[:time_start].split(',')[0] == 'b'
+      before = params[:time_start][0] == 'b'
+      time = parse_time(params[:time_start][1..-1])
       query += ' AND time_start'
       query += (before) ? ' <= ' : ' >= '
       query += ':time_start'
-      queryparams[:time_start] = params[:time_start].split(',')[1]
+      queryparams[:time_start] = time
     end
 
     unless params[:time_end].blank?
-      before = params[:time_end].split(',')[0] == 'b'
+      before = params[:time_end][0] == 'b'
+      time = parse_time(params[:time_end][1..-1])
       query += ' AND time_end'
       query += (before) ? ' <= ' : ' >= '
       query += ':time_end'
-      queryparams[:time_end] = params[:time_end].split(',')[1]
+      queryparams[:time_end] = time
     end
 
     unless params[:units].blank?
@@ -111,6 +114,11 @@ class HomeController < ApplicationController
       query += ')'
     end
 
+    unless params[:department].blank?
+      query += ' AND name LIKE :department'
+      queryparams[:department] = params[:department] + '%'
+    end
+
     # exclude non-timed classes
     unless params[:time_end].blank? && params[:time_start].blank?
       query += ' AND time_start != 0'
@@ -121,15 +129,32 @@ class HomeController < ApplicationController
     if params[:id].blank?
       sections = Section.where(query, queryparams.symbolize_keys)
     else
-      sections = Section.find(params[:id])
+      sections = Section.where('id = ?', params[:id])
     end
 
     # render query
-    render :json => [query, queryparams, sections]
+    #render :json => [query, queryparams, sections]
+    render :json => sections
   end
 
 
 
+  # real time search
+  def rt_search
+    results = []
+
+    if params[:id]
+      results = Section.select('id').where('id LIKE ?', params[:id]+'%').map{|course| course.id.to_s}
+    elsif params[:department]
+      results = Section.select('DISTINCT name').where('name LIKE ?', params[:department]+'%').map{|course| course.name.split(' ')[0]}.uniq()
+    end
+
+    render :json => results
+  end
+
+
+
+  # csv export
   def export
     require 'csv'
 
