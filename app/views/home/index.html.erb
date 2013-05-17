@@ -81,17 +81,6 @@
           <br>
           <i>Most professors haven't posted their books yet, so this list may be inaccurate!</i>
         </div>-->
-
-        <div ng-show="coursesAdded() == 1" class="alert alert-info">
-          <button type="button" class="close" data-dismiss="alert">&times;</button>
-          <p>Now that you've added a class:</p>
-          <ul>
-            <li>Open a CourseAvail listing by clicking the <strong>Class ID</strong></li>
-            <li>Open a professor's evaluations by clicking their name</li>
-            <li>Watch your schedule's unit count on the right.  Normally, you can register for a max of <strong>19</strong> units.</li>
-            <li>All of the information on this website comes from CourseAvail and is updated every hour</li>
-          </ul>
-        </div>
       </div>
 
       <div ng-repeat="course in courses | orderBy:'number':true" class="course course-{{course.number}} show-{{course.show}}">
@@ -125,7 +114,7 @@
                     <span class="remaining">seat{{plural(section.seats)}} remaining</span>
                   </td>
                   <td class="moreinfo">
-                    <a class="btn btn-mini" rel="popover" data-original-title="{{section.fullname}}" data-content="{{popoverInfo(section)}}">More Info</a>
+                    <a class="btn btn-mini btn-success" rel="popover" data-original-title="{{section.fullname}}" data-content="{{popoverInfo(section)}}">More Info</a>
                     <span ng-show="section.islab" class="label label-info">lab section</span>
                   </td>
                   <td class="info">
