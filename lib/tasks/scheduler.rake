@@ -30,8 +30,8 @@ task :update_sections => :environment do
 
         # check that time is well-formed
         if days != nil && times != nil
-          time_start = parseTime(times[1])
-          time_end = parseTime(times[2])
+          time_start = parse_time(times[1])
+          time_end = parse_time(times[2])
         else
           days = ''
           time_start = 0
@@ -69,14 +69,14 @@ task :update_sections => :environment do
   print(Section.count, " sections updated\n")
   print(newsections, " new sections\n")
 
-  if newsections > 0 || Time.now.hour%4 == 0
+  if newsections > 0 || Time.now.hour%4 == 0 || true
     Rake::Task['update_sections_details'].execute
   end
 
   print("update took ", ((Time.now - start)/60).round(2), " minutes\n")
 end
 
-def parseTime(time)
+def parse_time(time)
   time = /(\d{2}):(\d{2})\s([APM]{2})/.match(time)
   hours = time[1].to_i * 100
   minutes = time[2].to_i
