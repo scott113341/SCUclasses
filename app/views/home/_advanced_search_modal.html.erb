@@ -1,0 +1,135 @@
+<div id="search" class="modal hide fade">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h3>Advanced Search</h3>
+  </div>
+  <div class="modal-body">
+    <div class="row-fluid">
+      <div class="span5">
+
+        <div class="row-fluid">
+          <label for="id-active"><div class="span4 searchlabel active-{{search.id.active}}">Class ID number</div></label>
+          <div class="span8 asdf fields active-{{search.id.active}}">
+            <p>must be <input type="text" id="id" class="input-small" placeholder="Ex: 91028" ng-disabled="!search.id.active" ng-model="search.id.value.id" bs-typeahead="search.id.rtsearch" /></p>
+            <input id="id-active" class="hidden" type="checkbox" ng-model="search.id.active" />
+          </div>
+        </div>
+
+        <div class="row-fluid">
+          <label for="core-active"><div class="span4 searchlabel active-{{search.core.active}}">Core requirements</div></label>
+          <div class="span8 asdf fields active-{{search.core.active}}">
+            <p>include <select ng-change="addCourseCore()" ng-disabled="!search.core.active" ng-model="search.core.value.core" ng-options="value.name as value.fullname for value in core"></select></p>
+            <input id="core-active" class="hidden" type="checkbox" ng-model="search.core.active" />
+          </div>
+        </div>
+
+        <div class="row-fluid">
+          <label for="department-active"><div class="span4 searchlabel active-{{search.department.active}}">Department</div></label>
+          <div class="span8 fields active-{{search.department.active}}">
+            <p>must be <input type="text" id="department" class="input-small" placeholder="Ex: ENGL" ng-disabled="!search.department.active" ng-model="search.department.value.department" bs-typeahead="search.department.rtsearch" /></p>
+            <input id="department-active" type="checkbox" class="hidden" ng-model="search.department.active" />
+          </div>
+        </div>
+
+        <div class="row-fluid">
+          <label for="seats-active"><div class="span4 searchlabel active-{{search.seats.active}}">Open seats</div></label>
+          <div class="span8 fields active-{{search.seats.active}}">
+            <label for="seats-active"><p class="tall">must still be available</p></label>
+            <input id="seats-active" type="checkbox" class="hidden" ng-model="search.seats.active" ng-change="search.seats.value.seats=search.seats.active" />
+          </div>
+        </div>
+
+        <div class="row-fluid">
+          <label for="time_start-active"><div class="span4 searchlabel active-{{search.time_start.active}}">Start time</div></label>
+          <div class="span8 fields active-{{search.time_start.active}}">
+            <p>must be <select class="input-small" ng-disabled="!search.time_start.active" ng-model="search.time_start.values_raw.ba"><option value="b">before</option><option value="a">after</option></select> <input type="text" class="input-small" ng-disabled="!search.time_start.active" ng-model="search.time_start.values_raw.time" bs-timepicker value="10:00 AM" /></p>
+            <input id="time_start-active" type="checkbox" class="hidden" ng-model="search.time_start.active" />
+
+            <input type="hidden" ng-model="search.time_start.active" />
+            <input type="hidden" ng-model="search.time_start.active" />
+          </div>
+        </div>
+
+        <div class="row-fluid">
+          <label for="time_end-active"><div class="span4 searchlabel active-{{search.time_end.active}}">End time</div></label>
+          <div class="span8 fields active-{{search.time_end.active}}">
+            <p>must be <select class="input-small" ng-disabled="!search.time_end.active" ng-model="search.time_end.values_raw.ba"><option value="b">before</option><option value="a">after</option></select> <input type="text" class="input-small" ng-disabled="!search.time_end.active" ng-model="search.time_end.values_raw.time" bs-timepicker value="03:00 PM" /></p>
+            <input id="time_end-active" type="checkbox" class="hidden" ng-model="search.time_end.active" />
+          </div>
+        </div>
+
+        <div class="row-fluid">
+          <label for="days-active"><div class="span4 searchlabel active-{{search.days.active}}">Class days</div></label>
+          <div class="span8 fields active-{{search.days.active}}">
+            <p class="tall">may include</p>
+            <div class="btn-toolbar">
+              <div class="btn-group">
+                <button class="btn btn-mini active-{{search.days.values_raw.m}}" ng-disabled="!search.days.active" ng-click="search.days.values_raw.m=!search.days.values_raw.m" ng-model="search.days.values_raw.m">Mo</button>
+                <button class="btn btn-mini active-{{search.days.values_raw.t}}" ng-disabled="!search.days.active" ng-click="search.days.values_raw.t=!search.days.values_raw.t" ng-model="search.days.values_raw.t">Tu</button>
+                <button class="btn btn-mini active-{{search.days.values_raw.w}}" ng-disabled="!search.days.active" ng-click="search.days.values_raw.w=!search.days.values_raw.w" ng-model="search.days.values_raw.w">We</button>
+                <button class="btn btn-mini active-{{search.days.values_raw.r}}" ng-disabled="!search.days.active" ng-click="search.days.values_raw.r=!search.days.values_raw.r" ng-model="search.days.values_raw.r">Th</button>
+                <button class="btn btn-mini active-{{search.days.values_raw.f}}" ng-disabled="!search.days.active" ng-click="search.days.values_raw.f=!search.days.values_raw.f" ng-model="search.days.values_raw.f">Fr</button>
+                <button class="btn btn-mini active-{{search.days.values_raw.s}}" ng-disabled="!search.days.active" ng-click="search.days.values_raw.s=!search.days.values_raw.s" ng-model="search.days.values_raw.s">Sa</button>
+                <button class="btn btn-mini active-{{search.days.values_raw.u}}" ng-disabled="!search.days.active" ng-click="search.days.values_raw.u=!search.days.values_raw.u" ng-model="search.days.values_raw.u">Su</button>
+              </div>
+            </div>
+            <input id="days-active" type="checkbox" class="hidden" ng-model="search.days.active" />
+          </div>
+        </div>
+
+        <div class="row-fluid">
+          <div class="offset4 span8">
+            <br>
+            <button class="btn btn-primary" ng-click="search2()"><i class="icon-search icon-white"></i> Search</button>
+            <button class="btn btn-success" ng-click="search2()"><i class="icon-plus-sign icon-white"></i> Add Search</button>
+          </div>
+        </div>
+
+      </div>
+      <div class="span7">
+        <div class="row-fluid">
+          <div class="course course-0 show-true">
+            <div class="inner">
+              <h4>Search Results ({{searchresults.length}})</h4>
+              <div ng-repeat="section in searchresults" class="section selected-{{section.selected}} validchoice-{{isValidChoice(section)}} isfull-{{section.isfull}}" data-original-title="{{section.invalidbecause}}" rel="tooltip">
+                <table>
+                  <tbody>
+                  <tr>
+                    <td class="name">
+                      {{section.name}}
+                    </td>
+                    <td class="schedule">
+                      <span class="days">{{section.days}}</span>
+                      <br>
+                      <span class="times">{{section.time_start.formatted}} - {{section.time_end.formatted}}</span>
+                    </td>
+                    <td class="seats">
+                      <span class="seats">{{section.seats}}</span>
+                      <br>
+                      <span class="remaining">seat{{plural(section.seats)}} remaining</span>
+                    </td>
+                    <td class="moreinfo">
+                      <a class="btn btn-mini btn-success" href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{section.id}}&term=<%= TERM %>" title="Opens the CourseAvail listing for this section" target="_blank">More Info</a>
+                      <span ng-show="section.islab" class="label label-info">lab section</span>
+                    </td>
+                    <td class="info">
+                      <span><strong>Name:</strong> {{section.fullname}}</span>
+                      <br>
+                      <span><strong>Class ID:</strong> <a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{section.id}}&term=<%= TERM %>" title="Opens the CourseAvail listing for this section" target="_blank">{{section.id}}</a></span>
+                      <br>
+                      <span><strong>Professor:</strong> <a class="course-evaluation" data-professor="{{section.instructors}}" title="Opens course evaluations for this professor">{{section.instructors}}</a></span>
+                    </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal">Close</button>
+  </div>
+</div>

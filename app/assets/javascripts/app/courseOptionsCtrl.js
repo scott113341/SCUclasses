@@ -4,6 +4,118 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
   $scope.core = js_core;
 
 
+  // advanced search field setup
+  $scope.search = {
+    id: {},
+    core: {},
+    department: {},
+    seats: {},
+    time_start: {
+      format: function(values_raw) {
+        if (values_raw.ba && values_raw.time) return { time_start: values_raw.ba + values_raw.time };
+        else return {};
+      }
+    },
+    time_end: {
+      format: function(values_raw) {
+        if (values_raw.ba && values_raw.time) return { time_end: values_raw.ba + values_raw.time };
+        else return {};
+      }
+    },
+    days: {
+      format: function(values_raw) {
+        var days = '';
+        _.each(values_raw, function(selected, day) {
+          if (selected) days += day.toUpperCase();
+        });
+        return {days: days};
+      }
+    }
+  };
+  _.each($scope.search, function(search, id) {
+    search.id = id;
+    search.active = false;
+    search.values_raw = {};
+    search.value = {};
+    search.rtsearch = function(a,b) { $scope.rtsearch(a,b,id); };
+  });
+
+
+  // advanced search request
+  $scope.searchresults = {};
+  $scope.search2 = function() {
+    url = '/advanced_search?';
+
+    // for each field
+    _.each($scope.search, function(search) {
+      // if field is active
+      if (search.active) {
+        // format if there is extra formatting rule
+        if (search.format) search.value = search.format(search.values_raw);
+
+        // add search parameters
+        _.each(search.value, function(value, key) {
+          url += '&' + key + '=' + value;
+        });
+      }
+    });
+    console.log(url);
+
+    // do search and show search results
+    $http.get(url).success(function(res) {
+      console.log(res);
+      $scope.searchresults = $scope.formatSections(res);
+    });
+  };
+
+
+  // realtime search for typeahead
+  $scope.rtsearch = function(query, callback, field) {
+    var url = '/rt_search?' + field + '=' + query;
+    $http.get(url).success(function(res) {
+      callback(res);
+    });
+  };
+
+
+
+
+
+  $scope.formatSections = function(sections) {
+    _.each(sections,function(section) {
+      // compute values
+      section.time_start = intTimeToObject(section.time_start);
+      section.time_end = intTimeToObject(section.time_end);
+
+      console.log(section.time_start);
+
+      section.selected = false;
+      section.style = $scope.sectionCalendarStyle(section);
+      section.cores = (section.core) ? section.core.split(',') : [];
+
+      if (/lab/gi.test(section.fullname)) {
+        section.cores.push('LAB');
+        section.islab = true;
+      }
+      else section.islab = false;
+    });
+
+    return sections;
+  };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   // typeahead search function
   $scope.addCourseTextSearch = function(query) {
     return $.map(js_courses, function(country) {

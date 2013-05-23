@@ -1,5 +1,7 @@
 <div ng-controller="courseOptionsCtrl" class="container-fluid">
 
+  <%= render 'advanced_search_modal' %>
+
   <div id="schedule" class="modal hide fade">
     <div class="modal-header">
       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -57,6 +59,9 @@
         <input type="text" placeholder='Type a class, like "RSOC 9"' data-items="25" ng-model="addCourseText" bs-typeahead="addCourseTextSearch" />
         <strong>OR</strong>
         <select ng-change="addCourseCore()" ng-model="selectedcore" ng-options="value.name as value.fullname for value in core"></select>
+
+        <br><br>
+        <button data-toggle="modal" data-target="#search" class="btn btn-primary btn-small"><i class="icon-th-list icon-white"></i> Advanced Search</button>
 
         <div class="welcome hide-{{hideWelcomeMessage()}}">
           <h3>Welcome to SCU&#8226;classes.</h3>

@@ -1,17 +1,57 @@
 .modal {
-  width: 80%;
+  width: 90%;
   margin: -250px 0 0 0;
-  left: 10%;
+  left: 5%;
 
   &.in {
     top: 50% !important;
   }
 
-  table {
-    width: 100%;
+  label {
+    margin: 0;
+  }
 
-    td {
-      text-align: center;
+  &#search {
+    .searchlabel {
+      padding: 4px 8px 0 0;
+      text-align: right;
+      -webkit-transition: 0.2s;
+
+      &.active-true {
+        font-weight: bold;
+        background: lightgreen;
+      }
+
+      &:hover {
+        background: lightgreen;
+      }
+    }
+    .fields {
+      opacity: 0.3;
+      -webkit-transition: 0.2s;
+
+      &.active-true {
+        opacity: 1;
+      }
+
+      input, select {
+        margin: 0;
+      }
+
+      .tall {
+        line-height: 28px;
+        float: left;
+      }
+
+      .btn-toolbar {
+        float: left;
+        margin: 4px 0 0 10px;
+
+        .active-true {
+          color: white;
+          background: darkgreen;
+        }
+      }
     }
   }
 }
