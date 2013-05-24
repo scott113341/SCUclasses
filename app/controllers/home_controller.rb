@@ -99,10 +99,8 @@ class HomeController < ApplicationController
     end
 
     unless params[:units].blank?
-      query += ' AND units >= :units_min'
-      query += ' AND units <= :units_max'
-      queryparams[:units_min] = params[:units].split(',')[0]
-      queryparams[:units_max] = params[:units].split(',')[1]
+      query += ' AND units IN (:units)'
+      queryparams[:units] = params[:units].split(',')
     end
 
     unless params[:core].blank?

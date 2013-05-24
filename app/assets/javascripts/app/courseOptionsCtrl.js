@@ -29,13 +29,37 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
           if (selected) days += day.toUpperCase();
         });
         return {days: days};
+      },
+      values_raw: {
+        m: true,
+        t: true,
+        w: true,
+        r: true,
+        f: true
+      }
+    },
+    units: {
+      format: function(values_raw) {
+        var units = [];
+        _.each(values_raw, function(selected, unit) {
+          if (selected) units.push(unit);
+        });
+        units = units.join(',');
+        return {units: units};
+      },
+      values_raw: {
+        1: true,
+        2: true,
+        3: true,
+        4: true,
+        5: true
       }
     }
   };
   _.each($scope.search, function(search, id) {
     search.id = id;
     search.active = false;
-    search.values_raw = {};
+    if (!search.values_raw) search.values_raw = {};
     search.value = {};
     search.rtsearch = function(a,b) { $scope.rtsearch(a,b,id); };
   });
@@ -86,9 +110,6 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
       // compute values
       section.time_start = intTimeToObject(section.time_start);
       section.time_end = intTimeToObject(section.time_end);
-
-      console.log(section.time_start);
-
       section.selected = false;
       section.style = $scope.sectionCalendarStyle(section);
       section.cores = (section.core) ? section.core.split(',') : [];
