@@ -64,13 +64,13 @@
             <p class="tall">may include</p>
             <div class="btn-toolbar">
               <div class="btn-group">
-                <button class="btn btn-mini active-{{search.days.values_raw.m}}" ng-disabled="!search.days.active" ng-click="search.days.values_raw.m=!search.days.values_raw.m" ng-model="search.days.values_raw.m">Mo</button>
-                <button class="btn btn-mini active-{{search.days.values_raw.t}}" ng-disabled="!search.days.active" ng-click="search.days.values_raw.t=!search.days.values_raw.t" ng-model="search.days.values_raw.t">Tu</button>
-                <button class="btn btn-mini active-{{search.days.values_raw.w}}" ng-disabled="!search.days.active" ng-click="search.days.values_raw.w=!search.days.values_raw.w" ng-model="search.days.values_raw.w">We</button>
-                <button class="btn btn-mini active-{{search.days.values_raw.r}}" ng-disabled="!search.days.active" ng-click="search.days.values_raw.r=!search.days.values_raw.r" ng-model="search.days.values_raw.r">Th</button>
-                <button class="btn btn-mini active-{{search.days.values_raw.f}}" ng-disabled="!search.days.active" ng-click="search.days.values_raw.f=!search.days.values_raw.f" ng-model="search.days.values_raw.f">Fr</button>
-                <button class="btn btn-mini active-{{search.days.values_raw.s}}" ng-disabled="!search.days.active" ng-click="search.days.values_raw.s=!search.days.values_raw.s" ng-model="search.days.values_raw.s">Sa</button>
-                <button class="btn btn-mini active-{{search.days.values_raw.u}}" ng-disabled="!search.days.active" ng-click="search.days.values_raw.u=!search.days.values_raw.u" ng-model="search.days.values_raw.u">Su</button>
+                <%
+                  days = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su']
+                  days_short = ['m', 't', 'w', 'r', 'f', 's', 'u']
+                %>
+                <% (0..6).each do |day| %>
+                  <button class="btn btn-mini active-{{search.days.values_raw.<%= days_short[day] %>}}" ng-disabled="!search.days.active" ng-click="search.days.values_raw.<%= days_short[day] %>=!search.days.values_raw.<%= days_short[day] %>" ng-model="search.days.values_raw.<%= days_short[day] %>"><%= days[day] %></button>
+                <% end %>
               </div>
             </div>
             <input id="days-active" type="checkbox" class="hidden" ng-model="search.days.active" />
@@ -83,13 +83,9 @@
             <p class="tall">may include</p>
             <div class="btn-toolbar">
               <div class="btn-group">
-                <button class="btn btn-mini active-{{search.units.values_raw.0}}" ng-disabled="!search.units.active" ng-click="search.units.values_raw.0=!search.units.values_raw.0" ng-model="search.units.values_raw.0">0</button>
-                <button class="btn btn-mini active-{{search.units.values_raw.1}}" ng-disabled="!search.units.active" ng-click="search.units.values_raw.1=!search.units.values_raw.1" ng-model="search.units.values_raw.1">1</button>
-                <button class="btn btn-mini active-{{search.units.values_raw.2}}" ng-disabled="!search.units.active" ng-click="search.units.values_raw.2=!search.units.values_raw.2" ng-model="search.units.values_raw.2">2</button>
-                <button class="btn btn-mini active-{{search.units.values_raw.3}}" ng-disabled="!search.units.active" ng-click="search.units.values_raw.3=!search.units.values_raw.3" ng-model="search.units.values_raw.3">3</button>
-                <button class="btn btn-mini active-{{search.units.values_raw.4}}" ng-disabled="!search.units.active" ng-click="search.units.values_raw.4=!search.units.values_raw.4" ng-model="search.units.values_raw.4">4</button>
-                <button class="btn btn-mini active-{{search.units.values_raw.5}}" ng-disabled="!search.units.active" ng-click="search.units.values_raw.5=!search.units.values_raw.5" ng-model="search.units.values_raw.5">5</button>
-                <button class="btn btn-mini active-{{search.units.values_raw.6}}" ng-disabled="!search.units.active" ng-click="search.units.values_raw.6=!search.units.values_raw.6" ng-model="search.units.values_raw.6">6</button>
+                <% (0..6).each do |units| %>
+                  <button class="btn btn-mini active-{{search.units.values_raw.<%= units %>}}" ng-disabled="!search.units.active" ng-click="search.units.values_raw.<%= units %>=!search.units.values_raw.<%= units %>" ng-model="search.units.values_raw.<%= units %>"><%= units %></button>
+                <% end %>
               </div>
             </div>
             <input id="units-active" type="checkbox" class="hidden" ng-model="search.units.active" />
@@ -100,16 +96,15 @@
           <div class="offset4 span8">
             <br>
             <button class="btn btn-primary" ng-click="search2()"><i class="icon-search icon-white"></i> Search</button>
-            <button class="btn btn-success" ng-click="search2()"><i class="icon-plus-sign icon-white"></i> Add Search</button>
+            <button class="btn btn-success" ng-click="addSearchToCourses()"><i class="icon-plus-sign icon-white"></i> Add Search</button>
           </div>
         </div>
-
       </div>
       <div class="span7">
         <div class="row-fluid">
           <div class="course course-0 show-true">
             <div class="inner">
-              <h4>Search Results ({{searchresults.length}})</h4>
+              <h4>Search Results <span ng-show="searchresults.length > 0">({{searchresults.length}})</span></h4>
               <div ng-repeat="section in searchresults" class="section selected-{{section.selected}} validchoice-{{isValidChoice(section)}} isfull-{{section.isfull}}" data-original-title="{{section.invalidbecause}}" rel="tooltip">
                 <table>
                   <tbody>
