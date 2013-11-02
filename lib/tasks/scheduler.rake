@@ -1,13 +1,15 @@
-task :update_sections => :environment do
-  require 'rest-client'
-  require 'nokogiri'
+require 'rest-client'
+require 'nokogiri'
+require 'ruby-progressbar'
 
+
+task :update_sections => :environment do
   start = Time.now
-  print(Section.count, " existing sections\n")
+  puts "#{Section.count} existing sections"
   newsections = 0
 
   # get section list
-  url = 'http://www.scu.edu/courseavail/search/index.cfm?fuseAction=search&StartRow=1&MaxRow=4000&acad_career=all&school=&subject=&catalog_num=&instructor_name1=&days1=&start_time1=&start_time2=23&header=yes&footer=yes&term=' + TERM
+  url = "http://www.scu.edu/courseavail/search/index.cfm?fuseAction=search&StartRow=1&MaxRow=4000&acad_career=all&school=&subject=&catalog_num=&instructor_name1=&days1=&start_time1=&start_time2=23&header=yes&footer=yes&term=#{TERM}"
   res = RestClient::Request.execute(:method => :get, :url => url, :timeout => 200)
   res = Nokogiri.HTML(res)
 
@@ -62,18 +64,20 @@ task :update_sections => :environment do
   end
 
   # remove sections that don't exist anymore
-  todelete = Section.where('updated_at < ?', Time.now - 100*60) # 100 mintue grace period
-  print(todelete.length, " sections deleted\n")
+  todelete = Section.where('updated_at < ?', Time.now - 2.5*60*60) # 2.5 hour grace period
+  puts "#{todelete.length} sections deleted"
   todelete.destroy_all
 
-  print(Section.count, " sections updated\n")
-  print(newsections, " new sections\n")
+  puts "#{Section.count} sections updated"
+  puts "#{newsections} new sections"
 
-  if newsections > 0 || Time.now.hour%4 == 0 || true
+  if newsections > 0 || Time.now.hour%2 == 0
     Rake::Task['update_sections_details'].execute
+  else
+    puts "skipping details update for hour #{Time.now.hour}"
   end
 
-  print("update took ", ((Time.now - start)/60).round(2), " minutes\n")
+  puts "update took #{((Time.now - start)/60).round(2)} minutes"
 end
 
 def parse_time(time)
@@ -91,10 +95,6 @@ end
 
 
 task :update_sections_details => :environment do
-  require 'rest-client'
-  require 'nokogiri'
-  require 'ruby-progressbar'
-
   sections = Section.all
 
   progress = ProgressBar.create(
@@ -105,7 +105,7 @@ task :update_sections_details => :environment do
 
   sections.each do |section|
     # get section details
-    res = RestClient.get('http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr=' + section.id.to_s + '&term=' + TERM)
+    res = RestClient.get "http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr=#{section.id.to_s}&term=#{TERM}"
     res = Nokogiri.HTML(res)
 
     # parse section details
@@ -134,6 +134,4 @@ task :update_sections_details => :environment do
 
     progress.increment
   end
-
-  print("done!\n")
 end
