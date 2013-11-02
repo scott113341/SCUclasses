@@ -1,5 +1,5 @@
 #TERM = '3420'
 #TERM = '3440'
 #TERM = '3460'
-TERM = '3500'
-QUARTER = 'Fall 2013'
+TERM = '3520'
+QUARTER = 'Winter 2014'
