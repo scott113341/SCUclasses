@@ -9,7 +9,7 @@
 
         <div class="row-fluid">
           <label for="id-active"><div class="span4 searchlabel active-{{search.id.active}}">Class ID number</div></label>
-          <div class="span8 asdf fields active-{{search.id.active}}">
+          <div class="span8 fields active-{{search.id.active}}">
             <p>must be <input type="text" id="id" class="input-small" placeholder="Ex: 91028" ng-disabled="!search.id.active" ng-model="search.id.value.id" bs-typeahead="search.id.rtsearch" /></p>
             <input id="id-active" class="hidden" type="checkbox" ng-model="search.id.active" />
           </div>
@@ -17,7 +17,7 @@
 
         <div class="row-fluid">
           <label for="core-active"><div class="span4 searchlabel active-{{search.core.active}}">Core requirements</div></label>
-          <div class="span8 asdf fields active-{{search.core.active}}">
+          <div class="span8 fields active-{{search.core.active}}">
             <p>include <select ng-change="addCourseCore()" ng-disabled="!search.core.active" ng-model="search.core.value.core" ng-options="value.name as value.fullname for value in core"></select></p>
             <input id="core-active" class="hidden" type="checkbox" ng-model="search.core.active" />
           </div>
@@ -95,11 +95,15 @@
         <div class="row-fluid">
           <div class="offset4 span8">
             <br>
-            <button class="btn btn-primary" ng-click="search2()"><i class="icon-search icon-white"></i> Search</button>
-            <button class="btn btn-success" ng-click="addSearchToCourses()"><i class="icon-plus-sign icon-white"></i> Add Search</button>
+            <a class="btn btn-primary" ng-click="search2()"><i class="icon-search icon-white"></i> Search</a>
+            <a class="btn btn-success" ng-click="addSearchToCourses()" ng-show="searchresults.length > 0 && searchperformed"><i class="icon-plus-sign icon-white"></i> Add Search</a>
           </div>
         </div>
       </div>
+
+
+
+
       <div class="span7">
         <div class="row-fluid">
           <div class="course course-0 show-true">

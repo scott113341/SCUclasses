@@ -26,6 +26,7 @@
         background: lightgreen;
       }
     }
+
     .fields {
       opacity: 0.3;
       -webkit-transition: 0.2s;
@@ -53,6 +54,11 @@
         }
       }
     }
+
+    .span7 {
+      height: 400px;
+      overflow-y: scroll;
+    }
   }
 }
 
@@ -61,17 +67,20 @@
 .top {
   text-align: center;
 
-  input.input-name {
-    text-align: center;
-  }
+  div.buttons {
+    input {
+      margin-bottom: 0;
+      width: 200px;
+      font-size: 15px;
+      height: 25px;
+    }
 
-  input.input-course {
-    text-align: left;
-    width: 200px;
-  }
-  .dropdown-menu {
-    min-width: 212px;
-    text-align: left;
+    li {
+      text-align: left;
+    }
+
+    button {
+    }
   }
 
   .welcome {

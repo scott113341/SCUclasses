@@ -14,12 +14,12 @@
 
         <br><br>
 
-        <input type="text" placeholder='Type a class, like "RSOC 9"' data-items="25" ng-model="addCourseText" bs-typeahead="addCourseTextSearch" />
-        <strong>OR</strong>
-        <select ng-change="addCourseCore()" ng-model="selectedcore" ng-options="value.name as value.fullname for value in core"></select>
+        <div class="buttons">
+          <input type="text" placeholder='Type a class, like "RSOC 9"' data-items="25" ng-model="addCourseText" bs-typeahead="addCourseTextSearch" />
+          &nbsp;<strong>OR</strong>&nbsp;
+          <button data-toggle="modal" data-target="#search" class="btn btn-primary"><i class="icon-th-list icon-white"></i> Advanced Search</button>
+        </div>
 
-        <br><br>
-        <button data-toggle="modal" data-target="#search" class="btn btn-primary btn-small"><i class="icon-th-list icon-white"></i> Advanced Search</button>
 
         <div class="welcome hide-{{hideWelcomeMessage()}}">
           <h3>Welcome to SCU&#8226;classes.</h3>
@@ -53,7 +53,7 @@
               <button ng-click="toggleExpand(course)" class="btn btn-small" title="Expand/collapse this class"><i class="{{expandArrow(course)}}"></i></button>
               <button ng-click="removeCourse(course)" class="btn btn-small" title="Remove this class"><i class="icon-remove-sign"></i></button>
             </div>
-            {{course.nameandfullname}}
+            {{course.name}}
           </h4>
           <div ng-repeat="section in course.sections" class="section selected-{{section.selected}} validchoice-{{isValidChoice(section)}} isfull-{{section.isfull}}" data-original-title="{{section.invalidbecause}}" rel="tooltip">
             <label for="section-{{section.id}}">

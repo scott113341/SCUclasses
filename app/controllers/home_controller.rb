@@ -131,7 +131,6 @@ class HomeController < ApplicationController
     end
 
     # render query
-    #render :json => [query, queryparams, sections]
     render :json => sections
   end
 

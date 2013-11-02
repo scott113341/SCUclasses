@@ -65,9 +65,18 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
   });
 
 
+  // check if the search has been performed
+  // todo finish this trash
+  $scope.searchperformed = false;
+  $scope.$watch('search', function() {
+    $scope.searchperformed = false;
+  }, true);
+
+
   // advanced search request
   $scope.searchresults = {};
   $scope.search2 = function() {
+    console.log('search2()');
     url = '/advanced_search?';
 
     // for each field
@@ -83,12 +92,12 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
         });
       }
     });
-    console.log(url);
 
     // do search and show search results
     $http.get(url).success(function(res) {
-      console.log(res);
       $scope.searchresults = $scope.formatSections(res);
+      $scope.urlmcgee = url;
+      $scope.searchperformed = true;
     });
   };
 
@@ -100,6 +109,18 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
       callback(res);
     });
   };
+
+
+  $scope.addSearchToCourses = function() {
+    var results = {
+      name: 'Advanced Search',
+      number: _.size($scope.courses),
+      sections: $scope.searchresults,
+      search_url: $scope.urlmcgee
+    };
+
+    $scope.courses.push(results);
+  }
 
 
 
@@ -137,35 +158,43 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
 
 
 
+
   // typeahead search function
   $scope.addCourseTextSearch = function(query) {
-    return $.map(js_courses, function(country) {
-      return country;
+    return $.map(js_courses, function(course) {
+      return course;
     });
   };
 
 
   // typeahead selection listener
   $scope.$on('typeahead-updated', function() {
-    // add course
-    $scope.addCourse($scope.addCourseText, false);
-
     // reset input
     $scope.addCourseText = '';
     $('[ng-model="addCourseText"]').focus();
   });
 
+  $scope.$watch('addCourseText', function(new_v, old_v) {
+    // if there's a lenght difference of more than one since last update
+    if (new_v && old_v) {
+      if (new_v.length > old_v.length + 1) {
+        $scope.addCourse($scope.addCourseText);
+      }
+    }
+  });
+
 
   // add course by name via ajax
-  $scope.addCourse = function(name, core, saved_sections) {
+  $scope.addCourse = function(name, saved_sections) {
     // parse name
-    if (name) name = name.split(' - ')[0];
+    name = name.split(' - ')[0];
 
     // request courses and add to model
-    var req = '?' + ((name) ? 'name='+name : 'core='+core);
+    var req = '?name=' + name;
 
     // if not already added
-    if ((_.where($scope.courses, {name: name}).length==0) && (_.where($scope.courses, {name: core}).length==0)) {
+//    if ((_.where($scope.courses, {name: name}).length==0) && (_.where($scope.courses, {name: core}).length==0)) {
+    if (true) {
       $http.get('/search' + req).
         success(function(sections) {
           // add course
@@ -173,19 +202,18 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
           $scope.courses.push(thiscourse);
 
           // set course details
-          thiscourse.name = (name) ? name : core;
-          thiscourse.nameandfullname = (name) ? name+' - '+sections[0].fullname : 'Core: '+_.findWhere(js_core, {name:core}).fullname;
+          thiscourse.name = name;
           thiscourse.show = true;
           thiscourse.number = _.size($scope.courses) - 1;
           thiscourse.sections = [];
-          thiscourse.iscore = (name) ? false : true;
+          thiscourse.search_url = '/search' + req;
 
           // add sections
           _.each(sections,function(section) {
             // compute more values
             section.time_start = intTimeToObject(section.time_start);
             section.time_end = intTimeToObject(section.time_end);
-            section.selected = (_.contains(saved_sections,section.id)) ? true : false;
+            section.selected = _.contains(saved_sections, section.id);
             section.style = $scope.sectionCalendarStyle(section);
             section.cores = (section.core) ? section.core.split(',') : [];
 
@@ -200,8 +228,6 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
           });
 
           console.log($scope.courses);
-
-          $scope.selectedcore = 'default';
         });
     }
 
@@ -213,18 +239,9 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
   };
 
 
-  // add course by core
-  $scope.selectedcore = 'default';
-  $scope.addCourseCore = function() {
-    if ($scope.selectedcore != 'default') {
-      $scope.addCourse(false, $scope.selectedcore);
-    }
-  };
-
-
   // remove course on delete button click
   $scope.removeCourse = function(course) {
-    a = course.number;
+    var a = course.number;
     $scope.courses.remove(a);
     _.each($scope.courses, function(course, b) {
       if (b >= a) course.number += -1;
@@ -284,7 +301,7 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
               if (section.time_start.time <= section2.time_start.time && section.time_end.time >= section2.time_end.time) valid = false;
 
               // save conflicting section
-              if (valid == false) conflictingsection = section2;
+              if (valid == false) conflicting_section = section2;
             }
           }
         });
@@ -301,7 +318,7 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
       else section.isfull = false;
 
       // if section conflicts
-      if (valid == false) section.invalidbecause = 'Conflicts with ' + conflictingsection.name;
+      if (valid == false) section.invalidbecause = 'Conflicts with ' + conflicting_section.name;
 
       return valid;
     }
@@ -395,7 +412,7 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
   };
 
 
-  // check for full/closed sections
+  // check for full/closed sections that have been added
   $scope.fullSections = function() {
     var badsections = [];
     _.each($scope.sectionsAdded(), function(section) {
@@ -424,24 +441,39 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
   // load from localstorage
   if (store.enabled && store.get('courses')) {
     _.each(store.get('courses'), function(course) {
-      // create add array
-      var add = [false, false, []];
-      add[0] = (!course.iscore) ? course.nameandfullname : false;
-      add[1] = (!course.iscore) ? false : _.findWhere(js_core_all, {fullname: course.nameandfullname.substr(6)}).name;
-
-      // add each selected section id to add array
-      _.each(course.sections, function(section) {
-        if (section.selected) add[2].push(section.id);
-      });
-
       // add course and selected sections
-      $scope.addCourse(add[0], add[1], add[2]);
+      if (course.name = 'Advanced Search') {
+
+      }
+      else {
+        $scope.addCourse(course.name, course.selected_sections);
+      }
     });
   }
 
 
   // save to localstorage
   $scope.$watch('courses', function(courses) {
+    courses = _.map(courses, function(course) {
+      course.selected_sections = _.chain(course.sections)
+        .filter(function(section) {
+          return section.selected;
+        })
+        .pluck('id')
+        .value();
+
+      console.log('course being saved', _.clone(course));
+
+      course = {
+        search_url: course.search_url,
+        selected_sections: course.selected_sections,
+        show: course.show
+      };
+      return course;
+    });
+
+    console.log(courses);
+
     store.set('courses', courses);
     console.log('saved');
   }, true);
