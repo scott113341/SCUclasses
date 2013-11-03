@@ -102,6 +102,8 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
 
       $scope.search_results.search_performed = true;
       $scope.search_results.instructions = false;
+
+      $('div.results').scrollTop(0);
     });
   };
 
