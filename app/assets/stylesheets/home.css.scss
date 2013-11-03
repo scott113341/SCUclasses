@@ -7,18 +7,25 @@
     top: 50% !important;
   }
 
+  .modal-footer {
+    text-align: left;
+  }
+
   label {
     margin: 0;
   }
 
   &#search {
+    input[type="checkbox"] {
+      margin: -4px 0 0 0;
+    }
+
     .searchlabel {
       padding: 4px 8px 0 0;
       text-align: right;
       -webkit-transition: 0.2s;
 
       &.active-true {
-        font-weight: bold;
         background: lightgreen;
       }
 

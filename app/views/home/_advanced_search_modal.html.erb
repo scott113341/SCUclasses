@@ -3,63 +3,90 @@
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h3>Advanced Search</h3>
   </div>
+
   <div class="modal-body">
     <div class="row-fluid">
       <div class="span5">
 
         <div class="row-fluid">
-          <label for="id-active"><div class="span4 searchlabel active-{{asearch.id.active}}">Class ID number</div></label>
+          <label for="id-active">
+            <div class="span4 searchlabel active-{{asearch.id.active}}">
+              Class ID number
+              <input id="id-active" type="checkbox" ng-model="asearch.id.active" />
+            </div>
+          </label>
           <div class="span8 fields active-{{asearch.id.active}}">
             <p>must be <input type="text" id="id" class="input-small" placeholder="Ex: 91028" ng-disabled="!asearch.id.active" ng-model="asearch.id.value.id" bs-typeahead="asearch.id.rtsearch" /></p>
-            <input id="id-active" class="hidden" type="checkbox" ng-model="asearch.id.active" />
           </div>
         </div>
 
         <div class="row-fluid">
-          <label for="core-active"><div class="span4 searchlabel active-{{asearch.core.active}}">Core requirements</div></label>
+          <label for="core-active">
+            <div class="span4 searchlabel active-{{asearch.core.active}}">
+              Core requirements
+              <input id="core-active" type="checkbox" ng-model="asearch.core.active" />
+            </div>
+          </label>
           <div class="span8 fields active-{{asearch.core.active}}">
             <p>include <select ng-change="addCourseCore()" ng-disabled="!asearch.core.active" ng-model="asearch.core.value.core" ng-options="value.name as value.fullname for value in core"></select></p>
-            <input id="core-active" class="hidden" type="checkbox" ng-model="asearch.core.active" />
           </div>
         </div>
 
         <div class="row-fluid">
-          <label for="department-active"><div class="span4 searchlabel active-{{asearch.department.active}}">Department</div></label>
+          <label for="department-active">
+            <div class="span4 searchlabel active-{{asearch.department.active}}">
+              Department
+              <input id="department-active" type="checkbox" ng-model="asearch.department.active" />
+            </div>
+          </label>
           <div class="span8 fields active-{{asearch.department.active}}">
             <p>must be <input type="text" id="department" class="input-small" placeholder="Ex: ENGL" ng-disabled="!asearch.department.active" ng-model="asearch.department.value.department" bs-typeahead="asearch.department.rtsearch" /></p>
-            <input id="department-active" type="checkbox" class="hidden" ng-model="asearch.department.active" />
           </div>
         </div>
 
         <div class="row-fluid">
-          <label for="seats-active"><div class="span4 searchlabel active-{{asearch.seats.active}}">Open seats</div></label>
+          <label for="seats-active">
+            <div class="span4 searchlabel active-{{asearch.seats.active}}">
+              Open seats
+              <input id="seats-active" type="checkbox" ng-model="asearch.seats.active" ng-change="asearch.seats.value.seats=asearch.seats.active" />
+            </div>
+          </label>
           <div class="span8 fields active-{{asearch.seats.active}}">
             <label for="seats-active"><p class="tall">must still be available</p></label>
-            <input id="seats-active" type="checkbox" class="hidden" ng-model="asearch.seats.active" ng-change="asearch.seats.value.seats=asearch.seats.active" />
           </div>
         </div>
 
         <div class="row-fluid">
-          <label for="time_start-active"><div class="span4 searchlabel active-{{asearch.time_start.active}}">Start time</div></label>
+          <label for="time_start-active">
+            <div class="span4 searchlabel active-{{asearch.time_start.active}}">
+              Start time
+              <input id="time_start-active" type="checkbox" ng-model="asearch.time_start.active" />
+            </div>
+          </label>
           <div class="span8 fields active-{{asearch.time_start.active}}">
             <p>must be <select class="input-small" ng-disabled="!asearch.time_start.active" ng-model="asearch.time_start.values_raw.ba"><option value="b">before</option><option value="a">after</option></select> <input type="text" class="input-small" ng-disabled="!asearch.time_start.active" ng-model="asearch.time_start.values_raw.time" bs-timepicker value="10:00 AM" /></p>
-            <input id="time_start-active" type="checkbox" class="hidden" ng-model="asearch.time_start.active" />
-
-            <input type="hidden" ng-model="asearch.time_start.active" />
-            <input type="hidden" ng-model="asearch.time_start.active" />
           </div>
         </div>
 
         <div class="row-fluid">
-          <label for="time_end-active"><div class="span4 searchlabel active-{{asearch.time_end.active}}">End time</div></label>
+          <label for="time_end-active">
+            <div class="span4 searchlabel active-{{asearch.time_end.active}}">
+              End time
+              <input id="time_end-active" type="checkbox" ng-model="asearch.time_end.active" />
+            </div>
+          </label>
           <div class="span8 fields active-{{asearch.time_end.active}}">
             <p>must be <select class="input-small" ng-disabled="!asearch.time_end.active" ng-model="asearch.time_end.values_raw.ba"><option value="b">before</option><option value="a">after</option></select> <input type="text" class="input-small" ng-disabled="!asearch.time_end.active" ng-model="asearch.time_end.values_raw.time" bs-timepicker value="03:00 PM" /></p>
-            <input id="time_end-active" type="checkbox" class="hidden" ng-model="asearch.time_end.active" />
           </div>
         </div>
 
         <div class="row-fluid">
-          <label for="days-active"><div class="span4 searchlabel active-{{asearch.days.active}}">Class days</div></label>
+          <label for="days-active">
+            <div class="span4 searchlabel active-{{asearch.days.active}}">
+              Class days
+              <input id="days-active" type="checkbox" ng-model="asearch.days.active" />
+            </div>
+          </label>
           <div class="span8 fields active-{{asearch.days.active}}">
             <p class="tall">may include</p>
             <div class="btn-toolbar">
@@ -73,12 +100,16 @@
                 <% end %>
               </div>
             </div>
-            <input id="days-active" type="checkbox" class="hidden" ng-model="asearch.days.active" />
           </div>
         </div>
 
         <div class="row-fluid">
-          <label for="units-active"><div class="span4 searchlabel active-{{asearch.units.active}}">Class units</div></label>
+          <label for="units-active">
+            <div class="span4 searchlabel active-{{asearch.units.active}}">
+              Class units
+              <input id="units-active" type="checkbox" ng-model="asearch.units.active" />
+            </div>
+          </label>
           <div class="span8 fields active-{{asearch.units.active}}">
             <p class="tall">may include</p>
             <div class="btn-toolbar">
@@ -88,7 +119,6 @@
                 <% end %>
               </div>
             </div>
-            <input id="units-active" type="checkbox" class="hidden" ng-model="asearch.units.active" />
           </div>
         </div>
 
@@ -113,7 +143,8 @@
 
           <div class="course course-0 show-true" ng-show="!search_results.instructions">
             <div class="inner">
-              <h4>Search Results <span ng-show="search_results.sections.length > 0">({{search_results.sections.length}})</span></h4>
+              <h4>Search Results ({{search_results.sections.length}})</h4>
+              <p ng-show="search_results.sections.length == 0">No classes matching your criteria were found</p>
               <div ng-repeat="section in search_results.sections" class="section selected-{{section.selected}} validchoice-{{isValidChoice(section)}} isfull-{{section.isfull}}" data-original-title="{{section.invalidbecause}}" rel="tooltip">
                 <table>
                   <tbody>
@@ -153,6 +184,6 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn" data-dismiss="modal">Close</button>
+    <button class="btn btn-danger" data-dismiss="modal">Close</button>
   </div>
 </div>
