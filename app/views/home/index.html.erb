@@ -37,12 +37,6 @@
             <li ng-repeat="section in fullSections()"><strong>{{section.name}}</strong>, number {{section.id}}</li>
           </ul>
         </div>
-
-<!--        <div class="link-scubooks show-{{sectionsAdded().length > 0}}">
-          <a href="http://scubooks.com/books?courses={{sectionIds()}}" class="btn btn-success" target="_blank"><i class="icon-book icon-white"></i> View Book List on SCU&#8226;books</a>
-          <br>
-          <i>Most professors haven't posted their books yet, so this list may be inaccurate!</i>
-        </div>-->
       </div>
 
       <div ng-repeat="course in courses | orderBy:'number':true" class="course course-{{course.number}} show-{{course.show}}">

@@ -1,3 +1,68 @@
+.top {
+  text-align: center;
+
+  @include print_hide;
+
+  div.buttons {
+    input {
+      margin-bottom: 0;
+      width: 200px;
+      font-size: 15px;
+      height: 25px;
+    }
+
+    li {
+      text-align: left;
+    }
+
+    button {
+    }
+  }
+
+  .welcome {
+    opacity: 1;
+    height: 240px;
+    padding-top: 20px;
+
+    .quarter {
+      background-color: #02A672;
+      color: white;
+      padding: 0 3px;
+    }
+
+    -webkit-transition: 1s;
+    transition: 1s;
+  }
+  .welcome.hide-true {
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+  }
+
+  .link-scubooks {
+    height: 0px;
+    margin-bottom: 5px;
+    overflow: hidden;
+
+    -webkit-transition: 200ms;
+    transition: 200ms;
+
+    &.show-true {
+      margin-bottom: 20px;
+      height: 50px;
+    }
+  }
+
+  .alert {
+    text-align: left;
+    color: #333;
+  }
+}
+
+
+
+
+
 .modal {
   width: 90%;
   margin: -250px 0 0 0;
@@ -72,67 +137,6 @@
         }
       }
     }
-  }
-}
-
-
-
-.top {
-  text-align: center;
-
-  div.buttons {
-    input {
-      margin-bottom: 0;
-      width: 200px;
-      font-size: 15px;
-      height: 25px;
-    }
-
-    li {
-      text-align: left;
-    }
-
-    button {
-    }
-  }
-
-  .welcome {
-    opacity: 1;
-    height: 200px;
-    padding-top: 20px;
-
-    .quarter {
-      background-color: #02A672;
-      color: white;
-      padding: 0 3px;
-    }
-
-    -webkit-transition: 1s;
-    transition: 1s;
-  }
-  .welcome.hide-true {
-    opacity: 0;
-    height: 0;
-    overflow: hidden;
-  }
-
-  .link-scubooks {
-    height: 0px;
-    margin-bottom: 5px;
-    overflow: hidden;
-
-    -webkit-transition: 200ms;
-    transition: 200ms;
-
-    &.show-true {
-      margin-bottom: 20px;
-      height: 50px;
-    }
-  }
-
-  .alert {
-    text-align: left;
-    color: #333;
   }
 }
 

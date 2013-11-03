@@ -3,6 +3,9 @@
     display: none !important;
   }
 }
+.print_hide {
+  @include print_hide;
+}
 
 div.footer {
   border-top: 1px solid #ccc;
