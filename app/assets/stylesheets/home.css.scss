@@ -55,9 +55,15 @@
       }
     }
 
-    .span7 {
+    .results {
       height: 400px;
       overflow-y: scroll;
+
+      .instructions {
+        h3 {
+          text-align: center;
+        }
+      }
     }
   }
 }

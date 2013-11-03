@@ -96,7 +96,7 @@
           <div class="offset4 span8">
             <br>
             <a class="btn btn-primary" ng-click="advanced_search()"><i class="icon-search icon-white"></i> Search</a>
-            <a class="btn btn-success" ng-click="addSearchToCourses()" ng-show="search_results.sections.length > 0 && searchperformed"><i class="icon-plus-sign icon-white"></i> Add Search Results</a>
+            <a class="btn btn-success" ng-click="addSearchToCourses()" ng-show="search_results.sections.length > 0 && search_results.search_performed"><i class="icon-plus-sign icon-white"></i> Add Search Results</a>
           </div>
         </div>
       </div>
@@ -104,9 +104,14 @@
 
 
 
-      <div class="span7">
+      <div class="span7 results">
         <div class="row-fluid">
-          <div class="course course-0 show-true">
+          <div class="instructions" ng-show="search_results.instructions">
+            <h3>How to Search like a Pro</h3>
+          </div>
+
+
+          <div class="course course-0 show-true" ng-show="!search_results.instructions">
             <div class="inner">
               <h4>Search Results <span ng-show="search_results.sections.length > 0">({{search_results.sections.length}})</span></h4>
               <div ng-repeat="section in search_results.sections" class="section selected-{{section.selected}} validchoice-{{isValidChoice(section)}} isfull-{{section.isfull}}" data-original-title="{{section.invalidbecause}}" rel="tooltip">

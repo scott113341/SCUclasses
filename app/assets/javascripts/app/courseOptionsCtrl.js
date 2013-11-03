@@ -65,19 +65,21 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
   });
 
 
-  // check if the search has been performed
-  // todo finish this trash
-  $scope.searchperformed = false;
-  $scope.$watch('search', function() {
-    $scope.searchperformed = false;
+  // advanced search results view variables
+  $scope.search_results = {};
+  $scope.search_results.search_performed = false;
+  $scope.search_results.instructions = true;
+
+
+  // disable 'add search results' button if parameters change
+  $scope.$watch('asearch', function() {
+    $scope.search_results.search_performed = false;
   }, true);
 
 
-  // advanced search request
-  $scope.search_results = {};
+  // perform advanced search
   $scope.advanced_search = function() {
-    console.log('advanced_search()');
-    url = '/advanced_search?';
+    var url = '/advanced_search?';
 
     // for each field
     _.each($scope.asearch, function(field) {
@@ -97,7 +99,9 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
     $http.get(url).success(function(res) {
       $scope.search_results.sections = $scope.formatSections(res);
       $scope.search_results.url = url;
-      $scope.searchperformed = true;
+
+      $scope.search_results.search_performed = true;
+      $scope.search_results.instructions = false;
     });
   };
 
@@ -111,11 +115,14 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
   };
 
 
+  // add the advanced search results to the main interface
   $scope.addSearchToCourses = function() {
     var name = 'Advanced Search';
     $scope.search($scope.search_results.url, name, []);
   }
 
+
+  // add extra properties an array of sections
   $scope.formatSections = function(sections) {
     _.each(sections, function(section) {
       // compute values
@@ -136,12 +143,7 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
   };
 
 
-
-
-
-
-
-
+  // perform the search and addition of courses based on the url
   $scope.search = function(url, name, selected_sections) {
     // prevent duplicate searches
     // todo alert user if it's a duplicate search instead of silently failing
@@ -163,9 +165,6 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
       });
     }
   };
-
-
-
 
 
   // typeahead search function
