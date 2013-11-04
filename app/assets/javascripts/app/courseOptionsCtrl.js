@@ -1,4 +1,4 @@
-app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($scope, $http, $timeout) {
+app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnalyticsService', function($scope, $http, $timeout, GoogleAnalyticsService) {
   $scope.courses = [];
   $scope.core_all = js_core_all;
   $scope.core = js_core;
@@ -169,6 +169,8 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
       $scope.search_results.instructions = false;
 
       $('div.results').scrollTop(0);
+
+      GoogleAnalyticsService.send('search.advanced', $scope.search_results.sections.length);
     });
   };
 
@@ -283,6 +285,8 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
         var url = '/search?name=' + name;
 
         $scope.search(url, {name: name});
+
+        GoogleAnalyticsService.send('search.normal');
       }
     }
   });
@@ -496,9 +500,13 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
 
   // load from localstorage
   if (store.enabled && store.get('courses')) {
-    _.each(store.get('courses'), function(course) {
+    var courses = store.get('courses');
+
+    _.each(courses, function(course) {
       $scope.search(course.url, {name: course.name, tags: course.tags}, course.selected_sections);
     });
+
+    if (courses.length) GoogleAnalyticsService.send('search.localstorage', courses.length);
   }
 
 
