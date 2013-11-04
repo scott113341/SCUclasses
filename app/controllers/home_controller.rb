@@ -52,6 +52,11 @@ class HomeController < ApplicationController
     query = 'id != 0'
     queryparams = {}
 
+    unless params[:id].blank?
+      query += ' AND id = :id'
+      queryparams[:id] = params[:id]
+    end
+
     unless params[:name].blank?
       query += ' AND name = :name'
       queryparams[:name] = params[:name]
@@ -124,11 +129,7 @@ class HomeController < ApplicationController
     end
 
     # execute query
-    if params[:id].blank?
-      sections = Section.where(query, queryparams.symbolize_keys)
-    else
-      sections = Section.where('id = ?', params[:id])
-    end
+    sections = Section.where(query, queryparams.symbolize_keys)
 
     # render query
     render :json => sections
