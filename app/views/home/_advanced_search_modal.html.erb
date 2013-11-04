@@ -142,7 +142,11 @@
         </div>
 
         <div class="row-fluid">
-          <div class="offset4 span8">
+          <div class="span4">
+            <br>
+            <a class="btn" ng-click="resetAdvancedSearch()"><i class="icon-remove-sign"></i> Reset Search</a>
+          </div>
+          <div class="span8">
             <br>
             <a class="btn btn-primary" ng-click="advanced_search()"><i class="icon-search icon-white"></i> Search</a>
             <a class="btn btn-success" ng-click="addSearchToCourses()" ng-show="search_results.sections.length > 0 && search_results.search_performed"><i class="icon-plus-sign icon-white"></i> Add Search Results</a>
@@ -210,6 +214,6 @@
     </div>
   </div>
   <div class="modal-footer">
-    <button class="btn btn-danger" data-dismiss="modal">Close</button>
+    <button class="btn" data-dismiss="modal">Close</button>
   </div>
 </div>

@@ -112,12 +112,12 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
       }
     }
   };
-  _.each($scope.asearch, function(search, id) {
-    search.id = id;
-    search.active = false;
-    if (!search.values_raw) search.values_raw = {};
-    search.value = {};
-    search.rtsearch = function(a,b) { $scope.rtsearch(a,b,id); };
+  _.each($scope.asearch, function(field, id) {
+    field.id = id;
+    field.active = false;
+    if (!field.values_raw) field.values_raw = {};
+    field.value = {};
+    field.rtsearch = function(a,b) { $scope.rtsearch(a,b,id); };
   });
 
 
@@ -182,6 +182,18 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
 
     $('#search').modal('hide');
     scrollToTop();
+  };
+
+
+  // reset the advanced search and remove the results
+  $scope.resetAdvancedSearch = function() {
+    _.each($scope.asearch, function(field) {
+      field.active = false;
+    });
+
+    $scope.search_results.sections = [];
+    $scope.search_results.search_performed = false;
+    $scope.search_results.instructions = true;
   };
 
 
