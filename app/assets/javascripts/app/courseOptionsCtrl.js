@@ -9,6 +9,7 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
     id: {},
     core: {},
     department: {},
+    instructors: {},
     seats: {},
     time_start: {
       format: function(values_raw) {
@@ -69,6 +70,15 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
   });
 
 
+  // realtime search for typeahead
+  $scope.rtsearch = function(query, callback, field) {
+    var url = '/rt_search?' + field + '=' + query;
+    $http.get(url).success(function(res) {
+      callback(res);
+    });
+  };
+
+
   // advanced search results view variables
   $scope.search_results = {};
   $scope.search_results.search_performed = false;
@@ -108,15 +118,6 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
       $scope.search_results.instructions = false;
 
       $('div.results').scrollTop(0);
-    });
-  };
-
-
-  // realtime search for typeahead
-  $scope.rtsearch = function(query, callback, field) {
-    var url = '/rt_search?' + field + '=' + query;
-    $http.get(url).success(function(res) {
-      callback(res);
     });
   };
 

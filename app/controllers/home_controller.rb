@@ -141,9 +141,11 @@ class HomeController < ApplicationController
     results = []
 
     if params[:id]
-      results = Section.select('id').where('id LIKE ?', params[:id]+'%').map{|course| course.id.to_s}
+      results = Section.select('id').where('id LIKE ?', params[:id]+'%').map{|c| c.id.to_s}
     elsif params[:department]
-      results = Section.select('DISTINCT name').where('name LIKE ?', params[:department]+'%').map{|course| course.name.split(' ')[0]}.uniq()
+      results = Section.select('DISTINCT name').where('name LIKE ?', params[:department]+'%').map{|c| c.name.split(' ')[0]}.uniq()
+    elsif params[:instructors]
+      results = Section.select('DISTINCT instructors').where('instructors LIKE ?', "%#{params[:instructors]}%").map{|c| c.instructors}
     end
 
     render :json => results
