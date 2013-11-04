@@ -136,6 +136,10 @@
           text-align: center;
         }
       }
+
+      .section.validchoice-true:hover {
+        background: white !important;
+      }
     }
   }
 }
@@ -235,8 +239,8 @@
     }
 
     .section.validchoice-false, .section.isfull-true {
-      color: #777;
-      background: #ccc;
+      color: #777 !important;
+      background: #ccc !important;
     }
     .section.validchoice-false:hover label {
       cursor: not-allowed;
