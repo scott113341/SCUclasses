@@ -137,8 +137,12 @@
         }
       }
 
-      .section.validchoice-true:hover {
-        background: white !important;
+      .course {
+        border: 1px solid #ccc;
+
+        .section.validchoice-true:hover {
+          background: white !important;
+        }
       }
     }
   }
