@@ -27,11 +27,17 @@ $(function() {
 
   // scroll to top
   $(document).on('click', 'p.scroll', function() {
-    $('html, body').animate({
-      scrollTop: 0
-    }, 500);
+    scrollToTop();
   });
 });
+
+
+// scroll to top
+function scrollToTop() {
+  $('html, body').animate({
+    scrollTop: 0
+  }, 500);
+}
 
 
 // time pad formatting

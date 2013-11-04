@@ -35,7 +35,9 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
         t: true,
         w: true,
         r: true,
-        f: true
+        f: true,
+        s: false,
+        u: false
       }
     },
     units: {
@@ -48,11 +50,13 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
         return {units: units};
       },
       values_raw: {
+        0: false,
         1: true,
         2: true,
         3: true,
         4: true,
-        5: true
+        5: true,
+        6: false
       }
     }
   };
@@ -121,7 +125,10 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
   $scope.addSearchToCourses = function() {
     var name = 'Advanced Search';
     $scope.search($scope.search_results.url, name, []);
-  }
+
+    $('#search').modal('hide');
+    scrollToTop();
+  };
 
 
   // add extra properties an array of sections
