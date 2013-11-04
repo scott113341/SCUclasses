@@ -196,7 +196,7 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
   $scope.$watch('addCourseText', function(new_v, old_v) {
     // if there's a length difference of more than one since last update
     if (new_v && old_v) {
-      if (new_v.length > old_v.length + 1) {
+      if (new_v.length > old_v.length + 2) {
         var name = $scope.addCourseText.split(' - ')[0];
         var url = '/search?name=' + name;
 
