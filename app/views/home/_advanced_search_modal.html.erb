@@ -1,9 +1,4 @@
 <div id="search" class="modal hide fade">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h3>Advanced Search</h3>
-  </div>
-
   <div class="modal-body">
     <div class="row-fluid">
       <div class="span5">
@@ -139,6 +134,9 @@
             <br>
             <a class="btn btn-primary" ng-click="advanced_search()"><i class="icon-search icon-white"></i> Search</a>
             <a class="btn btn-success" ng-click="addSearchToCourses()" ng-show="search_results.sections.length > 0 && search_results.search_performed"><i class="icon-plus-sign icon-white"></i> Add Search Results</a>
+            <a class="btn" disabled ng-show="!(search_results.sections.length > 0 && search_results.search_performed)"><i class="icon-plus-sign"></i> Add Search Results</a>
+            <br><br>
+            <p>Click the <strong>Add Search Results</strong> button to add your search to the main page.</p>
           </div>
         </div>
       </div>

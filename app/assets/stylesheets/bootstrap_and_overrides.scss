@@ -11,3 +11,7 @@ body { padding-top: 10px; }
 .bootstrap-timepicker-widget.dropdown-menu {
   left: 148px !important;
 }
+
+.modal-body {
+  max-height: 500px !important;
+}
