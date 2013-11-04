@@ -6,24 +6,72 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
 
   // advanced search field setup
   $scope.asearch = {
-    id: {},
-    core: {},
-    department: {},
-    instructors: {},
-    seats: {},
+    id: {
+      description: function(value) {
+        return 'ID: ' + value.id;
+      }
+    },
+    core: {
+      description: function(value) {
+        return 'Core: ' + _.findWhere(js_core_all, {name: value.core}).fullname;
+      }
+    },
+    department: {
+      description: function(value) {
+        return 'Dept: ' + value.department;
+      }
+    },
+    instructors: {
+      description: function(value) {
+        return 'Professor: ' + value.instructors;
+      }
+    },
+    seats: {
+      description: function(value) {
+        return 'Open seats';
+      }
+    },
     time_start: {
+      description: function(value) {
+        var ba = (value.time_start[0] == 'b') ? 'before' : 'after';
+        var time = value.time_start.slice(1);
+        return 'Starts ' + ba + ' ' + time;
+      },
       format: function(values_raw) {
         if (values_raw.ba && values_raw.time) return { time_start: values_raw.ba + values_raw.time };
         else return {};
       }
     },
     time_end: {
+      description: function(value) {
+        var ba = (value.time_end[0] == 'b') ? 'before' : 'after';
+        var time = value.time_end.slice(1);
+        return 'Ends ' + ba + ' ' + time;
+      },
       format: function(values_raw) {
         if (values_raw.ba && values_raw.time) return { time_end: values_raw.ba + values_raw.time };
         else return {};
       }
     },
     days: {
+      description: function(value) {
+        var days = [];
+        var map = {
+          m: 'Mon',
+          t: 'Tue',
+          w: 'Wed',
+          r: 'Thu',
+          f: 'Fri',
+          s: 'Sat',
+          u: 'Sun'
+        };
+
+        _.each(value.days.split(''), function(day) {
+          days.push(map[day.toLowerCase()]);
+        });
+
+        return days.join('/');
+      },
       format: function(values_raw) {
         var days = '';
         _.each(values_raw, function(selected, day) {
@@ -42,6 +90,9 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
       }
     },
     units: {
+      description: function(value) {
+        return 'Units: ' + value.units;
+      },
       format: function(values_raw) {
         var units = [];
         _.each(values_raw, function(selected, unit) {
@@ -125,10 +176,28 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
   // add the advanced search results to the main interface
   $scope.addSearchToCourses = function() {
     var name = 'Advanced Search';
-    $scope.search($scope.search_results.url, name, []);
+    var tags = $scope.advancedSearchTags();
+
+    $scope.search($scope.search_results.url, {name: name, tags: tags}, []);
 
     $('#search').modal('hide');
     scrollToTop();
+  };
+
+
+  // build text tags of advanced search
+  $scope.advancedSearchTags = function() {
+    var tags = [];
+
+    // for each field
+    _.each($scope.asearch, function(field) {
+      // if field is active
+      if (field.active) {
+        tags.push(field.description(field.value));
+      }
+    });
+
+    return tags;
   };
 
 
@@ -154,18 +223,18 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
 
 
   // perform the search and addition of courses based on the url
-  $scope.search = function(url, name, selected_sections) {
+  $scope.search = function(url, properties, selected_sections) {
     // prevent duplicate searches
     // todo alert user if it's a duplicate search instead of silently failing
     if (_.where($scope.courses, {url: url}).length == 0) {
       $http.get(url).success(function(res) {
         var course = {
-          name: name,
           sections: $scope.formatSections(res),
           number: _.size($scope.courses),
           url: url,
           show: true
         };
+        course = _.extend(course, properties);
 
         _.each(course.sections, function(section) {
           if (_.contains(selected_sections, section.id)) section.selected = true;
@@ -201,7 +270,7 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
         var name = $scope.addCourseText.split(' - ')[0];
         var url = '/search?name=' + name;
 
-        $scope.search(url, name);
+        $scope.search(url, {name: name});
       }
     }
   });
@@ -416,7 +485,7 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
   // load from localstorage
   if (store.enabled && store.get('courses')) {
     _.each(store.get('courses'), function(course) {
-      $scope.search(course.url, course.name, course.selected_sections);
+      $scope.search(course.url, {name: course.name, tags: course.tags}, course.selected_sections);
     });
   }
 
@@ -434,6 +503,7 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
       course = {
         url: course.url,
         name: course.name,
+        tags: course.tags,
         selected_sections: course.selected_sections,
         show: course.show
       };
@@ -447,9 +517,6 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
 
   // load advanced search examples
   $scope.loadExample = function(example) {
-    console.log(example);
-    console.log($scope.asearch);
-
     if (example === 1) {
       // activate fields
       $scope.asearch.department.active = true;

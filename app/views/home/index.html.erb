@@ -47,8 +47,9 @@
               <button ng-click="removeCourse(course)" class="btn btn-small" title="Remove this search"><i class="icon-remove-sign"></i></button>
             </div>
             {{course.name}}
+            <span ng-repeat="tag in course.tags"><span class="label">{{tag}}</span>&nbsp;</span>
           </h4>
-          <div ng-repeat="section in course.sections" class="section selected-{{section.selected}} validchoice-{{isValidChoice(section)}} isfull-{{section.isfull}}" data-original-title="{{section.invalidbecause}}" rel="tooltip">
+          <div ng-repeat="section in course.sections" class="section selected-{{section.selected}} validchoice-{{isValidChoice(section)}} isfull-{{section.isfull}}" rel="tooltip" data-original-title="{{section.invalidbecause}}">
             <label for="section-{{section.id}}">
               <table>
                 <tbody>
