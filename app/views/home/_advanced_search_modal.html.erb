@@ -11,7 +11,7 @@
             </div>
           </label>
           <div class="span8 fields active-{{asearch.id.active}}">
-            <p>must be <input type="text" id="id" class="input-small" placeholder="Ex: 91028" ng-disabled="!asearch.id.active" ng-model="asearch.id.value.id" bs-typeahead="asearch.id.rtsearch" /></p>
+            <p>is <input type="text" id="id" class="input-small" placeholder="Ex: 91028" ng-disabled="!asearch.id.active" ng-model="asearch.id.value.id" bs-typeahead="asearch.id.rtsearch" /></p>
           </div>
         </div>
 
@@ -35,7 +35,7 @@
             </div>
           </label>
           <div class="span8 fields active-{{asearch.department.active}}">
-            <p>must be <input type="text" id="department" class="input-small" placeholder="Ex: ENGL" ng-disabled="!asearch.department.active" ng-model="asearch.department.value.department" bs-typeahead="asearch.department.rtsearch" /></p>
+            <p>is <input type="text" id="department" class="input-small" placeholder="Ex: ENGL" ng-disabled="!asearch.department.active" ng-model="asearch.department.value.department" bs-typeahead="asearch.department.rtsearch" /></p>
           </div>
         </div>
 
@@ -47,7 +47,7 @@
             </div>
           </label>
           <div class="span8 fields active-{{asearch.instructors.active}}">
-            <p>must be <input type="text" id="instructors" placeholder="Ex: Hardy,Scott" ng-disabled="!asearch.instructors.active" ng-model="asearch.instructors.value.instructors" bs-typeahead="asearch.instructors.rtsearch" /></p>
+            <p>is <input type="text" id="instructors" placeholder="Ex: Hardy,Scott" ng-disabled="!asearch.instructors.active" ng-model="asearch.instructors.value.instructors" bs-typeahead="asearch.instructors.rtsearch" /></p>
           </div>
         </div>
 
@@ -71,7 +71,7 @@
             </div>
           </label>
           <div class="span8 fields active-{{asearch.time_start.active}}">
-            <p>must be
+            <p>is
               <select class="input-small" ng-disabled="!asearch.time_start.active" ng-model="asearch.time_start.values_raw.ba">
                 <option value="b">before</option>
                 <option value="a">after</option>
@@ -89,7 +89,7 @@
             </div>
           </label>
           <div class="span8 fields active-{{asearch.time_end.active}}">
-            <p>must be
+            <p>is
               <select class="input-small" ng-disabled="!asearch.time_end.active" ng-model="asearch.time_end.values_raw.ba">
                 <option value="b">before</option>
                 <option value="a">after</option>
@@ -159,7 +159,11 @@
       <div class="span7 results">
         <div class="row-fluid">
           <div class="instructions" ng-show="search_results.instructions">
-            <h3>How to Search like a Pro</h3>
+            <h3>Advanced Search</h3>
+            <h4>Use the fields on the left to search for classes that match your criteria.</h4>
+            <br>
+            <p>For example, you could find all <span class="label">ENGL</span> classes that are on <span class="label">Mon/Wed/Fri</span> starting anytime after <span class="label">10:00 AM</span> that still have <span class="label">open seats</span>.</p>
+            <strong><a ng-click="loadExample(1)">Try out this example</a></strong>
           </div>
 
 

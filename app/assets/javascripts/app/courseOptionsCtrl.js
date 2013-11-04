@@ -443,4 +443,33 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
     store.set('courses', courses);
     console.log('saved courses', courses);
   }, true);
+
+
+  // load advanced search examples
+  $scope.loadExample = function(example) {
+    console.log(example);
+    console.log($scope.asearch);
+
+    if (example === 1) {
+      // activate fields
+      $scope.asearch.department.active = true;
+      $scope.asearch.seats.active = true;
+      $scope.asearch.time_start.active = true;
+      $scope.asearch.days.active = true;
+
+      // set field values
+      $scope.asearch.department.value.department = 'ENGL';
+
+      $scope.asearch.time_start.values_raw.ba = 'a';
+      $scope.asearch.time_start.values_raw.time = '10:00 AM';
+
+      $scope.asearch.days.values_raw.m = true;
+      $scope.asearch.days.values_raw.t = false;
+      $scope.asearch.days.values_raw.w = true;
+      $scope.asearch.days.values_raw.r = false;
+      $scope.asearch.days.values_raw.f = true;
+      $scope.asearch.days.values_raw.s = false;
+      $scope.asearch.days.values_raw.u = false;
+    }
+  };
 }]);
