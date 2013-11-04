@@ -7,3 +7,7 @@ $dropdownLinkColorActive: white;
 @import "bootstrap";
 body { padding-top: 10px; }
 @import "bootstrap-responsive";
+
+.bootstrap-timepicker-widget.dropdown-menu {
+  left: 148px !important;
+}

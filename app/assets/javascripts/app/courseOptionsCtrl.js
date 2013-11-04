@@ -398,6 +398,13 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', function($sc
   }
 
 
+  // clear localstorage if data structure has changed
+  if (!store.get('version') || store.get('version') < js_version) {
+    store.remove('courses');
+    store.set('version', js_version);
+  }
+
+
   // load from localstorage
   if (store.enabled && store.get('courses')) {
     _.each(store.get('courses'), function(course) {

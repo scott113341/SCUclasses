@@ -64,7 +64,13 @@
             </div>
           </label>
           <div class="span8 fields active-{{asearch.time_start.active}}">
-            <p>must be <select class="input-small" ng-disabled="!asearch.time_start.active" ng-model="asearch.time_start.values_raw.ba"><option value="b">before</option><option value="a">after</option></select> <input type="text" class="input-small" ng-disabled="!asearch.time_start.active" ng-model="asearch.time_start.values_raw.time" bs-timepicker value="10:00 AM" /></p>
+            <p>must be
+              <select class="input-small" ng-disabled="!asearch.time_start.active" ng-model="asearch.time_start.values_raw.ba">
+                <option value="b">before</option>
+                <option value="a">after</option>
+              </select>
+              <input type="text" class="input-small" ng-disabled="!asearch.time_start.active" ng-model="asearch.time_start.values_raw.time" bs-timepicker value="10:00 AM" />
+            </p>
           </div>
         </div>
 
@@ -76,7 +82,13 @@
             </div>
           </label>
           <div class="span8 fields active-{{asearch.time_end.active}}">
-            <p>must be <select class="input-small" ng-disabled="!asearch.time_end.active" ng-model="asearch.time_end.values_raw.ba"><option value="b">before</option><option value="a">after</option></select> <input type="text" class="input-small" ng-disabled="!asearch.time_end.active" ng-model="asearch.time_end.values_raw.time" bs-timepicker value="03:00 PM" /></p>
+            <p>must be
+              <select class="input-small" ng-disabled="!asearch.time_end.active" ng-model="asearch.time_end.values_raw.ba">
+                <option value="b">before</option>
+                <option value="a">after</option>
+              </select>
+              <input type="text" class="input-small" ng-disabled="!asearch.time_end.active" ng-model="asearch.time_end.values_raw.time" bs-timepicker value="03:00 PM" />
+            </p>
           </div>
         </div>
 
