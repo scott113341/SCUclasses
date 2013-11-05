@@ -146,7 +146,7 @@ class HomeController < ApplicationController
     elsif params[:department]
       results = Section.select('DISTINCT name').where('name LIKE ?', params[:department]+'%').map{|c| c.name.split(' ')[0]}.uniq()
     elsif params[:instructors]
-      results = Section.select('DISTINCT instructors').where('instructors LIKE UPPER(?)', "%#{params[:instructors]}%".upcase).map{|c| c.instructors}
+      results = Section.select('DISTINCT instructors').where('instructors ILIKE ?', "%#{params[:instructors]}%").map{|c| c.instructors}
     end
 
     render :json => results
