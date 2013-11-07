@@ -16,3 +16,7 @@ body { padding-top: 10px; }
 .modal-body {
   max-height: 500px !important;
 }
+
+a[href]:after {
+  content: none;
+}

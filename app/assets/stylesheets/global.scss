@@ -3,8 +3,17 @@
     display: none !important;
   }
 }
+@mixin print_show {
+  @media screen {
+    display: none !important;
+  }
+}
+
 .print_hide {
   @include print_hide;
+}
+.print_show {
+  @include print_show;
 }
 
 div.footer {

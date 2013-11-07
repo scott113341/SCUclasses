@@ -6,32 +6,7 @@
   <div class="modal-body">
     <p ng-show="sectionsAdded().length == 0">No classes added.</p>
     <div ng-show="sectionsAdded().length > 0">
-      <table class="table-striped table-bordered table-condensed">
-        <thead>
-        <tr>
-          <th>Class</th>
-          <th>Name</th>
-          <th>Class ID</th>
-          <th>Seats Remaining</th>
-          <th>Professor</th>
-          <th>Days</th>
-          <th>Times</th>
-          <th>Location</th>
-          <th>Units</th>
-        </tr>
-        </thead>
-        <tr ng-repeat="section in sectionsAdded()" ng-show="section.selected">
-          <td>{{section.name}}</td>
-          <td>{{section.fullname}}</td>
-          <td><a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{section.id}}&term=<%= TERM %>" title="Opens the CourseAvail listing for this section" target="_blank">{{section.id}}</a></td>
-          <td>{{section.seats}}</td>
-          <td><a class="course-evaluation" data-professor="{{section.instructors}}" title="Opens course evaluations for this professor">{{section.instructors}}</a></td>
-          <td>{{section.days}}</td>
-          <td>{{section.time_start.formatted}} - {{section.time_end.formatted}}</td>
-          <td>{{section.location}}</td>
-          <td>{{section.units}}</td>
-        </tr>
-      </table>
+      <%= render 'schedule_summary', :table_classes => %w{table-striped table-bordered table-condensed} %>
     </div>
   </div>
   <div ng-show="sectionsAdded().length > 0" class="modal-footer">
