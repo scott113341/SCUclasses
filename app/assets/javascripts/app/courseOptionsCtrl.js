@@ -557,6 +557,9 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
 
   // load advanced search examples
   $scope.loadExample = function(example) {
+    // reset search
+    $scope.resetAdvancedSearch();
+
     if (example === 1) {
       // activate fields
       $scope.asearch.department.active = true;
