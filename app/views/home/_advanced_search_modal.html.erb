@@ -23,7 +23,19 @@
             </div>
           </label>
           <div class="span8 fields active-{{asearch.core.active}}">
-            <p>include <select ng-change="addCourseCore()" ng-disabled="!asearch.core.active" ng-model="asearch.core.value.core" ng-options="value.name as value.fullname for value in core"></select></p>
+            <p>include <select ng-disabled="!asearch.core.active" ng-model="asearch.core.value.core" ng-options="value.name as value.fullname for value in core"></select></p>
+          </div>
+        </div>
+
+        <div class="row-fluid">
+          <label for="core2-active">
+            <div class="span4 searchlabel active-{{asearch.core2.active}}">
+              Core requirements
+              <input id="core2-active" type="checkbox" ng-model="asearch.core2.active" />
+            </div>
+          </label>
+          <div class="span8 fields active-{{asearch.core2.active}}">
+            <p>include <select ng-disabled="!asearch.core2.active" ng-model="asearch.core2.value.core2" ng-options="value.name as value.fullname for value in core"></select></p>
           </div>
         </div>
 

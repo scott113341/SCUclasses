@@ -13,7 +13,16 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
     },
     core: {
       description: function(value) {
-        return 'Core: ' + _.findWhere(js_core_all, {name: value.core}).fullname;
+        var core = _.findWhere(js_core_all, {name: value.core});
+        if (core) return 'Core: ' + core.fullname;
+        else return false;
+      }
+    },
+    core2: {
+      description: function(value) {
+        var core2 = _.findWhere(js_core_all, {name: value.core2});
+        if (core2) return 'Core: ' + core2.fullname;
+        else return false;
       }
     },
     department: {
@@ -207,7 +216,8 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
     _.each($scope.asearch, function(field) {
       // if field is active
       if (field.active) {
-        tags.push(field.description(field.value));
+        var description = field.description(field.value);
+        if (description) tags.push(description);
       }
     });
 
