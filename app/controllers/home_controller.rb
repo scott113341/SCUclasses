@@ -109,12 +109,13 @@ class HomeController < ApplicationController
     end
 
     unless params[:core].blank?
-      query += " AND (core NOT LIKE 'z'"
-      params[:core].split(',').each_with_index do |core, i|
-        query += ' AND core LIKE :core' + i.to_s
-        queryparams['core' + i.to_s] = '%' + core + '%'
-      end
-      query += ')'
+      query += ' AND core LIKE :core'
+      queryparams['core'] = '%' + params[:core] + '%'
+    end
+
+    unless params[:core2].blank?
+      query += ' AND core LIKE :core2'
+      queryparams['core2'] = '%' + params[:core2] + '%'
     end
 
     unless params[:department].blank?

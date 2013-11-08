@@ -13,7 +13,16 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
     },
     core: {
       description: function(value) {
-        return 'Core: ' + _.findWhere(js_core_all, {name: value.core}).fullname;
+        var core = _.findWhere(js_core_all, {name: value.core});
+        if (core) return 'Core: ' + core.fullname;
+        else return false;
+      }
+    },
+    core2: {
+      description: function(value) {
+        var core2 = _.findWhere(js_core_all, {name: value.core2});
+        if (core2) return 'Core: ' + core2.fullname;
+        else return false;
       }
     },
     department: {
@@ -33,9 +42,14 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
     },
     time_start: {
       description: function(value) {
-        var ba = (value.time_start[0] == 'b') ? 'before' : 'after';
-        var time = value.time_start.slice(1);
-        return 'Starts ' + ba + ' ' + time;
+        var ba = (value.time_start) ? value.time_start[0] : false;
+        if (ba) ba = (ba == 'b') ? 'before' : 'after';
+
+        var time = value.time_start;
+        if (time) time = time.slice(1);
+
+        if (ba && time) return 'Starts ' + ba + ' ' + time;
+        else return false;
       },
       format: function(values_raw) {
         if (values_raw.ba && values_raw.time) return { time_start: values_raw.ba + values_raw.time };
@@ -44,9 +58,14 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
     },
     time_end: {
       description: function(value) {
-        var ba = (value.time_end[0] == 'b') ? 'before' : 'after';
-        var time = value.time_end.slice(1);
-        return 'Ends ' + ba + ' ' + time;
+        var ba = (value.time_end) ? value.time_end[0] : false;
+        if (ba) ba = (ba == 'b') ? 'before' : 'after';
+
+        var time = value.time_end;
+        if (time) time = time.slice(1);
+
+        if (ba && time) return 'Ends ' + ba + ' ' + time;
+        else return false;
       },
       format: function(values_raw) {
         if (values_raw.ba && values_raw.time) return { time_end: values_raw.ba + values_raw.time };
@@ -207,7 +226,8 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
     _.each($scope.asearch, function(field) {
       // if field is active
       if (field.active) {
-        tags.push(field.description(field.value));
+        var description = field.description(field.value);
+        if (description) tags.push(description);
       }
     });
 
