@@ -557,10 +557,12 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
 
   // load advanced search examples
   $scope.loadExample = function(example) {
+    // reset search
+    $scope.resetAdvancedSearch();
+
     if (example === 1) {
       // activate fields
       $scope.asearch.department.active = true;
-      $scope.asearch.seats.active = true;
       $scope.asearch.time_start.active = true;
       $scope.asearch.days.active = true;
 
@@ -577,6 +579,17 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
       $scope.asearch.days.values_raw.f = true;
       $scope.asearch.days.values_raw.s = false;
       $scope.asearch.days.values_raw.u = false;
+    }
+
+    if (example === 2) {
+      // activate fields
+      $scope.asearch.core.active = true;
+      $scope.asearch.core2.active = true;
+
+      // set field values
+      console.log($scope.asearch.core);
+      $scope.asearch.core.value.core = 'E_DV';
+      $scope.asearch.core2.value.core2 = 'I_PTHAMS';
     }
   };
 }]);
