@@ -588,8 +588,8 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
 
       // set field values
       console.log($scope.asearch.core);
-      $scope.asearch.core.value.core = 'E_CE';
-      $scope.asearch.core2.value.core2 = 'E_ETH';
+      $scope.asearch.core.value.core = 'E_DV';
+      $scope.asearch.core2.value.core2 = 'I_PTHAMS';
     }
   };
 }]);
