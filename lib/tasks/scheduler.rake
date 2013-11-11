@@ -71,11 +71,7 @@ task :update_sections => :environment do
   puts "#{Section.count} sections updated"
   puts "#{newsections} new sections"
 
-  if newsections > 0 || Time.now.hour%2 == 0
-    Rake::Task['update_sections_details'].execute
-  else
-    puts "skipping details update for hour #{Time.now.hour}"
-  end
+  Rake::Task['update_sections_details'].execute
 
   puts "update took #{((Time.now - start)/60).round(2)} minutes"
 end
