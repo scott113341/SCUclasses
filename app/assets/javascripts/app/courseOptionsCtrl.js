@@ -162,7 +162,7 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
 
 
   // perform advanced search
-  $scope.advanced_search = function() {
+  $scope.advancedSearch = function() {
     var url = '/advanced_search?';
 
     // for each field
