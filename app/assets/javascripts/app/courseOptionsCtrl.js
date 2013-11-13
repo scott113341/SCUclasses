@@ -526,7 +526,7 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
       $scope.search(course.url, {name: course.name, tags: course.tags}, course.selected_sections);
     });
 
-    if (courses.length) GoogleAnalyticsService.send('search.localstorage', courses.length);
+    if (courses.length) GoogleAnalyticsService.send('search.localstorage', courses.length, true);
   }
 
 
