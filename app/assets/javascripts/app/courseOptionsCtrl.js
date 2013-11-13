@@ -252,6 +252,10 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
       else section.islab = false;
     });
 
+    sections = sections.sort(function(a, b) {
+      return parseInt(a.name.split(' ')[1]) - parseInt(b.name.split(' ')[1]);
+    });
+
     return sections;
   };
 
@@ -275,6 +279,7 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
         });
 
         $scope.courses.push(course);
+        console.log(course);
       });
     }
   };
