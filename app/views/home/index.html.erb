@@ -10,9 +10,9 @@
       <div class="top">
         <h1>SCU&#8226;classes</h1>
 
-        <button data-toggle="modal" data-target="#schedule" class="btn btn-primary btn-small"><i class="icon-th-list icon-white"></i> Schedule Info</button>
-        <a href="/export.csv?sections={{sectionIds()}}" class="btn btn-info btn-small" target="_blank"><i class="icon-download-alt icon-white"></i> Download Schedule to Excel</a>
-        <button ng-click="clearCourses()" class="btn btn-danger btn-small"><i class="icon-remove-sign icon-white"></i> Clear Schedule</button>
+        <button data-toggle="modal" data-target="#schedule" ng-click="gaEvent('click.schedule_info')" class="btn btn-primary btn-small"><i class="icon-th-list icon-white"></i> Schedule Info</button>
+        <a href="/export.csv?sections={{sectionIds()}}" ng-click="gaEvent('click.download_excel')" class="btn btn-info btn-small" target="_blank"><i class="icon-download-alt icon-white"></i> Download Schedule to Excel</a>
+        <button ng-click="clearCourses(); gaEvent('click.clear_schedule')" class="btn btn-danger btn-small"><i class="icon-remove-sign icon-white"></i> Clear Schedule</button>
 
         <br><br>
 
@@ -46,8 +46,8 @@
         <div class="inner">
           <h4>
             <div class="btn-group">
-              <button ng-click="toggleExpand(course)" class="btn btn-small" title="Expand/collapse this class"><i class="{{expandArrow(course)}}"></i></button>
-              <button ng-click="removeCourse(course)" class="btn btn-small" title="Remove this search"><i class="icon-remove-sign"></i></button>
+              <button ng-click="toggleExpand(course); gaEvent('click.toggle_expand')" class="btn btn-small" title="Expand/collapse this class"><i class="{{expandArrow(course)}}"></i></button>
+              <button ng-click="removeCourse(course); gaEvent('click.remove_course')" class="btn btn-small" title="Remove this search"><i class="icon-remove-sign"></i></button>
             </div>
             {{course.name}}
             <span ng-repeat="tag in course.tags"><span class="label">{{tag}}</span>&nbsp;</span>
@@ -93,7 +93,7 @@
               </table>
             </label>
           </div>
-          <p class="scroll"><a><i class="icon-arrow-up"></i>Scroll to top</a></p>
+          <p class="scroll"><a ng-click="gaEvent('click.scroll_top')"><i class="icon-arrow-up"></i>Scroll to top</a></p>
         </div>
       </div>
     </div>

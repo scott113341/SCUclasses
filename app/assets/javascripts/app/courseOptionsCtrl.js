@@ -598,4 +598,10 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
       $scope.asearch.core2.value.core2 = 'I_PTHAMS';
     }
   };
+
+
+  // send google analytics event
+  $scope.gaEvent = function(a, b, c) {
+    GoogleAnalyticsService.send(a, b, c);
+  };
 }]);
