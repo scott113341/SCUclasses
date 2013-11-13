@@ -162,7 +162,7 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
 
 
   // perform advanced search
-  $scope.advanced_search = function() {
+  $scope.advancedSearch = function() {
     var url = '/advanced_search?';
 
     // for each field
@@ -244,12 +244,17 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
       section.selected = false;
       section.style = $scope.sectionCalendarStyle(section);
       section.cores = (section.core) ? section.core.split(',') : [];
+      section.uniqid = _.uniqueId();
 
       if (/lab/gi.test(section.fullname)) {
         section.cores.push('LAB');
         section.islab = true;
       }
       else section.islab = false;
+    });
+
+    sections = sections.sort(function(a, b) {
+      return parseInt(a.name.split(' ')[1]) - parseInt(b.name.split(' ')[1]);
     });
 
     return sections;
@@ -275,6 +280,7 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
         });
 
         $scope.courses.push(course);
+        console.log(course);
       });
     }
   };
@@ -526,7 +532,7 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
       $scope.search(course.url, {name: course.name, tags: course.tags}, course.selected_sections);
     });
 
-    if (courses.length) GoogleAnalyticsService.send('search.localstorage', courses.length);
+    if (courses.length) GoogleAnalyticsService.send('search.localstorage', courses.length, true);
   }
 
 
