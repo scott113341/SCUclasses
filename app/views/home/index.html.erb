@@ -46,8 +46,8 @@
         <div class="inner">
           <h4>
             <div class="btn-group">
-              <button ng-click="toggleExpand(course)" class="btn btn-small" title="Expand/collapse this class"><i class="{{expandArrow(course)}}"></i></button>
-              <button ng-click="removeCourse(course)" class="btn btn-small" title="Remove this search"><i class="icon-remove-sign"></i></button>
+              <button ng-click="toggleExpand(course); gaEvent('click.toggle_expand')" class="btn btn-small" title="Expand/collapse this class"><i class="{{expandArrow(course)}}"></i></button>
+              <button ng-click="removeCourse(course); gaEvent('click.remove_course')" class="btn btn-small" title="Remove this search"><i class="icon-remove-sign"></i></button>
             </div>
             {{course.name}}
             <span ng-repeat="tag in course.tags"><span class="label">{{tag}}</span>&nbsp;</span>
