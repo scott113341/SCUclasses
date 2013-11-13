@@ -244,6 +244,7 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
       section.selected = false;
       section.style = $scope.sectionCalendarStyle(section);
       section.cores = (section.core) ? section.core.split(',') : [];
+      section.uniqid = _.uniqueId();
 
       if (/lab/gi.test(section.fullname)) {
         section.cores.push('LAB');

@@ -53,12 +53,12 @@
             <span ng-repeat="tag in course.tags"><span class="label">{{tag}}</span>&nbsp;</span>
           </h4>
           <div ng-repeat="section in course.sections" class="section selected-{{section.selected}} validchoice-{{isValidChoice(section)}} isfull-{{section.isfull}}" rel="tooltip" data-original-title="{{section.invalidbecause}}">
-            <label for="section-{{section.id}}">
+            <label for="section-{{section.uniqid}}">
               <table>
                 <tbody>
                 <tr>
                   <td class="select">
-                    <input ng-model="section.selected" id="section-{{section.id}}" type="checkbox" ng-disabled="!isValidChoice(section)">
+                    <input ng-model="section.selected" id="section-{{section.uniqid}}" type="checkbox" ng-disabled="!isValidChoice(section)">
                   </td>
                   <!--<td class="name">
                     {{section.name}}
@@ -119,7 +119,7 @@
               <div ng-repeat="course in courses">
                 <div ng-repeat="section in course.sections">
                   <div ng-show="showSectionBlock(section, '<%= d %>')" class="course-block course-{{course.number}}" ng-style="section.style.computed">
-                    <label for="section-{{section.id}}">&times;</label>
+                    <label for="section-{{section.uniqid}}">&times;</label>
                     <div class="name">{{section.name}}</div>
                     <div class="times">{{section.time_start.formatted}} - {{section.time_end.formatted}}</div>
                   </div>
