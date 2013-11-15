@@ -11,12 +11,7 @@ gem 'bootstrap-sass', '2.3.0.0'
 gem 'nokogiri'
 gem 'rest-client'
 
-group :production do
-  gem 'pg'
-end
-group :development, :test do
-  gem 'sqlite3'
-end
+gem 'pg'
 
 group :assets do
   gem 'sass-rails'

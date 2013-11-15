@@ -34,7 +34,6 @@ GEM
     builder (3.0.4)
     daemons (1.1.9)
     erubis (2.7.0)
-    eventmachine (1.0.3)
     eventmachine (1.0.3-x86-mingw32)
     execjs (1.4.0)
       multi_json (~> 1.0)
@@ -51,7 +50,6 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.23)
     multi_json (1.7.2)
-    nokogiri (1.5.9)
     nokogiri (1.5.9-x86-mingw32)
     pg (0.15.1-x86-mingw32)
     polyglot (0.3.3)
@@ -93,8 +91,6 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    sqlite3 (1.3.7)
-    sqlite3 (1.3.7-x86-mingw32)
     thin (1.5.1)
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
@@ -122,6 +118,5 @@ DEPENDENCIES
   rest-client
   ruby-progressbar
   sass-rails
-  sqlite3
   thin
   uglifier
