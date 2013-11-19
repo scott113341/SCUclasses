@@ -371,10 +371,10 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
             // if the sections share common days
             if (_.intersection(section.days.split(''), section2.days.split('')).length > 0) {
               // test if starts during
-              if (section.time_start.time >= section2.time_start.time && section.time_start.time <= section2.time_end.time) valid = false;
+              if (section.time_start.time >= section2.time_start.time && section.time_start.time < section2.time_end.time) valid = false;
 
               // test if ends during
-              if (section.time_end.time >= section2.time_start.time && section.time_end.time <= section2.time_end.time) valid = false;
+              if (section.time_end.time > section2.time_start.time && section.time_end.time <= section2.time_end.time) valid = false;
 
               // test if starts before and ends after
               if (section.time_start.time <= section2.time_start.time && section.time_end.time >= section2.time_end.time) valid = false;
