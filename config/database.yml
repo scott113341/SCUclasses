@@ -1,10 +1,7 @@
 development:
   adapter: postgresql
   database: scuclasses_development
-  username: postgres
-  password: admin
-  encoding: UTF8
-  pool: 5
+  host: localhost
 
 test:
   adapter: postgresql
