@@ -1,6 +1,7 @@
 require 'rest-client'
 require 'nokogiri'
 require 'ruby-progressbar'
+require 'scuclasses_platform/util'
 
 
 task :update_sections => :environment do
@@ -32,8 +33,8 @@ task :update_sections => :environment do
 
         # check that time is well-formed
         if days != nil && times != nil
-          time_start = parse_time(times[1])
-          time_end = parse_time(times[2])
+          time_start = Util.parse_time(times[1])
+          time_end = Util.parse_time(times[2])
         else
           days = ''
           time_start = 0
@@ -74,16 +75,6 @@ task :update_sections => :environment do
   Rake::Task['update_sections_details'].execute
 
   puts "update took #{((Time.now - start)/60).round(2)} minutes"
-end
-
-def parse_time(time)
-  time = /(\d{2}):(\d{2})\s([APM]{2})/.match(time)
-  hours = time[1].to_i * 100
-  minutes = time[2].to_i
-  ampm = time[3]
-
-  time = hours + minutes + ((ampm=='PM' && hours<1200) ? 1200 : 0)
-  return time
 end
 
 

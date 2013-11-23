@@ -87,7 +87,7 @@ class HomeController < ApplicationController
 
     unless params[:time_start].blank?
       before = params[:time_start][0] == 'b'
-      time = parse_time(params[:time_start][1..-1])
+      time = Util.parse_time(params[:time_start][1..-1])
       query += ' AND time_start'
       query += (before) ? ' <= ' : ' >= '
       query += ':time_start'
@@ -96,7 +96,7 @@ class HomeController < ApplicationController
 
     unless params[:time_end].blank?
       before = params[:time_end][0] == 'b'
-      time = parse_time(params[:time_end][1..-1])
+      time = Util.parse_time(params[:time_end][1..-1])
       query += ' AND time_end'
       query += (before) ? ' <= ' : ' >= '
       query += ':time_end'
