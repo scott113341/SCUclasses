@@ -155,6 +155,10 @@
   border: 1px solid #ccc;
   margin-bottom: 15px;
 
+  .title {
+    padding: 0 10px;
+  }
+
   .inner {
     padding: 0 10px 10px;
     overflow: hidden;
@@ -240,7 +244,7 @@
       }
     }
 
-    .section.validchoice-false, .section.isfull-true {
+    .section.validchoice-false, .section.isfull-true:not(.selected-true) {
       color: #777 !important;
       background: #ccc !important;
     }
@@ -257,16 +261,12 @@
 .course.show-false {
   border-left-width: 10px;
 }
-.course.show-false .inner {
-  height: 35px;
-  overflow: hidden;
-}
 
 
 
 
 
-div.calendar {
+.calendar {
   $hourheight: 35px;
   position: fixed;
   width: 47.4%;

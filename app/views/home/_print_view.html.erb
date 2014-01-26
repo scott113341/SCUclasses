@@ -1,10 +1,10 @@
-<div class="row-fluid print_show">
+<div id="print" class="row-fluid print_show">
   <div class="span12">
-    <h1 class="center">SCU&#8226;classes</h1>
-    <br>
-    <%= render 'schedule_summary', :table_classes => %w{table-condensed table-bordered} %>
-    <br>
-    <h4 class="center">Thank you for using SCU&#8226;classes!</h4>
-    <p class="center">(Hint: for best results, print this in landscape mode)</p>
+    <h3 class="center">SCU&#8226;classes</h3>
+    <%= render 'schedule_summary', :table_classes => %w{table-condensed} %>
+
+    <div class="calendar">
+      <%= render 'calendar_view' %>
+    </div>
   </div>
 </div>

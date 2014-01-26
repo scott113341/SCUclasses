@@ -1,0 +1,27 @@
+<div class="days">
+  <div class="hours">
+    <% @hours.each do |h| %>
+      <div class="hour"><%= ((h < 13) ? (h) : (h - 12)).to_s + ((h < 12) ? 'am' : 'pm') %></div>
+    <% end %>
+  </div>
+
+  <% @days.each do |d,day| %>
+    <div class="day" id="<%= d %>">
+      <div class="day-title"><%= day %></div>
+      <% @hours[0..(@hours.length - 3)].each do |h| %>
+        <div class="hour"></div>
+      <% end %>
+      <div class="hour last"></div>
+
+      <div ng-repeat="course in courses">
+        <div ng-repeat="section in course.sections">
+          <div ng-if="showSectionBlock(section, '<%= d %>')" class="course-block course-{{course.number}}" ng-style="section.style.computed">
+            <label for="section-{{section.uniqid}}">&times;</label>
+            <div class="name">{{section.name}}</div>
+            <div class="times">{{section.time_start.formatted}} - {{section.time_end.formatted}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
