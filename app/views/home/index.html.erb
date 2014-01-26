@@ -43,7 +43,7 @@
       </div>
 
       <div ng-repeat="course in courses | orderBy:'number':true" class="course course-{{course.number}} show-{{course.show}}">
-        <div class="inner">
+        <div class="title">
           <h4>
             <div class="btn-group">
               <button ng-click="toggleExpand(course); gaEvent('click.toggle_expand')" class="btn btn-small" title="Expand/collapse this class"><i class="{{expandArrow(course)}}"></i></button>
@@ -52,6 +52,8 @@
             {{course.name}}
             <span ng-repeat="tag in course.tags"><span class="label">{{tag}}</span>&nbsp;</span>
           </h4>
+        </div>
+        <div class="inner" ng-show="course.show">
           <div ng-repeat="section in course.sections" class="section selected-{{section.selected}} validchoice-{{isValidChoice(section)}} isfull-{{section.isfull}}" rel="tooltip" data-original-title="{{section.invalidbecause}}">
             <label for="section-{{section.uniqid}}">
               <table>
