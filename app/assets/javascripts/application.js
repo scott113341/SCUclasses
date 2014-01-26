@@ -5,7 +5,7 @@
 
 // libraries
   //= require app/core.js
-  //= require lib/angular-1.0.4.min.js
+  //= require angular/angular.js
   //= require lib/angularstrap-0.7.3.js
   //= require_tree ./lib
 
