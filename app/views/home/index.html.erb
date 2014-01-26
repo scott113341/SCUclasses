@@ -33,7 +33,7 @@
           <h4>Or, find things like double-dip classes with <button data-toggle="modal" data-target="#search" class="btn btn-primary btn-small"><i class="icon-th-list icon-white"></i> Advanced Search</button></h4>
         </div>
 
-        <div ng-show="fullSections().length > 0" class="alert alert-error">
+        <div ng-if="fullSections().length > 0" class="alert alert-error">
           <span class="label label-important">Warning!</span>
           <p>This schedule has classes that are full or closed. If this is ok (for example, if you are automatically registered or have a permission number), you can ignore this warning. Otherwise, please find replacement classes for the following:</p>
           <ul>
@@ -53,7 +53,7 @@
             <span ng-repeat="tag in course.tags"><span class="label">{{tag}}</span>&nbsp;</span>
           </h4>
         </div>
-        <div class="inner" ng-show="course.show">
+        <div class="inner" ng-if="course.show">
           <div ng-repeat="section in course.sections" class="section selected-{{section.selected}} validchoice-{{isValidChoice(section)}} isfull-{{section.isfull}}" rel="tooltip" data-original-title="{{section.invalidbecause}}">
             <label for="section-{{section.uniqid}}">
               <table>
@@ -62,9 +62,6 @@
                   <td class="select">
                     <input ng-model="section.selected" id="section-{{section.uniqid}}" type="checkbox" ng-disabled="!isValidChoice(section)">
                   </td>
-                  <!--<td class="name">
-                    {{section.name}}
-                  </td>-->
                   <td class="schedule">
                     <span class="days">{{section.days}}</span>
                     <br>
@@ -77,10 +74,10 @@
                   </td>
                   <td class="moreinfo">
                     <a class="btn btn-mini btn-success" rel="popover" data-original-title="{{section.fullname}}" data-content="{{popoverInfo(section)}}">More Info</a>
-                    <span ng-show="section.islab" class="label label-info">lab section</span>
+                    <span ng-if="section.islab" class="label label-info">lab section</span>
                   </td>
                   <td class="info">
-                    <div ng-show="course.name == 'Advanced Search'">
+                    <div ng-if="course.name == 'Advanced Search'">
                       <span><strong>Class:</strong> {{section.name}}</span>
                       <br>
                     </div>
@@ -120,7 +117,7 @@
 
               <div ng-repeat="course in courses">
                 <div ng-repeat="section in course.sections">
-                  <div ng-show="showSectionBlock(section, '<%= d %>')" class="course-block course-{{course.number}}" ng-style="section.style.computed">
+                  <div ng-if="showSectionBlock(section, '<%= d %>')" class="course-block course-{{course.number}}" ng-style="section.style.computed">
                     <label for="section-{{section.uniqid}}">&times;</label>
                     <div class="name">{{section.name}}</div>
                     <div class="times">{{section.time_start.formatted}} - {{section.time_end.formatted}}</div>

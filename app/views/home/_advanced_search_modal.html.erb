@@ -161,8 +161,8 @@
           <div class="span8">
             <br>
             <a class="btn btn-primary" ng-click="advancedSearch()"><i class="icon-search icon-white"></i> Search</a>
-            <a class="btn btn-success" ng-click="addSearchToCourses()" ng-show="search_results.sections.length > 0 && search_results.search_performed"><i class="icon-plus-sign icon-white"></i> Add Search Results</a>
-            <a class="btn" disabled ng-show="!(search_results.sections.length > 0 && search_results.search_performed)"><i class="icon-plus-sign"></i> Add Search Results</a>
+            <a class="btn btn-success" ng-click="addSearchToCourses()" ng-if="search_results.sections.length > 0 && search_results.search_performed"><i class="icon-plus-sign icon-white"></i> Add Search Results</a>
+            <a class="btn" disabled ng-if="!(search_results.sections.length > 0 && search_results.search_performed)"><i class="icon-plus-sign"></i> Add Search Results</a>
             <br><br>
             <p>Click the <strong>Add Search Results</strong> button to add your search to the main page.</p>
           </div>
@@ -174,7 +174,7 @@
 
       <div class="span7 results">
         <div class="row-fluid">
-          <div class="instructions" ng-show="search_results.instructions">
+          <div class="instructions" ng-if="search_results.instructions">
             <h3>Advanced Search</h3>
             <h4>Use the fields on the left to search for classes that match your criteria.</h4>
             <br>
@@ -186,10 +186,10 @@
           </div>
 
 
-          <div class="course course-0 show-true" ng-show="!search_results.instructions">
+          <div class="course course-0 show-true" ng-if="!search_results.instructions">
             <div class="inner">
               <h4>Search Results ({{search_results.sections.length}})</h4>
-              <p ng-show="search_results.sections.length == 0">No classes matching your criteria were found</p>
+              <p ng-if="search_results.sections.length == 0">No classes matching your criteria were found</p>
               <div ng-repeat="section in search_results.sections" class="section selected-{{section.selected}} validchoice-{{isValidChoice(section)}} isfull-{{section.isfull}}" data-original-title="{{section.invalidbecause}}" rel="tooltip">
                 <table>
                   <tbody>
@@ -209,7 +209,7 @@
                     </td>
                     <td class="moreinfo">
                       <a class="btn btn-mini btn-success" href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{section.id}}&term=<%= TERM %>" title="Opens the CourseAvail listing for this section" target="_blank">More Info</a>
-                      <span ng-show="section.islab" class="label label-info">lab section</span>
+                      <span ng-if="section.islab" class="label label-info">lab section</span>
                     </td>
                     <td class="info">
                       <span><strong>Name:</strong> {{section.fullname}}</span>

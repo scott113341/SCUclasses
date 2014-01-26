@@ -12,7 +12,7 @@
       <th>Units</th>
     </tr>
   </thead>
-    <tr ng-repeat="section in sectionsAdded()" ng-show="section.selected">
+    <tr ng-repeat="section in sectionsAdded()" ng-if="section.selected">
       <td>{{section.name}}</td>
       <td>{{section.fullname}}</td>
       <td><a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{section.id}}&term=<%= TERM %>" title="Opens the CourseAvail listing for this section" target="_blank">{{section.id}}</a></td>
