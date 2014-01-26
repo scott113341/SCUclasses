@@ -15,6 +15,7 @@
   ],
   "dependencies": {
     "angular": "~1.2.10",
-    "underscore": "~1.5.2"
+    "underscore": "~1.5.2",
+    "store": "https://github.com/marcuswestin/store.js.git#~1.3.15"
   }
 }
