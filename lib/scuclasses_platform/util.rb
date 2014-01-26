@@ -1,4 +1,4 @@
-require 'JSON'
+require 'json'
 
 class Util
   def self.parse_time(time)
