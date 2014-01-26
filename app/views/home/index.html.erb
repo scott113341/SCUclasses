@@ -2,7 +2,6 @@
 
   <%= render 'advanced_search_modal' %>
   <%= render 'schedule_summary_modal' %>
-
   <%= render 'print_view' %>
 
   <div class="row-fluid print_hide">
@@ -11,7 +10,7 @@
         <h1>SCU&#8226;classes</h1>
 
         <button data-toggle="modal" data-target="#schedule" ng-click="gaEvent('click.schedule_info')" class="btn btn-primary btn-small"><i class="icon-th-list icon-white"></i> Schedule Info</button>
-        <a href="/export.csv?sections={{sectionIds()}}" ng-click="gaEvent('click.download_excel')" class="btn btn-info btn-small" target="_blank"><i class="icon-download-alt icon-white"></i> Download Schedule to Excel</a>
+        <button class="btn btn-success btn-small" ng-click="print()"><i class="icon-print icon-white"></i> Print Schedule</button>
         <button ng-click="clearCourses(); gaEvent('click.clear_schedule')" class="btn btn-danger btn-small"><i class="icon-remove-sign icon-white"></i> Clear Schedule</button>
 
         <br><br>
@@ -100,34 +99,7 @@
 
     <div class="span6">
       <div class="calendar">
-        <div class="days">
-          <div class="hours">
-            <% @hours.each do |h| %>
-              <div class="hour"><%= ((h < 13) ? (h) : (h - 12)).to_s + ((h < 12) ? 'am' : 'pm') %></div>
-            <% end %>
-          </div>
-
-          <% @days.each do |d,day| %>
-            <div class="day" id="<%= d %>">
-              <div class="day-title"><%= day %></div>
-              <% @hours[0..(@hours.length - 3)].each do |h| %>
-                <div class="hour"></div>
-              <% end %>
-              <div class="hour last"></div>
-
-              <div ng-repeat="course in courses">
-                <div ng-repeat="section in course.sections">
-                  <div ng-if="showSectionBlock(section, '<%= d %>')" class="course-block course-{{course.number}}" ng-style="section.style.computed">
-                    <label for="section-{{section.uniqid}}">&times;</label>
-                    <div class="name">{{section.name}}</div>
-                    <div class="times">{{section.time_start.formatted}} - {{section.time_end.formatted}}</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <% end %>
-        </div>
-
+        <%= render 'calendar_view' %>
         <div class="bottom">
           <p>This schedule has <strong class="green-{{units() <= 19}}">{{units()}}</strong> unit{{plural(units())}} || Updated from CourseAvail <strong class="green-true">{{lastupdated}}</strong> minute{{plural(lastupdated)}} ago</p>
         </div>
