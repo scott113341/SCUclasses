@@ -87,7 +87,7 @@ class HomeController < ApplicationController
 
     unless params[:time_start].blank?
       before = params[:time_start][0] == 'b'
-      time = parse_time(params[:time_start][1..-1])
+      time = Util.parse_time(params[:time_start][1..-1])
       query += ' AND time_start'
       query += (before) ? ' <= ' : ' >= '
       query += ':time_start'
@@ -96,7 +96,7 @@ class HomeController < ApplicationController
 
     unless params[:time_end].blank?
       before = params[:time_end][0] == 'b'
-      time = parse_time(params[:time_end][1..-1])
+      time = Util.parse_time(params[:time_end][1..-1])
       query += ' AND time_end'
       query += (before) ? ' <= ' : ' >= '
       query += ':time_end'
@@ -151,37 +151,6 @@ class HomeController < ApplicationController
     end
 
     render :json => results
-  end
-
-
-
-  # csv export
-  def export
-    require 'csv'
-
-    # get sections
-    sections = params[:sections].split(',')
-
-    # make csv
-    csv = CSV.generate do |csv|
-      csv << ['Class', 'Name', 'Class ID', 'Seats Remaining', 'Professor', 'Days', 'Times', 'Location', 'Units']
-      Section.find(sections).each do |section|
-        # format the time
-        s = section.time_start.to_i
-        e = section.time_end.to_i
-        times = []
-        [s,e].each do |t|
-          time = ((t/100).floor > 12) ? (((t/100).floor - 12).to_s + ':' + (t-(t/100).floor*100).to_s.rjust(2,'0') + 'pm') : (((t/100).floor).to_s+':'+(t-(t/100).floor*100).to_s.rjust(2,'0') + 'am')
-          times << time
-        end
-        times = times.join(' - ')
-
-        # push to csv
-        csv << section.attributes.values_at('name', 'fullname', 'id', 'seats', 'instructors', 'days') + [times] + section.attributes.values_at('location', 'units')
-      end
-    end
-
-    send_data csv, :filename => 'Schedule.csv'
   end
 
 
