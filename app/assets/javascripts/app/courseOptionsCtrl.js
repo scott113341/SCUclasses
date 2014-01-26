@@ -353,12 +353,6 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
   };
 
 
-  // csv list of section ids
-  $scope.sectionIds = function() {
-    return _.pluck($scope.sectionsAdded(), 'id').join(',');
-  };
-
-
   // validate sections based off of selections
   $scope.isValidChoice = function(section) {
     if (section.selected == true) return true;
