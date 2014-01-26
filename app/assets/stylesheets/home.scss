@@ -240,7 +240,7 @@
       }
     }
 
-    .section.validchoice-false, .section.isfull-true {
+    .section.validchoice-false, .section.isfull-true:not(.selected-true) {
       color: #777 !important;
       background: #ccc !important;
     }
