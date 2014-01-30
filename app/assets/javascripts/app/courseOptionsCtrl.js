@@ -358,7 +358,7 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
     if (section.selected == true) return true;
     else {
       var valid = true;
-      var conflictingfunction = '';
+      var conflicting_section = '';
       _.each($scope.courses, function(course, name) { // for each course
         _.each(course.sections, function(section2) { // for each section2
           if (section2.selected == true && valid == true) { // if section2 is selected
