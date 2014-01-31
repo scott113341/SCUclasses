@@ -52,7 +52,7 @@
             <span ng-repeat="tag in course.tags"><span class="label">{{tag}}</span>&nbsp;</span>
           </h4>
         </div>
-        <div class="inner" ng-if="course.show">
+        <div class="inner" ng-show="course.show">
           <div ng-repeat="section in course.sections" class="section selected-{{section.selected}} validchoice-{{isValidChoice(section)}} isfull-{{section.isfull}}" rel="tooltip" data-original-title="{{section.invalidbecause}}">
             <label for="section-{{section.uniqid}}">
               <table>
