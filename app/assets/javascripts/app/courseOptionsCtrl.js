@@ -594,14 +594,9 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
   };
 
 
-  // send google analytics event
-  $scope.gaEvent = function(a, b, c) {
-    GoogleAnalyticsService.send(a, b, c);
-  };
-
-
   // print button
   $scope.print = function() {
+    GoogleAnalyticsService.send('click.print', $scope.sectionsAdded().length);
     window.print();
   };
 }]);
