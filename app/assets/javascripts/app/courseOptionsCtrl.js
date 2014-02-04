@@ -602,6 +602,7 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
 
   // print button
   $scope.print = function() {
+    GoogleAnalyticsService.send('click.print', $scope.sectionsAdded().length);
     window.print();
   };
 }]);
