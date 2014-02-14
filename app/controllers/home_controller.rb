@@ -23,6 +23,13 @@ class HomeController < ApplicationController
 
     # last updated
     @lastupdated = ((Time.now - Section.first.updated_at) / 60).ceil
+
+    # readonly if valid sections are specified
+    if params[:classes].nil?
+      @readonly = false
+    else
+      @readonly = ! Section.find(params[:classes].split(',')).nil?
+    end
   end
 
 

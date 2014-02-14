@@ -3,24 +3,29 @@
   <%= render 'advanced_search_modal' %>
   <%= render 'schedule_summary_modal' %>
   <%= render 'print_view' %>
+  <%= render 'share_schedule_modal' %>
 
   <div class="row-fluid print_hide">
     <div class="span6">
       <div class="top">
         <h1>SCU&#8226;classes</h1>
 
-        <button data-toggle="modal" data-target="#schedule" ng-click="gaEvent('click.schedule_info')" class="btn btn-primary btn-small"><i class="icon-th-list icon-white"></i> Schedule Info</button>
-        <button class="btn btn-success btn-small" ng-click="print()"><i class="icon-print icon-white"></i> Print Schedule</button>
-        <button ng-click="clearCourses(); gaEvent('click.clear_schedule')" class="btn btn-danger btn-small"><i class="icon-remove-sign icon-white"></i> Clear Schedule</button>
+        <button ng-click="gaEvent('click.schedule_info', sectionsAdded().length)" data-toggle="modal" data-target="#schedule" class="btn btn-primary btn-small"><i class="icon-th-list icon-white"></i> Schedule Info</button>
+        <button ng-click="print()" class="btn btn-success btn-small"><i class="icon-print icon-white"></i> Print Schedule</button>
+        <button ng-click="gaEvent('click.share_schedule', sectionsAdded().length)" data-toggle="modal" data-target="#share" class="btn btn-info btn-small"><i class="icon-share icon-white"></i> Share Schedule</button>
+        <button ng-click="gaEvent('click.clear_schedule', sectionsAdded().length); clearCourses()" class="btn btn-danger btn-small"><i class="icon-remove-sign icon-white"></i> Clear Schedule</button>
 
         <br><br>
 
-        <div class="buttons">
+        <div class="buttons readonly-hide">
           <input type="text" placeholder='Type a class, like "RSOC 9"' data-items="200" ng-model="addCourseText" bs-typeahead="addCourseTextSearch" />
           &nbsp;<strong>OR</strong>&nbsp;
           <button data-toggle="modal" data-target="#search" class="btn btn-primary"><i class="icon-th-list icon-white"></i> Advanced Search</button>
         </div>
 
+        <div class="readonly-show" style="display: none;">
+          <p>You are viewing someone else's schedule. <a href="/">Click here </a> to go back to your schedule.</p>
+        </div>
 
         <div class="welcome hide-{{hideWelcomeMessage()}}">
           <h3>Welcome to SCU&#8226;classes.</h3>
@@ -32,7 +37,7 @@
           <h4>Or, find things like double-dip classes with <button data-toggle="modal" data-target="#search" class="btn btn-primary btn-small"><i class="icon-th-list icon-white"></i> Advanced Search</button></h4>
         </div>
 
-        <div ng-if="fullSections().length > 0" class="alert alert-error">
+        <div ng-if="fullSections().length > 0" class="alert alert-error readonly-hide">
           <span class="label label-important">Warning!</span>
           <p>This schedule has classes that are full or closed. If this is ok (for example, if you are automatically registered or have a permission number), you can ignore this warning. Otherwise, please find replacement classes for the following:</p>
           <ul>
@@ -121,6 +126,7 @@
     var js_term = <%= TERM %>;
     var js_lastupdated = <%= @lastupdated %>;
     var js_version = 2.0;
+    var js_readonly = <%= @readonly %>;
 </script>
 
 <form id="course-evaluation-form" action="http://evaluations.scu.edu/" method="post" target="_blank">
@@ -132,6 +138,6 @@
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=212717712104514";
+  js.src = "//connect.facebook.net/en_US/all.js";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
