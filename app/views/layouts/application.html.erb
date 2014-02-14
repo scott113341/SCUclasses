@@ -10,7 +10,7 @@
     <link rel="icon" href="favicon.ico" />
   </head>
 
-  <body ng-cloak>
+  <body ng-cloak class="<%= "readonly-#{@readonly}" %>">
     <%= yield %>
     <div class="footer">
       <div class="container-fluid">
