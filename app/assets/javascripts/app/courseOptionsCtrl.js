@@ -2,6 +2,7 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
   $scope.courses = [];
   $scope.core_all = js_core_all;
   $scope.core = js_core;
+  $scope.readonly = js_readonly;
 
 
   // advanced search field setup
@@ -180,7 +181,7 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
     });
 
     // do search and show search results
-    $http.get(url).success(function(res) {
+    var promise = $http.get(url).success(function(res) {
       $scope.search_results.sections = $scope.formatSections(res);
       $scope.search_results.url = url;
 
@@ -191,18 +192,22 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
 
       GoogleAnalyticsService.send('search.advanced', $scope.search_results.sections.length);
     });
+
+    return promise;
   };
 
 
   // add the advanced search results to the main interface
-  $scope.addSearchToCourses = function() {
-    var name = 'Advanced Search';
+  $scope.addSearchToCourses = function(name) {
+    name = name || 'Advanced Search';
     var tags = $scope.advancedSearchTags();
 
-    $scope.search($scope.search_results.url, {name: name, tags: tags}, []);
+    var promise = $scope.search($scope.search_results.url, {name: name, tags: tags}, []);
 
     $('#search').modal('hide');
     scrollToTop();
+
+    return promise;
   };
 
 
@@ -265,8 +270,10 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
   $scope.search = function(url, properties, selected_sections) {
     // prevent duplicate searches
     // todo alert user if it's a duplicate search instead of silently failing
+    var promise;
+
     if (_.where($scope.courses, {url: url}).length == 0) {
-      $http.get(url).success(function(res) {
+      promise = $http.get(url).success(function(res) {
         var course = {
           sections: $scope.formatSections(res),
           number: _.size($scope.courses),
@@ -280,9 +287,10 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
         });
 
         $scope.courses.push(course);
-        console.log(course);
       });
     }
+
+    return promise;
   };
 
 
@@ -341,15 +349,23 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
   };
 
 
-  // sections added
-  $scope.sectionsAdded = function() {
-    var sectionsadded = [];
+  // sections
+  $scope.sections = function() {
+    var sections = [];
     _.each($scope.courses, function(course) {
       _.each(course.sections, function(section) {
-        if (section.selected) sectionsadded.push(section);
+        sections.push(section);
       });
     });
-    return sectionsadded;
+    return sections;
+  };
+
+
+  // sections added
+  $scope.sectionsAdded = function() {
+    return _.filter($scope.sections(), function(section) {
+      return section.selected;
+    });
   };
 
 
@@ -519,7 +535,7 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
 
 
   // load from localstorage
-  if (store.enabled && store.get('courses')) {
+  if (store.enabled && store.get('courses') && !$scope.readonly) {
     var courses = store.get('courses');
 
     _.each(courses, function(course) {
@@ -530,28 +546,51 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
   }
 
 
-  // save to localstorage
-  $scope.$watch('courses', function(courses) {
-    courses = _.map(courses, function(course) {
-      course.selected_sections = _.chain(course.sections)
-        .filter(function(section) {
-          return section.selected;
-        })
-        .pluck('id')
-        .value();
+  // load from server
+  if ($scope.readonly) {
+    var ids = location.search.match(/\d+/g);
 
-      course = {
-        url: course.url,
-        name: course.name,
-        tags: course.tags,
-        selected_sections: course.selected_sections,
-        show: course.show
-      };
-      return course;
+    $scope.asearch.id.active = true;
+
+    _.each(ids, function(id) {
+      $scope.asearch.id.value.id = id;
+      $scope.advancedSearch()
+        .then(function() {
+          return $scope.addSearchToCourses($scope.search_results.sections[0].name);
+        })
+        .then(function() {
+          $scope.courses.last().sections[0].selected = true;
+        });
     });
 
-    store.set('courses', courses);
-    console.log('saved courses', courses);
+    $scope.asearch.id.active = false;
+  }
+
+
+  // save to localstorage
+  $scope.$watch('courses', function(courses) {
+    if (!$scope.readonly) {
+      courses = _.map(courses, function(course) {
+        course.selected_sections = _.chain(course.sections)
+          .filter(function(section) {
+            return section.selected;
+          })
+          .pluck('id')
+          .value();
+
+        course = {
+          url: course.url,
+          name: course.name,
+          tags: course.tags,
+          selected_sections: course.selected_sections,
+          show: course.show
+        };
+        return course;
+      });
+
+      store.set('courses', courses);
+      console.log('saved courses', courses);
+    }
   }, true);
 
 
@@ -604,5 +643,13 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
   $scope.print = function() {
     GoogleAnalyticsService.send('click.print', $scope.sectionsAdded().length);
     window.print();
+  };
+
+
+  // sharing link
+  $scope.shareLink = function() {
+    var link = 'http://scuclasses.com/?classes=';
+    link += _.pluck($scope.sectionsAdded(), 'id').join(',');
+    return link;
   };
 }]);
