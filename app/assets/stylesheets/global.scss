@@ -16,11 +16,21 @@
   @include print_show;
 }
 
-.share-hide {
-  display: none !important;
+body.readonly-false {
+  .readonly-show {
+    display: none !important;
+  }
+  .readonly-hide {
+    display: block !important;
+  }
 }
-.share-show {
-  display: block !important;
+body.readonly-true {
+  .readonly-show {
+    display: block !important;
+  }
+  .readonly-hide {
+    display: none !important;
+  }
 }
 
 div.footer {

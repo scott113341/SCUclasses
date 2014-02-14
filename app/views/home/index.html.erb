@@ -17,13 +17,13 @@
 
         <br><br>
 
-        <div class="buttons share-hide">
+        <div class="buttons readonly-hide">
           <input type="text" placeholder='Type a class, like "RSOC 9"' data-items="200" ng-model="addCourseText" bs-typeahead="addCourseTextSearch" />
           &nbsp;<strong>OR</strong>&nbsp;
           <button data-toggle="modal" data-target="#search" class="btn btn-primary"><i class="icon-th-list icon-white"></i> Advanced Search</button>
         </div>
 
-        <div class="share-show" style="display: none;">
+        <div class="readonly-show" style="display: none;">
           <p>You are viewing someone else's schedule. <a href="/">Click here </a> to go back to your schedule.</p>
         </div>
 
@@ -37,7 +37,7 @@
           <h4>Or, find things like double-dip classes with <button data-toggle="modal" data-target="#search" class="btn btn-primary btn-small"><i class="icon-th-list icon-white"></i> Advanced Search</button></h4>
         </div>
 
-        <div ng-if="fullSections().length > 0" class="alert alert-error share-hide">
+        <div ng-if="fullSections().length > 0" class="alert alert-error readonly-hide">
           <span class="label label-important">Warning!</span>
           <p>This schedule has classes that are full or closed. If this is ok (for example, if you are automatically registered or have a permission number), you can ignore this warning. Otherwise, please find replacement classes for the following:</p>
           <ul>
