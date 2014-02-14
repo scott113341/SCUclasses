@@ -10,10 +10,10 @@
       <div class="top">
         <h1>SCU&#8226;classes</h1>
 
-        <button ng-click="gaEvent('click.schedule_info')" data-toggle="modal" data-target="#schedule" class="btn btn-primary btn-small"><i class="icon-th-list icon-white"></i> Schedule Info</button>
+        <button ng-click="gaEvent('click.schedule_info', sectionsAdded().length)" data-toggle="modal" data-target="#schedule" class="btn btn-primary btn-small"><i class="icon-th-list icon-white"></i> Schedule Info</button>
         <button ng-click="print()" class="btn btn-success btn-small"><i class="icon-print icon-white"></i> Print Schedule</button>
         <button ng-click="gaEvent('click.share_schedule', sectionsAdded().length)" data-toggle="modal" data-target="#share" class="btn btn-info btn-small"><i class="icon-share icon-white"></i> Share Schedule</button>
-        <button ng-click="gaEvent('click.clear_schedule'); clearCourses()" class="btn btn-danger btn-small"><i class="icon-remove-sign icon-white"></i> Clear Schedule</button>
+        <button ng-click="gaEvent('click.clear_schedule', sectionsAdded().length); clearCourses()" class="btn btn-danger btn-small"><i class="icon-remove-sign icon-white"></i> Clear Schedule</button>
 
         <br><br>
 
