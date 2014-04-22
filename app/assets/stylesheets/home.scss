@@ -3,6 +3,10 @@
 
   @include print_hide;
 
+  h1, h3, h4 {
+    font-weight: 400;
+  }
+
   div.buttons {
     input {
       margin-bottom: 0;
