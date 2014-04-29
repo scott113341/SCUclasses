@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(:version => 20140429163251) do
 
   create_table "cores", :force => true do |t|
-    t.string   "attribute"
+    t.string   "key"
     t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
