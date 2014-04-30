@@ -21,6 +21,11 @@ class HomeController < ApplicationController
     end
     @js_courses.sort! {|a,b| /[0-9]+/.match(a).to_s.to_i + ((/[0-9]+[A-Z]/.match(a)) ? 0.5 : 0) <=> /[0-9]+/.match(b).to_s.to_i + ((/[0-9]+[A-Z]/.match(b)) ? 0.5 : 0)} # sort courses by dept/number
 
+    # javascript core
+    @js_core = Core.all.map do |core|
+      {name: core.key, fullname: core.name}
+    end
+
     # last updated
     @lastupdated = ((Time.now - Section.first.updated_at) / 60).ceil
 

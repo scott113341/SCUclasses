@@ -73,6 +73,7 @@ task :update_sections => :environment do
   puts "#{newsections} new sections"
 
   Rake::Task['update_sections_details'].execute
+  Rake::Task['update_core_keys'].execute
 
   puts "update took #{((Time.now - start)/60).round(2)} minutes"
 end
@@ -120,5 +121,28 @@ task :update_sections_details => :environment do
     section.save
 
     progress.increment
+  end
+end
+
+
+
+
+
+task :update_core_keys => :environment do
+  # empty core model
+  Core.destroy_all
+
+  # get courseavail landing page
+  res = RestClient.get 'http://www.scu.edu/courseavail'
+  res = Nokogiri.HTML(res)
+
+  res.css('#newcore option').each do |core_option|
+    if core_option.text.length > 0
+      core = Core.new
+      core.key = core_option.attribute('value').text.strip
+      core.name = core_option.text.strip[/^\w+\s\-\s[A-Z]+\s(.+)/, 1].gsub(/PATH/, 'Pathway -')
+
+      core.save
+    end
   end
 end
