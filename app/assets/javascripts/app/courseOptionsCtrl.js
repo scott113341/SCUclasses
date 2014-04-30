@@ -1,7 +1,9 @@
 app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnalyticsService', function($scope, $http, $timeout, GoogleAnalyticsService) {
   $scope.courses = [];
-  $scope.core_all = js_core_all;
   $scope.core = js_core;
+  $scope.core_all = angular.copy(js_core).push(
+    {name:'LAB', fullname:'Lab Section'}
+  );
   $scope.readonly = js_readonly;
 
 
