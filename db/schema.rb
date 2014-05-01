@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140429163251) do
+ActiveRecord::Schema.define(:version => 20140501022607) do
 
   create_table "cores", :force => true do |t|
     t.string   "key"
@@ -34,6 +34,13 @@ ActiveRecord::Schema.define(:version => 20140429163251) do
     t.integer  "units"
     t.string   "location"
     t.string   "core"
+  end
+
+  create_table "terms", :force => true do |t|
+    t.string   "name"
+    t.integer  "number"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
 end
