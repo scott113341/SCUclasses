@@ -4,7 +4,6 @@
   //= require bootstrap
 
 // libraries
-  //= require app/core.js
   //= require angular/angular.js
   //= require lib/angularstrap-0.7.3.js
   //= require underscore/underscore.js
