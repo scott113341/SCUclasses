@@ -208,13 +208,13 @@
                       <span class="remaining">seat{{plural(section.seats)}} remaining</span>
                     </td>
                     <td class="moreinfo">
-                      <a class="btn btn-mini btn-success" href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{section.id}}&term=<%= TERM %>" title="Opens the CourseAvail listing for this section" target="_blank">More Info</a>
+                      <a class="btn btn-mini btn-success" href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{section.id}}&term=<%= Term.term %>" title="Opens the CourseAvail listing for this section" target="_blank">More Info</a>
                       <span ng-if="section.islab" class="label label-info">lab section</span>
                     </td>
                     <td class="info">
                       <span><strong>Name:</strong> {{section.fullname}}</span>
                       <br>
-                      <span><strong>Class ID:</strong> <a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{section.id}}&term=<%= TERM %>" title="Opens the CourseAvail listing for this section" target="_blank">{{section.id}}</a></span>
+                      <span><strong>Class ID:</strong> <a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{section.id}}&term=<%= Term.term %>" title="Opens the CourseAvail listing for this section" target="_blank">{{section.id}}</a></span>
                       <br>
                       <span><strong>Professor:</strong> <a class="course-evaluation" data-professor="{{section.instructors}}" title="Opens course evaluations for this professor">{{section.instructors}}</a></span>
                     </td>

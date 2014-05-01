@@ -10,7 +10,7 @@ task :update_sections => :environment do
   newsections = 0
 
   # get section list
-  url = "http://www.scu.edu/courseavail/search/index.cfm?fuseAction=search&StartRow=1&MaxRow=4000&acad_career=all&school=&subject=&catalog_num=&instructor_name1=&days1=&start_time1=&start_time2=23&header=yes&footer=yes&term=#{TERM}"
+  url = "http://www.scu.edu/courseavail/search/index.cfm?fuseAction=search&StartRow=1&MaxRow=4000&acad_career=all&school=&subject=&catalog_num=&instructor_name1=&days1=&start_time1=&start_time2=23&header=yes&footer=yes&term=#{Term.term}"
   res = RestClient::Request.execute(:method => :get, :url => url, :timeout => 200)
   res = Nokogiri.HTML(res)
 
@@ -74,6 +74,7 @@ task :update_sections => :environment do
 
   Rake::Task['update_sections_details'].execute
   Rake::Task['update_core_keys'].execute
+  Rake::Task['update_term'].execute
 
   puts "update took #{((Time.now - start)/60).round(2)} minutes"
 end
@@ -93,7 +94,7 @@ task :update_sections_details => :environment do
 
   sections.each do |section|
     # get section details
-    res = RestClient.get "http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr=#{section.id.to_s}&term=#{TERM}"
+    res = RestClient.get "http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr=#{section.id.to_s}&term=#{Term.term}"
     res = Nokogiri.HTML(res)
 
     # parse section details
@@ -145,4 +146,27 @@ task :update_core_keys => :environment do
       core.save
     end
   end
+end
+
+
+
+
+
+task :update_term => :environment do
+  # empty term model
+  Term.destroy_all
+
+  # get courseavail landing page
+  res = RestClient.get 'http://www.scu.edu/courseavail'
+  res = Nokogiri.HTML(res)
+
+  # get selected term
+  term = res.css('#term option').find do |option|
+    not option.attribute('selected').nil?
+  end
+
+  Term.create(
+    name: term.text.strip,
+    number: term.attribute('value').value.to_i
+  )
 end
