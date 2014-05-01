@@ -74,6 +74,7 @@ task :update_sections => :environment do
 
   Rake::Task['update_sections_details'].execute
   Rake::Task['update_core_keys'].execute
+  Rake::Task['update_term'].execute
 
   puts "update took #{((Time.now - start)/60).round(2)} minutes"
 end
@@ -145,4 +146,27 @@ task :update_core_keys => :environment do
       core.save
     end
   end
+end
+
+
+
+
+
+task :update_term => :environment do
+  # empty term model
+  Term.destroy_all
+
+  # get courseavail landing page
+  res = RestClient.get 'http://www.scu.edu/courseavail'
+  res = Nokogiri.HTML(res)
+
+  # get selected term
+  term = res.css('#term option').find do |option|
+    not option.attribute('selected').nil?
+  end
+
+  Term.create(
+    name: term.text.strip,
+    number: term.attribute('value').value.to_i
+  )
 end
