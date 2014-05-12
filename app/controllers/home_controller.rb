@@ -22,9 +22,11 @@ class HomeController < ApplicationController
     @js_courses.sort! {|a,b| /[0-9]+/.match(a).to_s.to_i + ((/[0-9]+[A-Z]/.match(a)) ? 0.5 : 0) <=> /[0-9]+/.match(b).to_s.to_i + ((/[0-9]+[A-Z]/.match(b)) ? 0.5 : 0)} # sort courses by dept/number
 
     # javascript core
-    @js_core = Core.all.map do |core|
+    @js_core = Core.order(:name).all.map do |core|
       {name: core.key, fullname: core.name}
     end
+    pathway = /^Pathway/
+    @js_core = @js_core.select{ |c| c[:fullname].match(pathway).nil? } + @js_core.reject{ |c| c[:fullname].match(pathway).nil? } # move the pathway cores to the end
 
     # last updated
     @lastupdated = ((Time.now - Section.first.updated_at) / 60).ceil
