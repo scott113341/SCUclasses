@@ -16,14 +16,14 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
     },
     core: {
       description: function(value) {
-        var core = _.findWhere(js_core_all, {name: value.core});
+        var core = _.findWhere(js_core, {name: value.core});
         if (core) return 'Core: ' + core.fullname;
         else return false;
       }
     },
     core2: {
       description: function(value) {
-        var core2 = _.findWhere(js_core_all, {name: value.core2});
+        var core2 = _.findWhere(js_core, {name: value.core2});
         if (core2) return 'Core: ' + core2.fullname;
         else return false;
       }
@@ -480,7 +480,7 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
 
     popover += '<tr><td>Core fulfilled: </td><td>';
     _.each(section.cores, function(core) {
-      popover += '<span class="label label-info">' + ((a = _.findWhere(js_core_all, {name: core})) ? a.fullname : '') + '</span> ';
+      popover += '<span class="label label-info">' + ((a = _.findWhere(js_core, {name: core})) ? a.fullname : '') + '</span> ';
     });
     popover += '</td></tr>';
 
