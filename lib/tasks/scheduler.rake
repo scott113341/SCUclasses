@@ -4,8 +4,43 @@ require 'ruby-progressbar'
 require 'scuclasses_platform/util'
 
 
-task :update_sections => :environment do
+task :update => :environment do
   start = Time.now
+
+  Rake::Task['update_term'].execute
+  throw 'no terms' if Term.count < 1
+
+  Rake::Task['update_sections'].execute
+  Rake::Task['update_sections_details'].execute
+  Rake::Task['update_core_keys'].execute
+
+  puts "update took #{((Time.now - start)/60).round(2)} minutes"
+end
+
+
+task :update_term => :environment do
+  # get courseavail landing page
+  res = RestClient.get 'http://www.scu.edu/courseavail'
+  res = Nokogiri.HTML(res)
+
+  # save terms to database
+  res.css('#term option').each do |term|
+    id = term.attribute('value').value.to_i
+    name = term.text.strip
+
+    newterm = Term.where(id: id).first_or_create(
+      name: name,
+      number: id
+    )
+    newterm.id = newterm.number
+    newterm.save
+  end
+
+  puts "Total of #{Term.count} terms: #{Term.all.map{|t| t.name}.join(', ')}"
+end
+
+
+task :update_sections => :environment do
   puts "#{Section.count} existing sections"
   newsections = 0
 
@@ -71,12 +106,6 @@ task :update_sections => :environment do
 
   puts "#{Section.count} sections updated"
   puts "#{newsections} new sections"
-
-  Rake::Task['update_sections_details'].execute
-  Rake::Task['update_core_keys'].execute
-  Rake::Task['update_term'].execute
-
-  puts "update took #{((Time.now - start)/60).round(2)} minutes"
 end
 
 
@@ -146,27 +175,4 @@ task :update_core_keys => :environment do
       core.save
     end
   end
-end
-
-
-
-
-
-task :update_term => :environment do
-  # empty term model
-  Term.destroy_all
-
-  # get courseavail landing page
-  res = RestClient.get 'http://www.scu.edu/courseavail'
-  res = Nokogiri.HTML(res)
-
-  # get selected term
-  term = res.css('#term option').find do |option|
-    not option.attribute('selected').nil?
-  end
-
-  Term.create(
-    name: term.text.strip,
-    number: term.attribute('value').value.to_i
-  )
 end
