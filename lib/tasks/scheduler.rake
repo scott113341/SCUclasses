@@ -7,7 +7,7 @@ require 'scuclasses_platform/util'
 task :update => :environment do
   start = Time.now
 
-  Rake::Task['update_term'].execute
+  Rake::Task['update_terms'].execute
   throw 'no terms' if Term.count < 1
 
   Rake::Task['update_sections'].execute
@@ -18,7 +18,7 @@ task :update => :environment do
 end
 
 
-task :update_term => :environment do
+task :update_terms => :environment do
   # get courseavail landing page
   res = RestClient.get 'http://www.scu.edu/courseavail'
   res = Nokogiri.HTML(res)
