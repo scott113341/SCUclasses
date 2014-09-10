@@ -15,7 +15,7 @@
     <tr ng-repeat="section in sectionsAdded()" ng-if="section.selected">
       <td>{{section.name}}</td>
       <td>{{section.fullname}}</td>
-      <td><a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{section.id}}&term=<%= Term.term %>" title="Opens the CourseAvail listing for this section" target="_blank">{{section.id}}</a></td>
+      <td><a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{section.id}}&term=<%= @term.number %>" title="Opens the CourseAvail listing for this section" target="_blank">{{section.id}}</a></td>
       <td>{{section.seats}}</td>
       <td><a class="course-evaluation" data-professor="{{section.instructors}}" title="Opens course evaluations for this professor">{{section.instructors}}</a></td>
       <td>{{section.days}}</td>
