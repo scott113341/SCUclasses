@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  before_filter :set_term
+
   def index
     # calculate min and max hours for each day
     hour_min = 7
@@ -173,5 +175,15 @@ class HomeController < ApplicationController
   def scubooks
     sections = Section.all
     render json: sections
+  end
+
+
+
+  def set_term
+    if params[:term]
+      @term = Term.find(params[:term])
+    else
+      @term = Term.find_by_default(true)
+    end
   end
 end
