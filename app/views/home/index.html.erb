@@ -31,7 +31,7 @@
           <h3>Welcome to SCU&#8226;classes.</h3>
           <h3>It's like CourseAvail on steroids.</h3>
           <br>
-          <h4>Now updated for <span class="quarter"><%= Term.quarter %></span></h4>
+          <h4>Now updated for <span class="quarter"><%= @term.name %></span></h4>
           <br>
           <h4>To get started, start typing a class in the box above.</h4>
           <h4>Or, find things like double-dip classes with <button data-toggle="modal" data-target="#search" class="btn btn-primary btn-small"><i class="icon-th-list icon-white"></i> Advanced Search</button></h4>
@@ -87,7 +87,7 @@
                     </div>
                     <span><strong>Name:</strong> {{section.fullname}}</span>
                     <br>
-                    <span><strong>Class ID:</strong> <a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{section.id}}&term=<%= Term.term %>" title="Opens the CourseAvail listing for this section" target="_blank">{{section.id}}</a></span>
+                    <span><strong>Class ID:</strong> <a href="http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr={{section.id}}&term=<%= @term.number %>" title="Opens the CourseAvail listing for this section" target="_blank">{{section.id}}</a></span>
                     <br>
                     <span><strong>Professor:</strong> <a class="course-evaluation" data-professor="{{section.instructors}}" title="Opens course evaluations for this professor">{{section.instructors}}</a></span>
                   </td>
@@ -124,7 +124,7 @@
 <script type="text/javascript">
     var js_courses = <%= raw @js_courses.to_json %>;
     var js_core = <%= raw @js_core.to_json %>;
-    var js_term = <%= Term.term %>;
+    var js_term = <%= @term.number %>;
     var js_lastupdated = <%= @lastupdated %>;
     var js_version = 2.0;
     var js_readonly = <%= @readonly %>;

@@ -4,13 +4,60 @@ require 'ruby-progressbar'
 require 'scuclasses_platform/util'
 
 
-task :update_sections => :environment do
+current_term = nil
+
+
+task :update => :environment do
   start = Time.now
+
+  Rake::Task['update_terms'].execute
+  throw 'no terms' if Term.count < 1
+
+  Term.all.each do |term|
+    puts "current term: #{term.name}"
+    current_term = term
+    Rake::Task['update_sections'].execute
+    Rake::Task['update_sections_details'].execute
+    puts "\n"
+  end
+  Rake::Task['update_core_keys'].execute
+
+  puts "update took #{((Time.now - start)/60).round(2)} minutes"
+end
+
+
+task :update_terms => :environment do
+  # get courseavail landing page
+  res = RestClient.get 'http://www.scu.edu/courseavail'
+  res = Nokogiri.HTML(res)
+
+  # save terms to database
+  res.css('#term option').each do |term|
+    name = term.text.strip
+    number = term.attribute('value').value.to_i
+
+    newterm = Term.where(id: id).first_or_initialize
+    newterm.name = name
+    newterm.number = number
+    newterm.default = term.attribute('selected') ? true : false
+    newterm.save
+    newterm.touch
+
+    # remove terms that haven't been visible for 5 days
+    Term.where('updated_at < ?', Time.now - 5.days).destroy_all
+  end
+
+  puts "Total of #{Term.count} terms: #{Term.all.map{|t| t.name}.join(', ')}"
+  puts "Default term is #{Term.find_by_default(true).name}"
+end
+
+
+task :update_sections => :environment do
   puts "#{Section.count} existing sections"
   newsections = 0
 
   # get section list
-  url = "http://www.scu.edu/courseavail/search/index.cfm?fuseAction=search&StartRow=1&MaxRow=4000&acad_career=all&school=&subject=&catalog_num=&instructor_name1=&days1=&start_time1=&start_time2=23&header=yes&footer=yes&term=#{Term.term}"
+  url = "http://www.scu.edu/courseavail/search/index.cfm?fuseAction=search&StartRow=1&MaxRow=4000&acad_career=all&school=&subject=&catalog_num=&instructor_name1=&days1=&start_time1=&start_time2=23&header=yes&footer=yes&term=#{current_term.number}"
   res = RestClient::Request.execute(:method => :get, :url => url, :timeout => 200)
   res = Nokogiri.HTML(res)
 
@@ -69,14 +116,7 @@ task :update_sections => :environment do
   puts "#{todelete.length} sections deleted"
   todelete.destroy_all
 
-  puts "#{Section.count} sections updated"
   puts "#{newsections} new sections"
-
-  Rake::Task['update_sections_details'].execute
-  Rake::Task['update_core_keys'].execute
-  Rake::Task['update_term'].execute
-
-  puts "update took #{((Time.now - start)/60).round(2)} minutes"
 end
 
 
@@ -87,14 +127,14 @@ task :update_sections_details => :environment do
   sections = Section.all
 
   progress = ProgressBar.create(
-      :title => 'section details',
-      :total => sections.length,
-      :format => '%t: |%B| %P%%, %e'
+    :title => 'section details',
+    :total => sections.length,
+    :format => '%t: |%B| %P%%, %e'
   )
 
   sections.each do |section|
     # get section details
-    res = RestClient.get "http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr=#{section.id.to_s}&term=#{Term.term}"
+    res = RestClient.get "http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr=#{section.id.to_s}&term=#{current_term.number}"
     res = Nokogiri.HTML(res)
 
     # parse section details
@@ -142,31 +182,7 @@ task :update_core_keys => :environment do
       core = Core.new
       core.key = core_option.attribute('value').text.strip
       core.name = core_option.text.strip[/^\w+\s\-\s[A-Z]+\s(.+)/, 1].gsub(/PATH/, 'Pathway -')
-
       core.save
     end
   end
-end
-
-
-
-
-
-task :update_term => :environment do
-  # empty term model
-  Term.destroy_all
-
-  # get courseavail landing page
-  res = RestClient.get 'http://www.scu.edu/courseavail'
-  res = Nokogiri.HTML(res)
-
-  # get selected term
-  term = res.css('#term option').find do |option|
-    not option.attribute('selected').nil?
-  end
-
-  Term.create(
-    name: term.text.strip,
-    number: term.attribute('value').value.to_i
-  )
 end
