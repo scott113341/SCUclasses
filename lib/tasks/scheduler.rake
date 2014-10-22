@@ -10,17 +10,41 @@ current_term = nil
 task :update => :environment do
   start = Time.now
 
+  Rake::Task['update_core_keys'].execute
   Rake::Task['update_terms'].execute
   throw 'no terms' if Term.count < 1
 
   Term.all.each do |term|
-    puts "current term: #{term.name}"
+    puts "updating term: #{term.name}"
     current_term = term
+
+    # update sections
     Rake::Task['update_sections'].execute
-    Rake::Task['update_sections_details'].execute
+
+    # only update section details twice a day at 7am/pm
+    # section data updated daily at 6am/pm
+    # remaining seats updated every 2 minutes
+    hour = Time.now.hour
+    if hour == 7 || hour == 12+7 || true
+      puts 'updating section details'
+
+      sections = Section.all
+      progress = ProgressBar.create(
+        :title => 'section details',
+        :total => sections.length,
+        :format => '%t: |%B| %P%%, %e'
+      )
+
+      sections.each do |section|
+        update_section_details section, current_term
+        progress.increment
+      end
+    else
+      puts 'skipping section details update'
+    end
+
     puts "\n"
   end
-  Rake::Task['update_core_keys'].execute
 
   puts "update took #{((Time.now - start)/60).round(2)} minutes"
 end
@@ -47,14 +71,17 @@ task :update_terms => :environment do
     Term.where('updated_at < ?', Time.now - 5.days).destroy_all
   end
 
-  puts "Total of #{Term.count} terms: #{Term.all.map{|t| t.name}.join(', ')}"
-  puts "Default term is #{Term.find_by_default(true).name}"
+  puts "total of #{Term.count} terms: #{Term.all.map{|t| t.name}.join(', ')}"
+  puts "default term is #{Term.find_by_default(true).name}\n\n"
 end
 
 
+
+
+
 task :update_sections => :environment do
-  puts "#{Section.count} existing sections"
-  newsections = 0
+  puts "#{Section.where(term_id: current_term.id).count} existing sections"
+  newsections = []
 
   # get section list
   url = "http://www.scu.edu/courseavail/search/index.cfm?fuseAction=search&StartRow=1&MaxRow=4000&acad_career=all&school=&subject=&catalog_num=&instructor_name1=&days1=&start_time1=&start_time2=23&header=yes&footer=yes&term=#{current_term.number}"
@@ -94,7 +121,7 @@ task :update_sections => :environment do
         thissection = Section.find(id)
       else
         thissection = Section.new
-        newsections += 1
+        newsections.push thissection
       end
 
       # set section properties
@@ -106,6 +133,7 @@ task :update_sections => :environment do
       thissection.days = days
       thissection.time_start = time_start
       thissection.time_end = time_end
+      thissection.term_id = current_term.id
       thissection.save
       thissection.touch
     end
@@ -116,53 +144,48 @@ task :update_sections => :environment do
   puts "#{todelete.length} sections deleted"
   todelete.destroy_all
 
-  puts "#{newsections} new sections"
+  puts "#{newsections.count} new sections"
+
+  newsections.each do |section|
+    update_section_details section, current_term
+    print '.'
+  end
+  puts "\n"
 end
 
 
 
 
 
-task :update_sections_details => :environment do
-  sections = Section.all
 
-  progress = ProgressBar.create(
-    :title => 'section details',
-    :total => sections.length,
-    :format => '%t: |%B| %P%%, %e'
-  )
+def update_section_details(section, current_term)
+  # get section details
+  res = RestClient.get "http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr=#{section.id.to_s}&term=#{current_term.number}"
+  res = Nokogiri.HTML(res)
 
-  sections.each do |section|
-    # get section details
-    res = RestClient.get "http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr=#{section.id.to_s}&term=#{current_term.number}"
-    res = Nokogiri.HTML(res)
+  # parse section details
+  res.css('#page-primary tr').each do |detail|
+    detail_name = detail.css('th').text.strip
+    value = detail.css('td').text.strip
 
-    # parse section details
-    res.css('#page-primary tr').each do |detail|
-      detail_name = detail.css('th').text.strip
-      value = detail.css('td').text.strip
-
-      if 'Description' == detail.css('th').text.strip
-        section.description = value.gsub(/\s{2,}/, ' ')
-      end
-
-      if detail_name.match(/2009 Core/)
-        section.core = value.scan(/\w{1}_\w+/).join(',')
-      end
-
-      if 'Units (min/max)' == detail.css('th').text.strip
-        section.units = (units = value.scan(/\d/)[0]) ? units : 0;
-      end
-
-      if location = detail.css('td')[4]
-        section.location = location.text.strip
-      end
+    if 'Description' == detail.css('th').text.strip
+      section.description = value.gsub(/\s{2,}/, ' ')
     end
 
-    section.save
+    if detail_name.match(/2009 Core/)
+      section.core = value.scan(/\w{1}_\w+/).join(',')
+    end
 
-    progress.increment
+    if 'Units (min/max)' == detail.css('th').text.strip
+      section.units = (units = value.scan(/\d/)[0]) ? units : 0;
+    end
+
+    if location = detail.css('td')[4]
+      section.location = location.text.strip
+    end
   end
+
+  section.save
 end
 
 

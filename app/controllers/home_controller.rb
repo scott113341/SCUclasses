@@ -18,7 +18,7 @@ class HomeController < ApplicationController
 
     # javascript course list (array of course.name)
     @js_courses = []
-    Section.select("name, MIN(fullname) AS fullname").group('name').each do |course|
+    Section.where_term(@term).select("name, MIN(fullname) AS fullname").group('name').each do |course|
       @js_courses.push(course.name + ' - ' + course.fullname)
     end
     @js_courses.sort! {|a,b| /[0-9]+/.match(a).to_s.to_i + ((/[0-9]+[A-Z]/.match(a)) ? 0.5 : 0) <=> /[0-9]+/.match(b).to_s.to_i + ((/[0-9]+[A-Z]/.match(b)) ? 0.5 : 0)} # sort courses by dept/number
@@ -37,7 +37,7 @@ class HomeController < ApplicationController
     if params[:classes].nil?
       @readonly = false
     else
-      @readonly = ! Section.find(params[:classes].split(',')).nil?
+      @readonly = ! Section.where_term(@term).find(params[:classes].split(',')).nil?
     end
   end
 
@@ -46,13 +46,13 @@ class HomeController < ApplicationController
   # section search
   def search
     if params[:name]
-      courses = Section.where('name = ? AND seats > 0', params[:name]).order('time_start')
-      courses_noseats = Section.where('name = ? AND seats = 0', params[:name]).order('time_start')
+      courses = Section.where_term(@term).where('name = ? AND seats > 0', params[:name]).order('time_start')
+      courses_noseats = Section.where_term(@term).where('name = ? AND seats = 0', params[:name]).order('time_start')
       courses = (courses + courses_noseats)
     elsif params[:id]
-      courses = Section.find(params[:id])
+      courses = Section.where_term(@term).find(params[:id])
     elsif params[:core]
-      courses = Section.where('core LIKE ?', '%'+params[:core]+'%')
+      courses = Section.where_term(@term).where('core LIKE ?', '%'+params[:core]+'%')
     else
       courses = []
     end
@@ -146,7 +146,7 @@ class HomeController < ApplicationController
     end
 
     # execute query
-    sections = Section.where(query, queryparams.symbolize_keys)
+    sections = Section.where_term(@term).where(query, queryparams.symbolize_keys)
 
     # render query
     render :json => sections
@@ -159,11 +159,11 @@ class HomeController < ApplicationController
     results = []
 
     if params[:id]
-      results = Section.select('id').where('CAST(id AS TEXT) LIKE ?', "#{params[:id]}%").map{|c| c.id.to_s}
+      results = Section.where_term(@term).select('id').where('CAST(id AS TEXT) LIKE ?', "#{params[:id]}%").map{|c| c.id.to_s}
     elsif params[:department]
-      results = Section.select('DISTINCT name').where('name ILIKE ?', "#{params[:department]}%").map{|c| c.name.split(' ')[0]}.uniq()
+      results = Section.where_term(@term).select('DISTINCT name').where('name ILIKE ?', "#{params[:department]}%").map{|c| c.name.split(' ')[0]}.uniq()
     elsif params[:instructors]
-      results = Section.select('DISTINCT instructors').where('instructors ILIKE ?', "%#{params[:instructors]}%").map{|c| c.instructors}
+      results = Section.where_term(@term).select('DISTINCT instructors').where('instructors ILIKE ?', "%#{params[:instructors]}%").map{|c| c.instructors}
     end
 
     render :json => results
