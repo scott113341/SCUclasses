@@ -25,7 +25,7 @@ task :update => :environment do
     # section data updated daily at 6am/pm
     # remaining seats updated every 2 minutes
     hour = Time.now.hour
-    if hour == 7 || hour == 12+7 || true
+    if hour == 7 || hour == 12+7
       puts 'updating section details'
 
       sections = Section.all
