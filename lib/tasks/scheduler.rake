@@ -36,7 +36,7 @@ task :update_terms => :environment do
     name = term.text.strip
     number = term.attribute('value').value.to_i
 
-    newterm = Term.where(id: id).first_or_initialize
+    newterm = Term.where(number: number).first_or_initialize
     newterm.name = name
     newterm.number = number
     newterm.default = term.attribute('selected') ? true : false
