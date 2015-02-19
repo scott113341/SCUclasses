@@ -71,6 +71,7 @@ task :update_terms => :environment do
     Term.where('updated_at < ?', Time.now - 5.days).destroy_all
   end
 
+  puts "\n"
   puts "total of #{Term.count} terms: #{Term.all.map{|t| t.name}.join(', ')}"
   puts "default term is #{Term.find_by_default(true).name}\n\n"
 end
@@ -150,7 +151,7 @@ task :update_sections => :environment do
     update_section_details section, current_term
     print '.'
   end
-  puts "\n"
+  puts "\n" if newsections.length > 0
 end
 
 
