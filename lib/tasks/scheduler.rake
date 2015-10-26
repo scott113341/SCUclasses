@@ -14,7 +14,8 @@ task :update => :environment do
   Rake::Task['update_terms'].execute
   throw 'no terms' if Term.count < 1
 
-  Term.all.each do |term|
+  # Term.all.each do |term|
+  Term.where(default: true).each do |term|
     puts "updating term: #{term.name}"
     current_term = term
 
