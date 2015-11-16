@@ -1,4 +1,4 @@
-app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnalyticsService', function($scope, $http, $timeout, GoogleAnalyticsService) {
+app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnalyticsService', '$modal', function($scope, $http, $timeout, GoogleAnalyticsService, $modal) {
   $scope.courses = [];
   $scope.core = js_core;
   $scope.core_all = angular.copy(js_core).push(
@@ -654,4 +654,16 @@ app.controller('courseOptionsCtrl', ['$scope', '$http', '$timeout', 'GoogleAnaly
     link += _.pluck($scope.sectionsAdded(), 'id').join(',');
     return link;
   };
+
+
+  // show scubooks modal
+  (function() {
+    var now = Date.now();
+    var debounce = 1000 * 60 * 60 * 24 * 30; // 30 days
+    var lastTime = store.get('scuBooksModal') || 0;
+    if (lastTime < now - debounce) {
+      $modal({scope: $scope, template: 'scubooks-modal.html', show: true});
+      store.set('scuBooksModal', now);
+    }
+  })();
 }]);
