@@ -4,6 +4,7 @@ require 'ruby-progressbar'
 require 'scuclasses_platform/util'
 
 
+COURSEAVAIL_URL = 'https://legacy.scu.edu/courseavail'
 current_term = nil
 
 
@@ -53,7 +54,7 @@ end
 
 task :update_terms => :environment do
   # get courseavail landing page
-  res = RestClient.get 'http://www.scu.edu/courseavail'
+  res = RestClient.get(COURSEAVAIL_URL)
   res = Nokogiri.HTML(res)
 
   # save terms to database
@@ -86,8 +87,8 @@ task :update_sections => :environment do
   newsections = []
 
   # get section list
-  url = "http://www.scu.edu/courseavail/search/index.cfm?fuseAction=search&StartRow=1&MaxRow=4000&acad_career=all&school=&subject=&catalog_num=&instructor_name1=&days1=&start_time1=&start_time2=23&header=yes&footer=yes&term=#{current_term.number}"
-  res = RestClient::Request.execute(:method => :get, :url => url, :timeout => 200)
+  url = "#{COURSEAVAIL_URL}/search/index.cfm?fuseAction=search&StartRow=1&MaxRow=4000&acad_career=all&school=&subject=&catalog_num=&instructor_name1=&days1=&start_time1=&start_time2=23&header=yes&footer=yes&term=#{current_term.number}"
+  res = RestClient::Request.execute(method: :get, url: url, timeout: 200)
   res = Nokogiri.HTML(res)
 
   # parse, set, and save section list
@@ -162,7 +163,7 @@ end
 
 def update_section_details(section, current_term)
   # get section details
-  res = RestClient.get "http://www.scu.edu/courseavail/class/?fuseaction=details&class_nbr=#{section.id.to_s}&term=#{current_term.number}"
+  res = RestClient.get("#{COURSEAVAIL_URL}/class/?fuseaction=details&class_nbr=#{section.id.to_s}&term=#{current_term.number}")
   res = Nokogiri.HTML(res)
 
   # parse section details
@@ -199,7 +200,7 @@ task :update_core_keys => :environment do
   Core.destroy_all
 
   # get courseavail landing page
-  res = RestClient.get 'http://www.scu.edu/courseavail'
+  res = RestClient.get(COURSEAVAIL_URL)
   res = Nokogiri.HTML(res)
 
   res.css('#newcore option').each do |core_option|
