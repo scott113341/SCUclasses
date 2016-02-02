@@ -31,9 +31,9 @@ task :update => :environment do
 
       sections = Section.all
       progress = ProgressBar.create(
-        :title => 'section details',
-        :total => sections.length,
-        :format => '%t: |%B| %P%%, %e'
+        title: 'section details',
+        total: sections.length,
+        format: '%t: |%B| %P%%, %e',
       )
 
       sections.each do |section|
