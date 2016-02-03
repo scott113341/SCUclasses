@@ -72,7 +72,13 @@ task :update_terms => :environment do
     newterm = Term.where(number: number).first_or_initialize
     newterm.name = name
     newterm.number = number
-    newterm.default = term.attribute('selected') ? true : false
+
+    if ENV['SCUCLASSES_TERM']
+      newterm.default = newterm.name == ENV['SCUCLASSES_TERM']
+    else
+      newterm.default = term.attribute('selected') ? true : false
+    end
+
     newterm.save
     newterm.touch
 
