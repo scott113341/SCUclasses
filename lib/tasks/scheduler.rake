@@ -15,8 +15,15 @@ task :update => :environment do
   Rake::Task['update_terms'].execute
   throw 'no terms' if Term.count < 1
 
-  # Term.all.each do |term|
-  Term.where(default: true).each do |term|
+  terms = Term.where(name: ENV['TERM'])
+  if terms.length == 0
+    puts 'using default term'
+    terms = Term.where(default: true)
+  else
+    puts 'using TERM environment variable override'
+  end
+
+  terms.each do |term|
     puts "updating term: #{term.name}"
     current_term = term
 
