@@ -15,7 +15,7 @@ task :update => :environment do
   Rake::Task['update_terms'].execute
   throw 'no terms' if Term.count < 1
 
-  terms = Term.where(name: ENV['TERM'])
+  terms = Term.where(name: ENV['SCUCLASSES_TERM'])
   if terms.length == 0
     puts 'using default term'
     terms = Term.where(default: true)
