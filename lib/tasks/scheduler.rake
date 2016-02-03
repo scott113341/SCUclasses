@@ -20,7 +20,7 @@ task :update => :environment do
     puts 'using default term'
     terms = Term.where(default: true)
   else
-    puts 'using TERM environment variable override'
+    puts 'using SCUCLASSES_TERM environment variable override'
   end
 
   terms.each do |term|
