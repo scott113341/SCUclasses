@@ -31,7 +31,7 @@ class HomeController < ApplicationController
     @js_core = @js_core.select{ |c| c[:fullname].match(pathway).nil? } + @js_core.reject{ |c| c[:fullname].match(pathway).nil? } # move the pathway cores to the end
 
     # last updated
-    @lastupdated = ((Time.now - Section.first.updated_at) / 60).ceil
+    @lastupdated = ((Time.now - Section.last.updated_at) / 60).ceil
 
     # readonly if valid sections are specified
     if params[:classes].nil?
@@ -171,10 +171,9 @@ class HomeController < ApplicationController
 
 
 
-  # export interface for scubooks
-  def scubooks
-    sections = Section.all
-    render json: sections
+  # all sections
+  def sections
+    render json: Section.all
   end
 
 
