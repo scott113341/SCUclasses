@@ -1,0 +1,41 @@
+<div class="container-fluid">
+  <div class="row-fluid print_hide">
+
+    <div class="span6">
+      <div class="top">
+        <h1>SCU&#8226;classes</h1>
+
+        <div class="welcome">
+          <h3>SCU&#8226;classes is currently broken, maybe forever</h3>
+          <br>
+          <h4 style="text-align: left;">Hi everyone, it seems that SCU has shut off their legacy version of CourseAvail that SCU&#8226;classes relies on.  It is my understanding that the university has been working on a <a href="https://www.scu.edu/apps/courseavail">much-improved version of CourseAvail</a> for students to use.  My guess is that they intend to have students solely use that going forward.</h4>
+          <br>
+          <h4 style="text-align: left;">While it is definitely possible to update SCU&#8226;classes to use the new CourseAvail for data, I currently have quite a lot on my plate and can't commit to the task.  So, if any of you are interested in taking a shot at this, please do so! All of the source code can be found <a href="https://github.com/scott113341/SCUclasses">here</a>.</h4>
+          <br>
+          <h4 style="text-align: left;">And if that's not in the cards, then thanks for using SCU&#8226;classes while it lasted, it's been a great source of joy knowing that my software is doing some good in the world :)</h4>
+          <br>
+          <h4 style="text-align: left;">&mdash; Scott Hardy, Class of 2014</h4>
+        </div>
+      </div>
+    </div>
+
+    <div class="span6">
+      <div class="calendar">
+        <%= render 'calendar_view' %>
+        <div class="bottom">
+          <p>This schedule has <strong>0</strong> units || Updated from CourseAvail maybe never again :(</p>
+        </div>
+      </div>
+      <div class="spacer"></div>
+    </div>
+  </div>
+</div>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/all.js";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>

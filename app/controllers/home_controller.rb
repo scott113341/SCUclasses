@@ -39,6 +39,8 @@ class HomeController < ApplicationController
     else
       @readonly = ! Section.where_term(@term).find(params[:classes].split(',')).nil?
     end
+  rescue
+    render 'broken'
   end
 
 
