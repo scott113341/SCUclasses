@@ -35,7 +35,6 @@ GEM
     daemons (1.1.9)
     erubis (2.7.0)
     eventmachine (1.0.3)
-    eventmachine (1.0.3-x86-mingw32)
     execjs (1.4.0)
       multi_json (~> 1.0)
     hike (1.2.2)
@@ -52,9 +51,7 @@ GEM
     mime-types (1.23)
     multi_json (1.7.2)
     nokogiri (1.5.9)
-    nokogiri (1.5.9-x86-mingw32)
     pg (0.15.1)
-    pg (0.15.1-x86-mingw32)
     polyglot (0.3.3)
     rack (1.4.5)
     rack-cache (1.2)
@@ -110,7 +107,6 @@ GEM
 
 PLATFORMS
   ruby
-  x86-mingw32
 
 DEPENDENCIES
   bootstrap-sass (= 2.3.0.0)
